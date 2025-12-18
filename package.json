@@ -1,6 +1,11 @@
 {
   "name": "circulo-lectura-fronted",
   "version": "0.0.0",
+
+  "volta": {
+    "node": "22.21.1",
+    "npm": "11.6.4"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
