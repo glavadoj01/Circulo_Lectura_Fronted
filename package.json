@@ -1,7 +1,6 @@
 {
   "name": "circulo-lectura-fronted",
   "version": "0.0.0",
-
   "volta": {
     "node": "22.21.1",
     "npm": "11.6.4"
@@ -33,13 +32,16 @@
     "@angular/forms": "^20.3.0",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
+    "tailwindcss": "^4.1.18",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular/build": "^20.3.10",
-    "@angular/cli": "^20.3.10",
+    "@angular/cli": "^20.0.6",
     "@angular/compiler-cli": "^20.3.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.9.0",
