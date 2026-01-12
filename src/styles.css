@@ -1,2 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
 @import 'tailwindcss';
+@plugin "daisyui";
+
+/* Variables por defecto (tema oscuro) */
+html[data-theme='dark'] {
+    --bg-primary: #1a1a1a;
+    --text-primary: #ffffff;
+    --color-accent: #tu-color;
+    /* ... más variables */
+}
+
+/* Sobrescribe para tema claro */
+html[data-theme='light'] {
+    --bg-primary: #ffffff;
+    --text-primary: #000000;
+    --color-accent: #tu-color-claro;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
