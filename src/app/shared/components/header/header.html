@@ -36,14 +36,45 @@
             class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-background-dark text-sm font-bold leading-normal tracking-[0.015em] hover:brightness-110 transition-all">
             <span class="truncate">Registrarse</span>
         </button>
+    </div>
+    <div class="flex items-center">
         <button id="mobile-menu-button" type="button" aria-controls="mobile-menu" aria-expanded="false"
             class="md:hidden flex items-center justify-center size-10 rounded-lg bg-surface-dark hover:bg-white/10 transition-colors">
             <span class="material-symbols-outlined text-white">Menu</span>
         </button>
-    </div>
-    <div class="flex items-center">
         <button (click)="toggleTheme()" class="btn btn-circle">
             <img src="luna.svg" alt="Luna" class="size-[1.2em]">
         </button>
     </div>
 </header>
+<!-- Desplegable Nav en pantalla pequeña -->
+<div id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden" aria-hidden="true">
+    <!-- Backdrop -->
+    <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/40"></div>
+
+    <!-- Panel (aside) -->
+    <aside id="mobile-menu-panel"
+        class="absolute right-0 top-0 h-full w-4/5 max-w-xs bg-surface-dark shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out"
+        role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
+        <div class="p-4">
+            <div class="flex items-center justify-between">
+                <h2 id="mobile-menu-title" class="text-white font-bold">Menú</h2>
+                <button id="mobile-menu-close" type="button" aria-label="Cerrar menú"
+                    class="text-text-secondary hover:text-white">
+                    ✕
+                </button>
+            </div>
+
+            <nav class="mt-4 flex flex-col gap-2">
+                <a href="../catálogo_de_libros/catalogo.html"
+                    class="text-text-light px-2 py-2 rounded hover:bg-white/5">Catálogo</a>
+                <a href="../catálogo_de_listas_de_libros/listas.html"
+                    class="text-text-light px-2 py-2 rounded hover:bg-white/5">Listas</a>
+                <a href="../página_de_eventos/eventos.html"
+                    class="text-text-light px-2 py-2 rounded hover:bg-white/5">Eventos</a>
+            </nav>
+        </div>
+    </aside>
+</div>
+
+<script src="../js/menuContextual.js"></script>
