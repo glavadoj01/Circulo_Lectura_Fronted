@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild, HostListener, signal } from '@angular/core';
+import { Component, ElementRef, ViewChild, HostListener, signal, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Theme } from '../../services/theme.js';
 
 @Component({
   selector: 'app-header',
@@ -7,21 +8,16 @@ import { RouterModule } from '@angular/router';
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header {
-    toggleTheme() {
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme') || 'dark';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    }
 
-   ngOnInit() {
-    const saved = localStorage.getItem('theme');
-    if (saved) document.documentElement.setAttribute('data-theme', saved);
+export class Header {
+ //Injección y uso del servicio Tema Claro/Oscuro
+  protected themeService = inject(Theme);
+  toggleTheme(): void {
+      this.themeService.toggleTheme();
   }
 
   isMenuOpen = signal(false);
+// Para almacenar el último elemento enfocado antes de abrir el menú y poder volver al cerrarlo (si no has pulsado enlace)
   lastFocused: HTMLElement | null = null;
 
   @ViewChild('openBtn') openBtn!: ElementRef<HTMLButtonElement>;
@@ -33,7 +29,7 @@ export class Header {
   private getFocusable(container: HTMLElement): HTMLElement[] {
     return Array.from(
       container.querySelectorAll(
-        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        'a[routerLink], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
       )
     ).filter(el => (el as HTMLElement).offsetParent !== null) as HTMLElement[];
   }
