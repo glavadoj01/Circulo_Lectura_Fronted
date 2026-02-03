@@ -1,7 +1,8 @@
 <header
-    class="flex items-center gap-10 whitespace-nowrap border-b border-solid border-surface-dark px-6 md:px-10 py-3 w-full max-w-7xl sticky top-0 bg-background-dark/80 backdrop-blur-sm z-50">
+    class="flex items-center gap-3 md:gap-6 whitespace-nowrap border-b border-primary px-4 md:px-6 lg:px-10 py-3 w-full sticky top-0 bg-background-main/80 backdrop-blur-sm z-50">
     <!-- Logo + Nombre App/Sitio -->
-    <a class="flex items-center gap-3 text-white" routerLink="/bienvenida">
+    <a class="flex items-center gap-3 text-primary hover:opacity-80 transition-opacity" routerLink="/bienvenida"
+        aria-label="Ir a página de bienvenida">
         <div class="size-8 text-primary">
             <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -9,18 +10,24 @@
                 </path>
             </svg>
         </div>
-        <h2 class="hidden sm:block text-white text-lg font-bold font-display leading-tight tracking-[-0.015em]">
+        <h2 class="hidden sm:block text-primary text-lg font-bold font-display leading-tight tracking-[-0.015em]">
             Círculo de Lectura</h2>
     </a>
 
     <!-- Navegación Desktop -->
     <nav class="hidden md:flex items-center gap-8 md:flex-1 md:justify-center">
-        <a class="text-text-light text-sm font-medium leading-normal hover:text-primary transition-colors"
-            routerLink="/catalogos/libros">Catálogo</a>
-        <a class="text-text-light text-sm font-medium leading-normal hover:text-primary transition-colors"
-            routerLink="/catalogos/listas">Listas</a>
-        <a class="text-text-light text-sm font-medium leading-normal hover:text-primary transition-colors"
-            routerLink="/catalogos/eventos">Eventos</a>
+        <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
+            routerLink="/catalogos/libros" routerLinkActive="!text-accent" [routerLinkActiveOptions]="{ exact: true }">
+            Catálogo
+        </a>
+        <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
+            routerLink="/catalogos/listas" routerLinkActive="!text-accent" [routerLinkActiveOptions]="{ exact: true }">
+            Listas
+        </a>
+        <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
+            routerLink="/catalogos/eventos" routerLinkActive="!text-accent" [routerLinkActiveOptions]="{ exact: true }">
+            Eventos
+        </a>
     </nav>
 
     <!-- Barra de Busqueda -->
@@ -28,19 +35,21 @@
         <div class="relative flex w-full items-center">
             <span class="material-symbols-outlined absolute left-4 text-text-secondary cursor-pointer">Search</span>
             <input
-                class="w-full h-10 rounded-lg bg-surface-dark border-transparent pl-18 pr-4 text-text-light placeholder:text-text-secondary focus:border-primary focus:ring-primary"
+                class="w-full h-10 rounded-lg bg-blanco-puro/85 border border-bordes-primary pl-18 pr-4 text-text-secondary placeholder:text-text-primary focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none"
                 placeholder="Buscar por título o autor" type="search" />
         </div>
     </div>
 
     <!-- Botones de Autenticación -->
-    <div class="flex items-center">
+    <div class="flex items-center gap-2">
         <a routerLink="/auth"
-            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface-dark text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-white/10 transition-colors">
+            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-primary text-primary text-sm font-bold leading-normal tracking-[0.015em] 
+            hover:bg-btn-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-primary-focus active:bg-btn-primary-pressed transition-colors">
             <span class="truncate">Iniciar Sesión</span>
         </a>
         <a routerLink="/auth/registro"
-            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-background-dark text-sm font-bold leading-normal tracking-[0.015em] hover:brightness-110 transition-all">
+            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-secondary text-secondary text-sm font-bold leading-normal tracking-[0.015em]
+            hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-all">
             <span class="truncate">Registrarse</span>
         </a>
     </div>
@@ -59,7 +68,7 @@
 
 <!-- Desplegable Nav en pantalla pequeña -->
 <div #menu id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden" aria-hidden="true">
-    <!-- Backdrop -->
+    <!-- Backdrop (resto pantalla para cierre) -->
     <div #backdrop (click)="onBackdropClick($event)" class="absolute inset-0 bg-black/40"></div>
 
     <!-- Panel (aside) -->

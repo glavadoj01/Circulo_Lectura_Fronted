@@ -3,20 +3,95 @@
 
 /* Variables por defecto (tema oscuro) */
 html[data-theme='dark'] {
-    --bg-primary: #1a1a1a;
-    --text-primary: #ffffff;
-    --color-accent: #tu-color;
-    /* ... más variables */
+    --primary: rgba(124, 92, 255, 1);
+    --secondary: rgba(31, 35, 46, 1);
+    --accent: rgba(83, 109, 254, 1);
+
+    --background-main: rgba(17, 22, 33, 1);
+    --background-element: rgba(26, 32, 44, 1);
+
+    --text-primary: rgba(156, 163, 175, 1);
+    --text-secondary: rgba(107, 114, 128, 1);
+
+    --blanco-puro: rgba(255, 255, 255, 1);
+
+    --bordes-primary: rgba(55, 65, 81, 1);
+
+    --btn-primary: rgba(214, 158, 46, 1);
+    --btn-primary-disabled: rgba(208, 208, 208, 1);
+    --btn-primary-focus: rgba(23, 89, 168, 1);
+    --btn-primary-hover: rgba(25, 118, 210, 1);
+    --btn-primary-pressed: rgba(17, 61, 126, 1);
+
+    --btn-secondary: rgba(255, 255, 255, 0.05);
+    --btn-secondary-disabled: rgba(255, 255, 255, 0.08);
+    --btn-secondary-focus: rgba(255, 255, 255, 0.12);
+    --btn-secondary-hover: rgba(255, 255, 255, 0.15);
+    --btn-secondary-pressed: rgba(255, 255, 255, 0.2);
+
+    --mensaje-confirmacion: rgba(141, 227, 64, 1);
+    --mensaje-error: rgba(225, 45, 57, 1);
 }
 
 /* Sobrescribe para tema claro */
 html[data-theme='light'] {
-    --bg-primary: #ffffff;
-    --text-primary: #000000;
-    --color-accent: #tu-color-claro;
+    --primary: rgba();
+    --secondary: rgba();
+    --accent: rgba();
+
+    --background-main: rgba();
+    --background-element: rgba();
+
+    --text-primary: rgba();
+    --text-secondary: rgba();
+
+    --blanco-puro: rgba();
+
+    --bordes-primary: rgba();
+
+    --btn-primary: rgba();
+    --btn-primary-disabled: rgba();
+    --btn-primary-focus: rgba();
+    --btn-primary-hover: rgba();
+    --btn-primary-pressed: rgba();
+
+    --btn-secondary: rgba();
+    --btn-secondary-disabled: rgba();
+    --btn-secondary-focus: rgba();
+    --btn-secondary-hover: rgba();
+    --btn-secondary-pressed: rgba();
+
+    --mensaje-confirmacion: rgba();
+    --mensaje-error: rgba();
 }
 
-body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+@theme {
+    --color-primary: var(--primary);
+    --color-secondary: var(--secondary);
+    --color-accent: var(--accent);
+
+    --color-background-main: var(--background-main);
+    --color-background-element: var(--background-element);
+
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+
+    --color-blanco-puro: var(--blanco-puro);
+
+    --color-bordes-primary: var(--bordes-primary);
+
+    --color-btn-primary: var(--btn-primary);
+    --color-btn-primary-disabled: var(--btn-primary-disabled);
+    --color-btn-primary-focus: var(--btn-primary-focus);
+    --color-btn-primary-hover: var(--btn-primary-hover);
+    --color-btn-primary-pressed: var(--btn-primary-pressed);
+
+    --color-btn-secondary: var(--btn-secondary);
+    --color-btn-secondary-disabled: var(--btn-secondary-disabled);
+    --color-btn-secondary-focus: var(--btn-secondary-focus);
+    --color-btn-secondary-hover: var(--btn-secondary-hover);
+    --color-btn-secondary-pressed: var(--btn-secondary-pressed);
+
+    --color-mensaje-confirmacion: var(--mensaje-confirmacion);
+    --color-mensaje-error: var(--mensaje-error);
 }

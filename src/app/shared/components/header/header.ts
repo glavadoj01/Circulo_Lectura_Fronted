@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, HostListener, signal, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Theme } from '../../services/theme.js';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-header',
