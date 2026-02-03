@@ -21,7 +21,6 @@ export class Header {
   lastFocused: HTMLElement | null = null;
 
   @ViewChild('openBtn') openBtn!: ElementRef<HTMLButtonElement>;
-  @ViewChild('menu') menu!: ElementRef<HTMLElement>;
   @ViewChild('backdrop') backdrop!: ElementRef<HTMLElement>;
   @ViewChild('panel') panel!: ElementRef<HTMLElement>;
   @ViewChild('closeBtn') closeBtn?: ElementRef<HTMLButtonElement>;
@@ -43,41 +42,20 @@ export class Header {
     this.lastFocused = document.activeElement as HTMLElement;
     this.isMenuOpen.set(true);
 
-    const menuEl = this.menu.nativeElement;
-    const openBtnEl = this.openBtn.nativeElement;
     const panelEl = this.panel.nativeElement;
-
-    menuEl.classList.remove('hidden');
-    menuEl.setAttribute('aria-hidden', 'false');
-    openBtnEl.setAttribute('aria-expanded', 'true');
-
-    // Forzar reflow para asegurar la transición
-    void panelEl.offsetHeight;
-
-    panelEl.classList.remove('translate-x-full');
-    panelEl.classList.add('translate-x-0');
-
     const focusables = this.getFocusable(panelEl);
+
     if (focusables.length) focusables[0].focus();
   }
 
   hideMenu() {
     this.isMenuOpen.set(false);
 
-    const menuEl = this.menu.nativeElement;
-    const openBtnEl = this.openBtn.nativeElement;
     const panelEl = this.panel.nativeElement;
-
-    menuEl.setAttribute('aria-hidden', 'true');
-    openBtnEl.setAttribute('aria-expanded', 'false');
-
-    panelEl.classList.remove('translate-x-0');
-    panelEl.classList.add('translate-x-full');
 
     const handler = (e: TransitionEvent) => {
       if (e.target !== panelEl) return;
       panelEl.removeEventListener('transitionend', handler);
-      menuEl.classList.add('hidden');
       if (this.lastFocused && typeof this.lastFocused.focus === 'function') {
         this.lastFocused.focus();
       }

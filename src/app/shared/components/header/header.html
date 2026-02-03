@@ -33,9 +33,9 @@
     <!-- Barra de Busqueda -->
     <div class="flex-1 px-4 max-h-fit">
         <div class="relative flex w-full items-center">
-            <span class="material-symbols-outlined absolute left-4 text-text-secondary cursor-pointer">Search</span>
+            <span class="material-symbols-outlined absolute left-4 text-text-secondary cursor-pointer">search</span>
             <input
-                class="w-full h-10 rounded-lg bg-blanco-puro/85 border border-bordes-primary pl-18 pr-4 text-text-secondary placeholder:text-text-primary focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none"
+                class="w-full h-10 rounded-lg bg-blanco-puro/85 border border-bordes-primary pl-20 pr-4 text-text-secondary placeholder:text-text-primary focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none"
                 placeholder="Buscar por título o autor" type="search" />
         </div>
     </div>
@@ -43,41 +43,46 @@
     <!-- Botones de Autenticación -->
     <div class="flex items-center gap-2">
         <a routerLink="/auth"
-            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-primary text-primary text-sm font-bold leading-normal tracking-[0.015em] 
+            class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-primary text-primary text-sm font-bold leading-normal tracking-[0.015em] 
             hover:bg-btn-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-primary-focus active:bg-btn-primary-pressed transition-colors">
             <span class="truncate">Iniciar Sesión</span>
         </a>
         <a routerLink="/auth/registro"
-            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-secondary text-secondary text-sm font-bold leading-normal tracking-[0.015em]
+            class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-secondary text-secondary text-sm font-bold leading-normal tracking-[0.015em]
             hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-all">
             <span class="truncate">Registrarse</span>
         </a>
     </div>
 
     <!-- Botones de Tema y Menú Móvil -->
-    <div class="flex items-center">
-        <button #openBtn (click)="toggleMenu()" aria-controls="mobile-menu" aria-expanded="false"
-            class="md:hidden flex items-center justify-center size-10 rounded-lg bg-surface-dark hover:bg-white/10 transition-colors">
-            <span class="material-symbols-outlined text-white">Menu</span>
+    <div class="flex gap-2 items-center">
+        <button #openBtn (click)="toggleMenu()" aria-controls="mobile-menu" [attr.aria-expanded]="isMenuOpen()"
+            class="md:hidden flex items-center justify-center size-10 rounded-lg bg-btn-secondary
+            hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-colors">
+            <span class="material-symbols-outlined text-white">menu</span>
         </button>
-        <button (click)="toggleTheme()" class="btn btn-circle">
-            <img src="luna.svg" alt="Luna" class="size-[1.2em]">
+        <button (click)="toggleTheme()"
+            class="btn btn-circle bg-btn-secondary
+            hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-colors">
+            <img src="/luna.svg" alt="Luna" class="size-[1.2em]">
         </button>
     </div>
 </header>
 
 <!-- Desplegable Nav en pantalla pequeña -->
-<div #menu id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden" aria-hidden="true">
+<div #menu id="mobile-menu" class="fixed inset-0 z-50 md:hidden" [class.hidden]="!isMenuOpen()"
+    [attr.aria-hidden]="!isMenuOpen()">
     <!-- Backdrop (resto pantalla para cierre) -->
     <div #backdrop (click)="onBackdropClick($event)" class="absolute inset-0 bg-black/40"></div>
 
     <!-- Panel (aside) -->
     <aside #panel
-        class="absolute right-0 top-0 h-full w-4/5 max-w-xs bg-surface-dark shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out"
-        role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
+        class="absolute right-0 top-0 h-full w-4/5 max-w-xs bg-background-element shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out"
+        [class.translate-x-0]="isMenuOpen()" [class.translate-x-full]="!isMenuOpen()" role="dialog" aria-modal="true"
+        aria-labelledby="mobile-menu-title">
         <div class="p-4">
             <div class="flex items-center justify-between">
-                <h2 id="mobile-menu-title" class="text-white font-bold">Menú</h2>
+                <h2 id="mobile-menu-title" class="text-blanco-puro font-bold">Menú</h2>
                 <button #closeBtn (click)="hideMenu()" aria-label="Cerrar menú"
                     class="text-text-secondary hover:text-white">
                     ✕
@@ -86,10 +91,11 @@
 
             <nav (click)="onPanelLinkClick($event)" class="mt-4 flex flex-col gap-2">
                 <a routerLink="/catalogos/libros"
-                    class="text-text-light px-2 py-2 rounded hover:bg-white/5">Catálogo</a>
-                <a routerLink="/catalogos/listas" class="text-text-light px-2 py-2 rounded hover:bg-white/5">Listas</a>
+                    class="text-text-primary px-2 py-2 rounded hover:bg-white/5">Catálogo</a>
+                <a routerLink="/catalogos/listas"
+                    class="text-text-primary px-2 py-2 rounded hover:bg-white/5">Listas</a>
                 <a routerLink="/catalogos/eventos"
-                    class="text-text-light px-2 py-2 rounded hover:bg-white/5">Eventos</a>
+                    class="text-text-primary px-2 py-2 rounded hover:bg-white/5">Eventos</a>
             </nav>
         </div>
     </aside>
