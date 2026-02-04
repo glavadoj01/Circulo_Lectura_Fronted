@@ -1,71 +1,76 @@
-<header
-    class="flex items-center gap-3 md:gap-6 whitespace-nowrap border-b border-primary px-4 md:px-6 lg:px-10 py-3 w-full sticky top-0 bg-background-main/80 backdrop-blur-sm z-50">
-    <!-- Logo + Nombre App/Sitio -->
-    <a class="flex items-center gap-3 text-primary hover:opacity-80 transition-opacity" routerLink="/bienvenida"
-        aria-label="Ir a página de bienvenida">
-        <div class="size-8 text-primary">
-            <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 15.5v-2.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v2.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5zm-3.8-1.74c-.59.59-1.54.59-2.12 0L3.4 14.58c-.59-.59-.59-1.54 0-2.12l1.18-1.18c.59-.59 1.54-.59 2.12 0l1.18 1.18c.59.59.59 1.54 0 2.12zm9.18 0c.59.59.59 1.54 0 2.12l-1.18 1.18c-.59.59-1.54.59-2.12 0l-1.18-1.18c-.59-.59-.59-1.54 0-2.12l1.18-1.18c.59-.59 1.54-.59 2.12 0zM12 6.5c-.83 0-1.5-.67-1.5-1.5V2.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v2.5c0 .83-.67 1.5-1.5 1.5z">
-                </path>
-            </svg>
+<header class="w-full border-b border-primary bg-background-main/80 backdrop-blur-sm sticky top-0 z-50">
+    <!-- Contenedor Responsive -->
+    <div class="flex items-center gap-3 md:gap-6 whitespace-nowrap px-4 md:px-6 lg:px-10 py-3">
+        <!-- Logo + Nombre App/Sitio -->
+        <a class="flex items-center gap-3 text-primary hover:opacity-80 transition-opacity" routerLink="/bienvenida"
+            aria-label="Ir a página de bienvenida">
+            <div class="size-8 text-primary">
+                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 15.5v-2.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v2.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5zm-3.8-1.74c-.59.59-1.54.59-2.12 0L3.4 14.58c-.59-.59-.59-1.54 0-2.12l1.18-1.18c.59-.59 1.54-.59 2.12 0l1.18 1.18c.59.59.59 1.54 0 2.12zm9.18 0c.59.59.59 1.54 0 2.12l-1.18 1.18c-.59.59-1.54.59-2.12 0l-1.18-1.18c-.59-.59-.59-1.54 0-2.12l1.18-1.18c.59-.59 1.54-.59 2.12 0zM12 6.5c-.83 0-1.5-.67-1.5-1.5V2.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v2.5c0 .83-.67 1.5-1.5 1.5z">
+                    </path>
+                </svg>
+            </div>
+            <h2 class="hidden sm:block text-primary text-lg font-bold font-display leading-tight tracking-[-0.015em]">
+                Círculo de Lectura</h2>
+        </a>
+
+        <!-- Navegación Desktop -->
+        <nav class="hidden md:flex items-center gap-8 md:flex-1 md:justify-center">
+            <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
+                routerLink="/catalogos/libros" routerLinkActive="!text-accent"
+                [routerLinkActiveOptions]="{ exact: true }">
+                Catálogo
+            </a>
+            <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
+                routerLink="/catalogos/listas" routerLinkActive="!text-accent"
+                [routerLinkActiveOptions]="{ exact: true }">
+                Listas
+            </a>
+            <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
+                routerLink="/catalogos/eventos" routerLinkActive="!text-accent"
+                [routerLinkActiveOptions]="{ exact: true }">
+                Eventos
+            </a>
+        </nav>
+
+        <!-- Barra de Busqueda -->
+        <div class="flex-1 px-4 max-h-fit">
+            <div class="relative flex w-full items-center">
+                <span class="material-symbols-outlined absolute left-4 text-text-secondary cursor-pointer">search</span>
+                <input
+                    class="w-full h-10 rounded-lg bg-blanco-puro/85 border border-bordes-primary pl-20 pr-4 text-text-secondary placeholder:text-text-primary focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none"
+                    placeholder="Buscar por título o autor" type="search" />
+            </div>
         </div>
-        <h2 class="hidden sm:block text-primary text-lg font-bold font-display leading-tight tracking-[-0.015em]">
-            Círculo de Lectura</h2>
-    </a>
 
-    <!-- Navegación Desktop -->
-    <nav class="hidden md:flex items-center gap-8 md:flex-1 md:justify-center">
-        <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
-            routerLink="/catalogos/libros" routerLinkActive="!text-accent" [routerLinkActiveOptions]="{ exact: true }">
-            Catálogo
-        </a>
-        <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
-            routerLink="/catalogos/listas" routerLinkActive="!text-accent" [routerLinkActiveOptions]="{ exact: true }">
-            Listas
-        </a>
-        <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
-            routerLink="/catalogos/eventos" routerLinkActive="!text-accent" [routerLinkActiveOptions]="{ exact: true }">
-            Eventos
-        </a>
-    </nav>
-
-    <!-- Barra de Busqueda -->
-    <div class="flex-1 px-4 max-h-fit">
-        <div class="relative flex w-full items-center">
-            <span class="material-symbols-outlined absolute left-4 text-text-secondary cursor-pointer">search</span>
-            <input
-                class="w-full h-10 rounded-lg bg-blanco-puro/85 border border-bordes-primary pl-20 pr-4 text-text-secondary placeholder:text-text-primary focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none"
-                placeholder="Buscar por título o autor" type="search" />
-        </div>
-    </div>
-
-    <!-- Botones de Autenticación -->
-    <div class="flex items-center gap-2">
-        <a routerLink="/auth"
-            class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-primary text-primary text-sm font-bold leading-normal tracking-[0.015em] 
+        <!-- Botones de Autenticación -->
+        <div class="flex items-center gap-2">
+            <a routerLink="/auth"
+                class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-primary text-primary text-sm font-bold leading-normal tracking-[0.015em] 
             hover:bg-btn-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-primary-focus active:bg-btn-primary-pressed transition-colors">
-            <span class="truncate">Iniciar Sesión</span>
-        </a>
-        <a routerLink="/auth/registro"
-            class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-secondary text-secondary text-sm font-bold leading-normal tracking-[0.015em]
+                <span class="truncate">Iniciar Sesión</span>
+            </a>
+            <a routerLink="/auth/registro"
+                class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-secondary text-secondary text-sm font-bold leading-normal tracking-[0.015em]
             hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-all">
-            <span class="truncate">Registrarse</span>
-        </a>
-    </div>
+                <span class="truncate">Registrarse</span>
+            </a>
+        </div>
 
-    <!-- Botones de Tema y Menú Móvil -->
-    <div class="flex gap-2 items-center">
-        <button #openBtn (click)="toggleMenu()" aria-controls="mobile-menu" [attr.aria-expanded]="isMenuOpen()"
-            class="md:hidden flex items-center justify-center size-10 rounded-lg bg-btn-secondary
+        <!-- Botones de Tema y Menú Móvil -->
+        <div class="flex gap-2 items-center">
+            <button #openBtn (click)="toggleMenu()" aria-controls="mobile-menu" [attr.aria-expanded]="isMenuOpen()"
+                class="md:hidden flex items-center justify-center size-10 rounded-lg bg-btn-secondary
             hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-colors">
-            <span class="material-symbols-outlined text-white">menu</span>
-        </button>
-        <button (click)="toggleTheme()"
-            class="btn btn-circle bg-btn-secondary
+                <span class="material-symbols-outlined text-white">menu</span>
+            </button>
+            <button (click)="toggleTheme()"
+                class="btn btn-circle bg-btn-secondary
             hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-colors">
-            <img src="/luna.svg" alt="Luna" class="size-[1.2em]">
-        </button>
+                <img src="/luna.svg" alt="Luna" class="size-[1.2em]">
+            </button>
+        </div>
     </div>
 </header>
 
