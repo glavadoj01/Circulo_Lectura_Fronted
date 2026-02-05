@@ -1,10 +1,11 @@
 import { Component, ElementRef, ViewChild, HostListener, signal, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Theme } from '@sharedServices/theme';
+import { SearchBar } from '@sharedComponents/searchBar/searchBar';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule],
+  imports: [RouterModule, SearchBar],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })

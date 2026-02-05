@@ -7,6 +7,7 @@
     "paths": {
         "@app/*": ["app/*"],
         "@sharedServices/*": ["app/shared/services/*"],
+        "@sharedComponents/*": ["app/shared/components/*"],
     },
     "outDir": "./out-tsc/app",
     "types": [],

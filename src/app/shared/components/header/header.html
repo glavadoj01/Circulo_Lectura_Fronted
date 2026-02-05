@@ -1,6 +1,6 @@
 <header class="w-full border-b border-primary bg-background-main/80 backdrop-blur-sm sticky top-0 z-50">
     <!-- Contenedor Responsive -->
-    <div class="flex items-center gap-3 md:gap-6 whitespace-nowrap px-4 md:px-6 lg:px-10 py-3">
+    <div class="flex items-center justify-between gap-3 md:gap-6 whitespace-nowrap px-4 md:px-6 lg:px-10 py-3">
         <!-- Logo + Nombre App/Sitio -->
         <a class="flex items-center gap-3 text-primary hover:opacity-80 transition-opacity" routerLink="/bienvenida"
             aria-label="Ir a página de bienvenida">
@@ -16,7 +16,7 @@
         </a>
 
         <!-- Navegación Desktop -->
-        <nav class="hidden md:flex items-center gap-8 md:flex-1 md:justify-center">
+        <nav class="hidden md:flex items-center gap-8">
             <a class="text-secondary text-sm font-medium leading-normal hover:text-primary transition-colors"
                 routerLink="/catalogos/libros" routerLinkActive="!text-accent"
                 [routerLinkActiveOptions]="{ exact: true }">
@@ -35,39 +35,33 @@
         </nav>
 
         <!-- Barra de Busqueda -->
-        <div class="flex-1 px-4 max-h-fit">
-            <div class="relative flex w-full items-center">
-                <span class="material-symbols-outlined absolute left-4 text-text-secondary cursor-pointer">search</span>
-                <input
-                    class="w-full h-10 rounded-lg bg-blanco-puro/85 border border-bordes-primary pl-20 pr-4 text-text-secondary placeholder:text-text-primary focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none"
-                    placeholder="Buscar por título o autor" type="search" />
-            </div>
+        <div class="w-1/3">
+            <app-search-bar></app-search-bar>
         </div>
 
-        <!-- Botones de Autenticación -->
+        <!-- Botones de Autenticación, Tema y Menú Móvil -->
         <div class="flex items-center gap-2">
-            <a routerLink="/auth"
-                class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-primary text-primary text-sm font-bold leading-normal tracking-[0.015em] 
-            hover:bg-btn-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-primary-focus active:bg-btn-primary-pressed transition-colors">
+            <a routerLink="/auth" class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 
+                    bg-btn-primary text-primary text-sm font-bold leading-normal tracking-[0.015em] 
+                    hover:bg-btn-primary-hover focus-visible:outline-none focus-visible:ring-2 
+                    focus-visible:ring-btn-primary-focus active:bg-btn-primary-pressed transition-colors">
                 <span class="truncate">Iniciar Sesión</span>
             </a>
-            <a routerLink="/auth/registro"
-                class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-btn-secondary text-secondary text-sm font-bold leading-normal tracking-[0.015em]
-            hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-all">
+            <a routerLink="/auth/registro" class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 
+                    bg-btn-secondary text-secondary text-sm font-bold leading-normal tracking-[0.015em]
+                    hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 
+                    focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-all">
                 <span class="truncate">Registrarse</span>
             </a>
-        </div>
-
-        <!-- Botones de Tema y Menú Móvil -->
-        <div class="flex gap-2 items-center">
             <button #openBtn (click)="toggleMenu()" aria-controls="mobile-menu" [attr.aria-expanded]="isMenuOpen()"
                 class="md:hidden flex items-center justify-center size-10 rounded-lg bg-btn-secondary
-            hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-colors">
+                    hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 
+                    focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-colors">
                 <span class="material-symbols-outlined text-white">menu</span>
             </button>
-            <button (click)="toggleTheme()"
-                class="btn btn-circle bg-btn-secondary
-            hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-colors">
+            <button (click)="toggleTheme()" class="btn btn-circle bg-btn-secondary ml-5
+                    hover:bg-btn-secondary-hover focus-visible:outline-none focus-visible:ring-2 
+                    focus-visible:ring-btn-secondary-focus active:bg-btn-secondary-pressed transition-colors">
                 <img src="/luna.svg" alt="Luna" class="size-[1.2em]">
             </button>
         </div>
