@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LibroApp } from '@app/interfaces/modelosApp/modelosApp';
+import { environment } from '@app/environments/environments';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,7 +11,8 @@ export class ObtenerLibro {
     constructor(private http: HttpClient) {}
 
     getLibroPorId(id: number): Observable<LibroApp> {
-        // Cambia la URL por la de tu backend real
-        return this.http.get<LibroApp>(`/api/libros/${id}`);
+        const url = `${environment.apiUrl}${environment.servidor}:${environment.puerto}/libros/${id}`;
+        console.log('URL para obtener libro:', url);
+        return this.http.get<LibroApp>(url);
     }
 }

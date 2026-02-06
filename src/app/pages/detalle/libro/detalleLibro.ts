@@ -18,11 +18,20 @@ export class DetalleLibro {
     // Efecto reactivo para obtener la id y pedir el libro
     constructor() {
         effect(() => {
-            const id = Number(this.route.snapshot.paramMap.get('id'));
-            if (id) {
+            const idParam = this.route.snapshot.paramMap.get('id');
+            const id = idParam ? Number(idParam) : null;
+            console.log('ID leído de la ruta:', id);
+            if (id && !isNaN(id) && id > 0) {
                 this.libroService.getLibroPorId(id).subscribe((data) => {
-                    this.libro.set(data);
+                    const libro: LibroApp = {
+                        ...data,
+                        autores: data.autores?.map((a: any) => a.nombre_autor),
+                        generos: data.generos?.map((g: any) => g.nombre),
+                    };
+                    this.libro.set(libro);
                 });
+            } else {
+                console.error('ID inválido:', id);
             }
         });
     }
