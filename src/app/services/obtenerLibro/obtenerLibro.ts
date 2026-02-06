@@ -11,7 +11,7 @@ export class ObtenerLibro {
     constructor(private http: HttpClient) {}
 
     getLibroPorId(id: number): Observable<LibroApp> {
-        const url = `${environment.apiUrl}${environment.servidor}:${environment.puerto}/libros/${id}`;
+        const url = `${environment.apiUrl}${environment.servidor}:${environment.puerto}/libro/${id}`;
         console.log('URL para obtener libro:', url);
         return this.http.get<LibroApp>(url);
     }
