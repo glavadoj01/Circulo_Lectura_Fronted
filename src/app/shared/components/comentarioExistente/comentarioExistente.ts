@@ -6,12 +6,11 @@ import { ServicioUsuario } from '@services/servicioUsuario/servicioUsuario';
     selector: 'app-comentario-existente',
     imports: [],
     templateUrl: './comentarioExistente.html',
-    styleUrl: './comentarioExistente.css',
 })
 export class ComentarioExistente {
     @Input() critica!: Partial<LibroCritica>;
-    usuarioNombre = signal<string>('');
-    intervaloT = signal<string>('');
+    usuarioNombre: string = '';
+    intervaloT: string = '';
 
     constructor(private ServicioUsuario: ServicioUsuario) {
         effect(() => {
@@ -25,14 +24,14 @@ export class ComentarioExistente {
                 ).subscribe((data: any) => {
                     // Si la respuesta es un array, toma el primer elemento
                     if (Array.isArray(data) && data.length > 0) {
-                        this.usuarioNombre.set(data[0].nombre_usuario);
+                        this.usuarioNombre = data[0].nombre_usuario;
                     } else if (data && data.nombre_usuario) {
-                        this.usuarioNombre.set(data.nombre_usuario);
+                        this.usuarioNombre = data.nombre_usuario;
                     } else {
-                        this.usuarioNombre.set('Desconocido');
+                        this.usuarioNombre = 'Desconocido';
                     }
                 });
-                this.intervaloT.set(this.calcularIntervaloTiempo(critica.fecha_critica));
+                this.intervaloT = this.calcularIntervaloTiempo(critica.fecha_critica);
             }
         });
     }
@@ -44,7 +43,7 @@ export class ComentarioExistente {
             fechaConvertida = fecha;
         } else if (typeof fecha === 'string') {
             fechaConvertida = new Date(fecha.trim());
-            if (!isNaN(fechaConvertida.getTime())) {
+            if (isNaN(fechaConvertida.getTime())) {
                 return 'Fecha inválida';
             }
         } else {
@@ -61,6 +60,12 @@ export class ComentarioExistente {
         if (diferenciaHoras < 24)
             return `Hace ${diferenciaHoras} hora${diferenciaHoras > 1 ? 's' : ''}`;
         const diferenciaDias = Math.floor(diferenciaHoras / 24);
-        return `Hace ${diferenciaDias} día${diferenciaDias > 1 ? 's' : ''}`;
+        if (diferenciaDias < 30)
+            return `Hace ${diferenciaDias} día${diferenciaDias > 1 ? 's' : ''}`;
+        const diferenciaMeses = Math.floor(diferenciaDias / 30);
+        if (diferenciaMeses < 12)
+            return `Hace ${diferenciaMeses} mes${diferenciaMeses > 1 ? 'es' : ''}`;
+        const diferenciaAños = Math.floor(diferenciaMeses / 12);
+        return `Hace ${diferenciaAños} año${diferenciaAños > 1 ? 's' : ''}`;
     }
 }

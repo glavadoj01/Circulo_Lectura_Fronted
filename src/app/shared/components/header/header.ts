@@ -7,7 +7,6 @@ import { SearchBar } from '@sharedComponents/searchBar/searchBar';
     selector: 'app-header',
     imports: [RouterModule, SearchBar],
     templateUrl: './header.html',
-    styleUrl: './header.css',
 })
 export class Header {
     //Injección y uso del servicio Tema Claro/Oscuro

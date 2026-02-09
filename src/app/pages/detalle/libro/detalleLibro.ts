@@ -10,12 +10,11 @@ import { ComentarioExistente } from '@app/shared/components/comentarioExistente/
     selector: 'app-libro-detalle',
     imports: [ComentarioNuevo, ComentarioExistente],
     templateUrl: './detalleLibro.html',
-    styleUrl: './detalleLibro.css',
 })
 export class DetalleLibro {
-    libro = signal<LibroApp | null>(null);
-    notasIndividuales = signal<{ nota: number; cantidad: number; frecuencia: number }[]>([]);
-    criticas = signal<Partial<LibroCritica>[]>([]);
+    libro: LibroApp | null = null;
+    notasIndividuales: { nota: number; cantidad: number; frecuencia: number }[] = [];
+    criticas: Partial<LibroCritica>[] = [];
 
     @ViewChild('ENVIAR') enviarBtn!: ElementRef<HTMLButtonElement>;
     @ViewChild('selectorIrA') selectorIrA!: ElementRef<HTMLInputElement>;
@@ -55,7 +54,7 @@ export class DetalleLibro {
                     calificacionPromedio:
                         parseFloat(libroData.calificacionPromedio).toFixed(2) || 0,
                 };
-                this.libro.set(libro);
+                this.libro = libro;
             });
         } else {
             console.error('ID inválido:', id);
@@ -65,14 +64,14 @@ export class DetalleLibro {
     obtenerCriticas(id: number | null) {
         if (id && !isNaN(id) && id > 0) {
             this.libroService.getCriticasPorIdLibro(id).subscribe((data: RespuestaCriticas) => {
-                this.criticas.set(data.criticas);
+                this.criticas = data.criticas;
                 const total = data.criticas.length;
                 const notas = data.frecuencias.map((cantidad, nota) => ({
                     nota,
                     cantidad,
                     frecuencia: total > 0 ? Number(((cantidad * 100) / total).toFixed(2)) : 0,
                 }));
-                this.notasIndividuales.set(notas);
+                this.notasIndividuales = notas.sort((a, b) => b.nota - a.nota);
             });
         } else {
             console.error('ID inválido para obtener notas individuales:', id);

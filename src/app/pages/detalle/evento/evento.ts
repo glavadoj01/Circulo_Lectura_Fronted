@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-evento',
-  imports: [],
-  templateUrl: './evento.html',
-  styleUrl: './evento.css'
+    selector: 'app-evento',
+    imports: [],
+    templateUrl: './evento.html',
 })
-export class Evento {
-
-}
+export class Evento {}

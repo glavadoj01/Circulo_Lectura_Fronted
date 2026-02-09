@@ -38,27 +38,27 @@
                 <div class="flex min-w-72 flex-col gap-2">
                     <p #tituloLibro
                         class="text-black dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">
-                        {{libro()?.titulo_libro || "Autor no encontrado"}}</p>
+                        {{libro?.titulo_libro || "Autor no encontrado"}}</p>
                     <p #autorLibro class="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal">
-                        {{libro()?.autores?.join("; ") || "Autor Desconocido / Anonimo"}}</p>
+                        {{libro?.autores?.join("; ") || "Autor Desconocido / Anonimo"}}</p>
                 </div>
                 <!-- Calificación y total Reseñas -->
                 <div class="flex flex-wrap items-center gap-2 text-gray-400 dark:text-gray-500">
                     <span class="flex items-center gap-1 text-yellow-400 dark:text-yellow-500">
                         <span class="material-symbols-outlined text-base">star</span>
-                        <span class="font-bold text-sm">{{libro()?.calificacionPromedio || "N/A"}}</span>
+                        <span class="font-bold text-sm">{{libro?.calificacionPromedio || "N/A"}}</span>
                     </span>
                     <span>·</span>
                     <span class="text-sm">{{
-                        libro()?.totalResenas! === 0 ? ' Sín Reseñas'
-                        : libro()?.totalResenas! === 1 ? libro()?.totalResenas + ' reseña'
-                        : libro()?.totalResenas + ' reseñas'
+                        libro?.totalResenas! === 0 ? ' Sín Reseñas'
+                        : libro?.totalResenas! === 1 ? libro?.totalResenas + ' reseña'
+                        : libro?.totalResenas + ' reseñas'
                         }}
                     </span>
                 </div>
                 <!-- Descripción -->
                 <div class="text-gray-700 dark:text-gray-300 text-base leading-relaxed space-y-4">
-                    <p>{{libro()?.sinopsis}}</p>
+                    <p>{{libro?.sinopsis}}</p>
                 </div>
                 <!-- Detalles -->
                 <div class="border-t border-white/10 pt-4 mt-2">
@@ -66,11 +66,11 @@
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm">
                         <div class="flex flex-col"><span
                                 class="font-semibold text-gray-500 dark:text-gray-400">Género</span> <span
-                                class="text-gray-700 dark:text-gray-300">{{libro()?.generos?.join("; ") ||
+                                class="text-gray-700 dark:text-gray-300">{{libro?.generos?.join("; ") ||
                                 "N/A"}}</span></div>
                         <div class="flex flex-col"><span
                                 class="font-semibold text-gray-500 dark:text-gray-400">Publicado</span>
-                            <span class="text-gray-700 dark:text-gray-300">{{libro()?.year_publicacion || "N/A"}}</span>
+                            <span class="text-gray-700 dark:text-gray-300">{{libro?.year_publicacion || "N/A"}}</span>
                         </div>
                         <div class="flex flex-col"><span
                                 class="font-semibold text-gray-500 dark:text-gray-400">Editorial</span>
@@ -78,14 +78,14 @@
                         </div>
                         <div class="flex flex-col"><span
                                 class="font-semibold text-gray-500 dark:text-gray-400">Páginas</span> <span
-                                class="text-gray-700 dark:text-gray-300">{{libro()?.paginas || "N/A"}}</span></div>
+                                class="text-gray-700 dark:text-gray-300">{{libro?.paginas || "N/A"}}</span></div>
                         <div class="flex flex-col"><span class="font-semibold text-gray-500 dark:text-gray-400">Idioma
-                                Original</span> <span
-                                class="text-gray-700 dark:text-gray-300">{{libro()?.idioma_original || "N/A"}}</span>
+                                Original</span> <span class="text-gray-700 dark:text-gray-300">{{libro?.idioma_original
+                                || "N/A"}}</span>
                         </div>
                         <div class="flex flex-col"><span
                                 class="font-semibold text-gray-500 dark:text-gray-400">ISBN</span> <span
-                                class="text-gray-700 dark:text-gray-300">{{libro()?.codigo_isbn || "N/A"}}</span></div>
+                                class="text-gray-700 dark:text-gray-300">{{libro?.codigo_isbn || "N/A"}}</span></div>
                     </div>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                 <!-- Resumen Principal -->
                 <div class="flex flex-col gap-2 items-center md:items-start">
                     <p class="text-black dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
-                        {{libro()?.calificacionPromedio || "N/A"}}</p>
+                        {{libro?.calificacionPromedio || "N/A"}}</p>
                     <div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
                         <span class="material-symbols-outlined">star</span>
                         <span class="material-symbols-outlined">star</span>
@@ -110,15 +110,16 @@
                         <span class="material-symbols-outlined">star_half</span>
                     </div>
                     <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal">{{
-                        libro()?.totalResenas! === 0 ? ' Sín Reseñas'
-                        : libro()?.totalResenas! === 1 ? libro()?.totalResenas + ' reseña'
-                        : libro()?.totalResenas + ' reseñas'
+                        libro?.totalResenas! === 0 ? ' Sín Reseñas'
+                        : libro?.totalResenas! === 1 ? libro?.totalResenas + ' reseña'
+                        : libro?.totalResenas + ' reseñas'
                         }}
                     </p>
                 </div>
                 <!-- Estadisticas por Nota -->
                 <div class="grid min-w-50 max-w-100 flex-1 grid-cols-[20px_1fr_110px] items-center gap-y-2">
-                    @for (nota of notasIndividuales(); track nota.nota) {
+                    @for (nota of notasIndividuales; track nota.nota) {
+                    @if (nota.nota > 0) {
                     <p class="text-black dark:text-white text-sm font-normal leading-normal">
                         {{nota.nota}}
                     </p>
@@ -128,6 +129,7 @@
                     <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal text-right">
                         {{nota.frecuencia}}% - Total: {{nota.cantidad}}</p>
                     }
+                    }
                 </div>
 
             </div>
@@ -135,59 +137,9 @@
             <app-comentario-nuevo></app-comentario-nuevo>
             <!-- Existing Reviews List -->
             <div class="flex flex-col gap-6">
-                @for (critica of criticas(); track critica.id_usuario) {
+                @for (critica of criticas; track critica.id_usuario) {
                 <app-comentario-existente [critica]="critica"></app-comentario-existente>
                 }
-                <!--                 
-                <div class="flex flex-col gap-4 p-6 border border-gray-200 dark:border-white/10 rounded-xl">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                            data-alt="Avatar of user Carlos Sánchez"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmczh5KSzL9J2A_YyRnxGDJibuwEsOgI23gyPyF4XQhe0gZ3GkXpA__-77e_yH_ecOlu9eAPh1Ex_yzcMfhhVtE5YOVbg5SqWeiUBcrjdWY2KzvnjdbTMuR4SRVYgkiDiulMfeV5TmjpR5_9dB9FKYXta5vTqDqmnsD5wqv2Oa1hXV3YbS60kshREqXANfLYtLGCRVl4Cs5A73eI0FiuF7E25lVEcJNif0dL_RPR9UiWHsJp_pC7QbTiewyRlwf8UNDXFPnOMB-Q");'>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-semibold text-black dark:text-white">Carlos Sánchez</p>
-                            <div class="flex items-center gap-2">
-                                <div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">hace 2 semanas</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Una obra maestra
-                        absoluta. La construcción del mundo es increíble y el personaje de Kvothe es uno de
-                        los más fascinantes que he leído en años. No puedo esperar a la continuación.</p>
-                </div>
-                <div class="flex flex-col gap-4 p-6 border border-gray-200 dark:border-white/10 rounded-xl">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                            data-alt="Avatar of user Laura Fernandez"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDSjIeuUcO_oT0IBEoVI7iBmIIsDePP8nJXuWeIscyu28hUfwGSoceaVzNuQYGB9Eyl1wNtt0rcPPLeELH7jwwQiwzSQr5GWTfwYKVjM0aaZgeEtRG2FegLfnTN_4LWV03oRj0ztHEHuasCmMFaZICYAFD5cFDXPdfThYIm2mq1mnEdIYeNxI-VHHPwMQUgiu2y-_ASVmL8hFucX_cic4vekD0F8EzxHKktb8p-Ni-w2FQ-rub4KSg-ewZ1qXV7N8FqfXKOM42cMw");'>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-semibold text-black dark:text-white">Laura Fernandez</p>
-                            <div class="flex items-center gap-2">
-                                <div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                    <span class="material-symbols-outlined text-base!">star</span>
-                                    <span class="material-symbols-outlined text-base! text-gray-400 dark:text-gray-600"
-                                        style="font-variation-settings: 'FILL' 0;">star</span>
-                                </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">hace 1 mes</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Me ha encantado la
-                        prosa de Rothfuss, es pura poesía. La historia es envolvente, aunque a veces el
-                        ritmo puede ser un poco lento para mi gusto. Aun así, totalmente recomendable.</p>
-                </div> -->
             </div>
         </section>
     </div>

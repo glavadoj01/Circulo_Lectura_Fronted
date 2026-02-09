@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-listas',
-  imports: [],
-  templateUrl: './listas.html',
-  styleUrl: './listas.css'
+    selector: 'app-listas',
+    imports: [],
+    templateUrl: './listas.html',
 })
-export class Listas {
-
-}
+export class Listas {}

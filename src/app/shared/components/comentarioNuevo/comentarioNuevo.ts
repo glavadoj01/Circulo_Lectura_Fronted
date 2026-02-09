@@ -4,6 +4,5 @@ import { Component } from '@angular/core';
     selector: 'app-comentario-nuevo',
     imports: [],
     templateUrl: './comentarioNuevo.html',
-    styleUrl: './comentarioNuevo.css',
 })
 export class ComentarioNuevo {}
