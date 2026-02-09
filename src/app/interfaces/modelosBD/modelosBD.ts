@@ -4,11 +4,15 @@
 
 // Entidades Fuertes
 export interface UsuarioBD {
-    id_usuario: number;
+    id_usuario: NombreUsuario;
     nombre_usuario: string;
     nombre_real: string;
     apellido?: string;
     esAdministrador: boolean; // 0: No, 1: Mod, 2: Admin
+}
+
+export interface NombreUsuario {
+    nombre_usuario: string;
 }
 
 export interface LibroBD {
@@ -101,6 +105,7 @@ export interface LibroCritica {
     titulo_critica?: string;
     texto_critica?: string;
     calificacion_libro: number; // 0-5
+    fecha_critica: Date | string;
 }
 
 // Relación F: Lista-Comentario

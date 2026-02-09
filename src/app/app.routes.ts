@@ -17,7 +17,11 @@ export const routes: Routes = [
     { path: 'detalle/evento', component: Evento },
     { path: 'detalle/libro/:id', component: DetalleLibro },
     { path: 'detalle/lista', component: Lista },
-    { path: '', redirectTo: 'bienvenida', pathMatch: 'full' } /* Ruta por defecto www.webapp.es */,
+    {
+        path: '',
+        redirectTo: 'detalle/libro/1',
+        pathMatch: 'full',
+    } /* Ruta por defecto www.webapp.es */,
     {
         path: '**',
         redirectTo: 'bienvenida',

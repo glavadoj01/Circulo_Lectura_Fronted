@@ -1,5 +1,4 @@
 export const environment = {
-    servidor: 'localhost',
+    apiUrl: 'http://192.168.0.19',
     puerto: '3000',
-    apiUrl: 'http://',
 };

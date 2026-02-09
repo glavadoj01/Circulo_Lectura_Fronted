@@ -1,3 +1,11 @@
 {
-  "css.validate": false
+    "css.validate": false,
+    "angular-schematics.schematicsDefaultOptions": {
+        "angular-component": {
+            "skipChangeDetectionOnPush": true
+        },
+        "angular-*": {
+            "externalTemplate": true
+        }
+    }
 }
