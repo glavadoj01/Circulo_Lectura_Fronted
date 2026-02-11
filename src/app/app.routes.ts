@@ -17,15 +17,19 @@ export const routes: Routes = [
     { path: 'detalle/evento', component: Evento },
     { path: 'detalle/libro/:id', component: DetalleLibro },
     { path: 'detalle/lista', component: Lista },
+    /* Ruta por defecto www.webapp.es */
     {
         path: '',
-        redirectTo: 'detalle/libro/1',
+        redirectTo: 'bienvenida',
         pathMatch: 'full',
-    } /* Ruta por defecto www.webapp.es */,
+    },
+    /* Ruta para cuando no existe la ruta www.webapp.es/loquesea */
     {
         path: '**',
         redirectTo: 'bienvenida',
-    } /* Ruta para cuando no existe la ruta www.webapp.es/loquesea */,
+    },
     /* Realmente la default es redundante, ya que está la cualquiera **; que atraparia la ruta vacia igualmente, 
-        pero se puede aprovechar para incluir algun codigo de error => WIP */
+        pero se puede aprovechar para incluir algun codigo de error
+        => WIP
+    */
 ];

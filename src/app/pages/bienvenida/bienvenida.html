@@ -1,1 +1,178 @@
-<app-search-bar></app-search-bar>
+<main class="layout-content-container flex flex-col w-full max-w-6xl flex-1 px-4 md:px-0 mx-auto">
+    <!-- Sección Mensaje de Bienvenida -->
+    <section class="@container">
+        <div class="py-16 md:py-24">
+            <div class="flex min-h-120 flex-col gap-8 bg-cover bg-center bg-no-repeat @[480px]:rounded-xl items-center justify-center p-4 text-center"
+                data-alt="A cozy library with warm lighting and shelves full of books"
+                style='background-image: linear-gradient(rgba(18, 18, 18, 0.7) 0%, rgba(18, 18, 18, 0.9) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd5SYn9eXRLiKwl8IKNEuo1xk9Xv8czo4Jw0AMmVcdMSoWHIqtRXjS1geORuCJcbBCP-E5oz3n_GbOse-6PpnIpD8XUPAQBt3FgG4AsTTvZJv6YeQOjm13WI9S97J03wrHcpJz5axOBarsv7J6ShDjvtEknkc8cD3HkiyHgTZLPDDRFZ-zWPAzMuQA_hRS94CsU-rr-YqnoT3MqsHKq1UoSF7R4LGjqe4CEkREUtJOp9Y3uy43zB6vWHYQgwbbq62ySM4yRrUFOw");'>
+                <div class="flex flex-col gap-2">
+                    <h1
+                        class="font-serif text-white text-4xl font-bold leading-tight tracking-tight @[480px]:text-6xl @[480px]:font-bold @[480px]:leading-tight">
+                        Bienvenido a nuestro Círculo de Lectura
+                    </h1>
+                    <h2
+                        class="text-text-light text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-normal max-w-2xl mx-auto">
+                        Un espacio para descubrir, compartir y conectar a través de los libros.
+                    </h2>
+                </div>
+                <div class="w-full max-w-2xl px-4">
+                    <div class="relative flex w-full items-center">
+                        <span class="material-symbols-outlined absolute left-4 text-text-secondary">search</span>
+                        <input
+                            class="w-full h-14 rounded-lg bg-surface-dark border-transparent pl-12 pr-4 text-text-light placeholder:text-text-secondary focus:border-primary focus:ring-primary"
+                            placeholder="Busca tu próxima lectura por título o autor..." type="search" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Novedades y próximos eventos -->
+    <section class="py-10">
+        <h2
+            class="text-white text-[22px] font-serif font-bold leading-tight tracking-[-0.015em] px-4 pb-4 pt-5 md:text-3xl">
+            Novedades y Próximos Encuentros</h2>
+        <div
+            class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+            <div class="flex items-stretch p-4 gap-4">
+                <div
+                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-surface-dark shadow-[0_0_4px_rgba(0,0,0,0.1)] min-w-60 hover:transform hover:-translate-y-1 transition-transform">
+                    <div class="w-full bg-center bg-no-repeat aspect-3/4 bg-cover rounded-t-lg flex flex-col"
+                        data-alt="Book cover of Cien Años de Soledad"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBTovjBm-mdjyAATLqtc1i8VZbPx0xXFuqfMAMKCgg2DjyuPUh_6cqah0UFoSlhMh_LEdz-XO4toWWUrbJv_z3O8J__UmKgoOdgNq_XJ9O2nJZGSnnqf2n2Xy1sfZbZTR_HKTB5BeFKdZI9rWSZDQcWrU5UQPVmNLjidy1diM109PqX85tR1aRQ4OroIYc3PyCsYHj-TMv8N17Q5fEwFGfg_nqXz1lxupUCYpmZcJ8SI3lC061mjH5BLUwhh9XdeIKNX1yGNMMlMg");'>
+                    </div>
+                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                        <div>
+                            <p class="text-white text-base font-bold leading-normal">Cien Años de Soledad
+                            </p>
+                            <p class="text-text-secondary text-sm font-normal leading-normal">Gabriel García
+                                Márquez</p>
+                        </div>
+                        <button
+                            class="flex min-w-21 w-full max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/5 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-white/10 transition-colors">
+                            <span class="truncate">Ver más</span>
+                        </button>
+                    </div>
+                </div>
+                <div
+                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-surface-dark shadow-[0_0_4px_rgba(0,0,0,0.1)] min-w-60 hover:transform hover:-translate-y-1 transition-transform">
+                    <div class="w-full bg-center bg-no-repeat aspect-3/4 bg-cover rounded-t-lg flex flex-col"
+                        data-alt="Promotional image for a literary discussion event"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMUmvFS7STNiz7jKQ2FmF6LJaFIFuu7RPSOSBgkSnEb8H9wlmTR6yrdI8gsHwop4dEUmiKo3Inaly4qlQAh79-shdtvGJdip65bmPSSBzNUOnvPfaJT3CAcTK6blvSfTNRBM_lNBOc6jdOTTlfNCPtMj4Azbs_s8yPCog1rizjIsR1J-xddll6uS2-2N7OpuDQUiFTIgJPmD5257-1gTsafDvcWUdiqfzQMNawTG0F-t9pLPvVIzwbnFC2WWonpfa08r27HgD2vw");'>
+                    </div>
+                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                        <div>
+                            <p class="text-white text-base font-bold leading-normal">Tertulia: El Realismo
+                                Mágico</p>
+                            <p class="text-text-secondary text-sm font-normal leading-normal">Fecha: 25 de
+                                Octubre</p>
+                        </div>
+                        <button
+                            class="flex min-w-21 w-full max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/5 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-white/10 transition-colors">
+                            <span class="truncate">Ver más</span>
+                        </button>
+                    </div>
+                </div>
+                <div
+                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-surface-dark shadow-[0_0_4px_rgba(0,0,0,0.1)] min-w-60 hover:transform hover:-translate-y-1 transition-transform">
+                    <div class="w-full bg-center bg-no-repeat aspect-3/4 bg-cover rounded-t-lg flex flex-col"
+                        data-alt="Book cover of Dune by Frank Herbert"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuBDfauXLJe0h5NzB4Wb6cmMEVAY7brpqTi-r0XqiZiWK3Lm86kJlyik0-DsPcaUrSl9bJgnRhVuYkZQEPPMUqkBsWRAGZopdxdhZO9ji6-tGr_BAXUB-UzQR9cu27QtpAh-pGn2CGs524oOcacKZpgwZxZMfmYOwHm5G0cTWcdkMcFXGcNYIbPqKrOalyyXc6OgkzZbOfagA4t9Enbg5dlV-f4PKRa5mI9v2FIQYV5yDiNIjzBSOFNEJwN407hFSBWE9CYtMncw");'>
+                    </div>
+                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                        <div>
+                            <p class="text-white text-base font-bold leading-normal">Dune</p>
+                            <p class="text-text-secondary text-sm font-normal leading-normal">Frank Herbert
+                            </p>
+                        </div>
+                        <button
+                            class="flex min-w-21 w-full max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/5 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-white/10 transition-colors">
+                            <span class="truncate">Ver más</span>
+                        </button>
+                    </div>
+                </div>
+                <div
+                    class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-surface-dark shadow-[0_0_4px_rgba(0,0,0,0.1)] min-w-60 hover:transform hover:-translate-y-1 transition-transform">
+                    <div class="w-full bg-center bg-no-repeat aspect-3/4 bg-cover rounded-t-lg flex flex-col"
+                        data-alt="Photo of author Isabel Allende"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvFNQQjGoKpiZidjh_Tadi53Lw8m7wxJ_SoCC7h9CMzkPxiXCYXLjTgITkonNciwv_320lgcaF1-_km1Uqu1VO4UnHF9w9I2JzfC8jjJtCcm3metL2y0qmkIUv3dyY1Va-fUWMv3sdOEjhPq0n_QlxLKUGhmvXFgRO2tMawkfI1pMKSpdWNfHPzRAbwdl8SECaZgC0N7TFreNqZizN-PqaIReTX7sdTewLGVKRgU_FjiJkjy70kbxZzCIPg48v1LbYI1qS2DzGWg");'>
+                    </div>
+                    <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                        <div>
+                            <p class="text-white text-base font-bold leading-normal">Encuentro con Autor:
+                                Isabel Allende</p>
+                            <p class="text-text-secondary text-sm font-normal leading-normal">Fecha: 15 de
+                                Noviembre</p>
+                        </div>
+                        <button
+                            class="flex min-w-21 w-full max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white/5 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-white/10 transition-colors">
+                            <span class="truncate">Ver más</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Nosotros -->
+    <section class="flex flex-col gap-10 px-4 py-16 @container">
+        <div class="flex flex-col gap-4">
+            <h1 class="font-serif text-white text-[32px] font-bold leading-tight @[480px]:text-4xl max-w-180">
+                Sobre Nosotros
+            </h1>
+            <p class="text-text-light text-base font-normal leading-normal max-w-180">
+                Nuestra misión es crear una comunidad vibrante donde los amantes de la lectura puedan
+                descubrir nuevas obras, compartir perspectivas y participar en eventos enriquecedores.
+            </p>
+        </div>
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4 p-0">
+            <div class="flex flex-1 gap-3 rounded-lg border border-surface-dark bg-surface-dark p-4 flex-col">
+                <div class="text-primary">
+                    <span class="material-symbols-outlined" style="font-size: 32px;">auto_stories</span>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-white text-lg font-bold leading-tight font-display">Descubre Nuevos
+                        Libros</h2>
+                    <p class="text-text-secondary text-sm font-normal leading-normal">Accede a un catálogo
+                        curado y recomendaciones personalizadas.</p>
+                </div>
+            </div>
+            <div class="flex flex-1 gap-3 rounded-lg border border-surface-dark bg-surface-dark p-4 flex-col">
+                <div class="text-primary">
+                    <span class="material-symbols-outlined" style="font-size: 32px;">groups</span>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-white text-lg font-bold leading-tight font-display">Conecta con Lectores
+                    </h2>
+                    <p class="text-text-secondary text-sm font-normal leading-normal">Únete a debates y
+                        comparte tus opiniones con otros apasionados.</p>
+                </div>
+            </div>
+            <div class="flex flex-1 gap-3 rounded-lg border border-surface-dark bg-surface-dark p-4 flex-col">
+                <div class="text-primary">
+                    <span class="material-symbols-outlined" style="font-size: 32px;">event</span>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-white text-lg font-bold leading-tight font-display">Participa en Eventos
+                    </h2>
+                    <p class="text-text-secondary text-sm font-normal leading-normal">Asiste a tertulias,
+                        encuentros con autores y talleres exclusivos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- No nos mires => ¡Uneté! -->
+    <section class="my-16">
+        <div class="flex flex-col items-center justify-center gap-6 rounded-xl bg-surface-dark px-6 py-12 text-center">
+            <h2 class="font-serif text-3xl font-bold text-white">Únete a Nuestra Comunidad</h2>
+            <p class="max-w-xl text-text-light">Forma parte de nuestro círculo, comparte tus lecturas
+                favoritas y no te pierdas ninguno de nuestros eventos. ¡El próximo libro te está esperando!
+            </p>
+            <button
+                class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-background-dark text-base font-bold leading-normal tracking-[0.015em] hover:brightness-110 transition-all">
+                <span class="truncate">Regístrate ahora</span>
+            </button>
+        </div>
+    </section>
+</main>

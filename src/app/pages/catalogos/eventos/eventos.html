@@ -1,1 +1,159 @@
-<p>eventos works!</p>
+<h2>Eventos Placeholder - WIP</h2>
+<div class="flex flex-col gap-8 mt-8">
+    <!-- Cabecera Catalogo Eventos -->
+    <div class="flex flex-wrap justify-between gap-4 p-4">
+        <div class="flex min-w-72 flex-col gap-3">
+            <p class="text-[#E5E7EB] text-4xl font-black leading-tight tracking-[-0.033em]">Eventos
+                del Círculo</p>
+            <p class="text-[#9CA3AF] text-base font-normal leading-normal">Explora, únete y
+                participa en nuestras próximas discusiones.</p>
+        </div>
+        <button
+            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/90 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors">
+            <span class="truncate">Crear Evento</span>
+        </button>
+    </div>
+    <!-- Barra de busqueda Eventos -->
+    <div class="px-4 py-3">
+        <label class="flex flex-col min-w-40 h-12 w-full">
+            <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                <div
+                    class="text-[#9CA3AF] flex border-none bg-[#1F2937] items-center justify-center pl-4 rounded-l-lg border-r-0">
+                    <span class="material-symbols-outlined" style="font-size: 24px;">search</span>
+                </div>
+                <input
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#E5E7EB] focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-[#1F2937] focus:border-none h-full placeholder:text-[#9CA3AF] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                    placeholder="Buscar eventos por libro o tema" value="" />
+            </div>
+        </label>
+    </div>
+    <!-- Contenedor Eventos Próximos -->
+    <section class="flex flex-col gap-4">
+        <h2 class="text-[#E5E7EB] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
+            Próximos Eventos</h2>
+        <!-- Evento -->
+        <a routerLink="/detalle/evento">
+            <div class="p-4">
+                <div
+                    class="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-xl bg-[#1F2937] p-6 hover:bg-[#2a3647] transition-colors">
+                    <div class="flex flex-[2_2_0px] flex-col gap-4">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex flex-col items-center justify-center bg-[#121212] p-3 rounded-lg w-16 h-16 text-center">
+                                <span class="text-primary font-bold text-2xl leading-none">25</span>
+                                <span class="text-[#9CA3AF] text-xs uppercase tracking-wider">OCT</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-[#E5E7EB] text-xl font-bold leading-tight">Debate sobre
+                                    'Cien años de soledad'</p>
+                                <p class="text-[#9CA3AF] text-sm font-normal leading-normal">
+                                    Exploraremos el realismo mágico y el legado de la familia Buendía en
+                                    la obra maestra de García Márquez.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6 mt-2">
+                            <button
+                                class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/20 text-primary hover:bg-primary/30 text-sm font-medium leading-normal gap-2 transition-colors">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">event_available</span>
+                                <span class="truncate">Asistiré</span>
+                            </button>
+                            <div class="flex items-center gap-2 text-[#9CA3AF]">
+                                <span class="material-symbols-outlined" style="font-size: 20px;">groups</span>
+                                <span class="text-sm font-medium">18 Asistentes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full sm:w-40 bg-center bg-no-repeat aspect-2/3 bg-cover rounded-lg shrink-0"
+                        data-alt="Book cover of 'One Hundred Years of Solitude'"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD0KZ1KYV3g7vrWYfr8CeObNWgGvweyB030NUdAOI6jLC_VCvp1hf0427a6IG64ocMACtqiFUBvnoWC0YvgY505W6JilawM1ya0v-u7O73EhD489xJAeTPY0RpBbhaB3cKtKRr6jgSdZqn0jzsz86VHCfsXAQBMOaRwvRI49qONO6IAeMJOzVfaoQTI1XG3VPFplsGkCQN783UhbGsQHIbyEJb2nJAzvHFrkUI08se8X5gwjwFUIgH6pgrY_AF2HJF7xtFyfXr3-w");'>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <!-- Evento -->
+        <a routerLink="/detalle/evento">
+            <div class="p-4">
+                <div
+                    class="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-xl bg-[#1F2937] p-6 hover:bg-[#2a3647] transition-colors">
+                    <div class="flex flex-[2_2_0px] flex-col gap-4">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex flex-col items-center justify-center bg-[#121212] p-3 rounded-lg w-16 h-16 text-center">
+                                <span class="text-primary font-bold text-2xl leading-none">12</span>
+                                <span class="text-[#9CA3AF] text-xs uppercase tracking-wider">NOV</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-[#E5E7EB] text-xl font-bold leading-tight">Análisis de
+                                    'Frankenstein' de Mary Shelley</p>
+                                <p class="text-[#9CA3AF] text-sm font-normal leading-normal">
+                                    Una inmersión en los temas de la creación, la responsabilidad y la
+                                    humanidad en la novela gótica.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6 mt-2">
+                            <button
+                                class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-[#10B981]/20 text-[#10B981] text-sm font-medium leading-normal gap-2">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">check_circle</span>
+                                <span class="truncate">Confirmado</span>
+                            </button>
+                            <div class="flex items-center gap-2 text-[#9CA3AF]">
+                                <span class="material-symbols-outlined" style="font-size: 20px;">groups</span>
+                                <span class="text-sm font-medium">23 Asistentes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full sm:w-40 bg-center bg-no-repeat aspect-2/3 bg-cover rounded-lg shrink-0"
+                        data-alt="Book cover of 'Frankenstein'"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtTeB0_NKClL5GcWaB1HZ-1v4hFVKDCd2MsekVphj6P8rylB4i8uoSN0HA5MKAOBpRZNxkff2T2cfsT4dSjO3OF71B8C07JQYqxHb6Rn-v1afs2-IewbPqK4kQKs3cJJN31lIgNrZwluUQSBINofqymMHKA_d-KyMnElYgAZnF_liyD7nfzPVMN_Zoe6Q_p2KiASp_VhSpJjiVV_OwJm10t3eqBlNz0Ah4jwUTKNrVr1PIi8tDJ5WjMVNQ9lYJNpUnxY7S9b7mDw");'>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </section>
+    <!-- Contenedor Eventos Pasados -->
+    <section class="flex flex-col gap-4 mt-8">
+        <h2 class="text-[#E5E7EB] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
+            Eventos Pasados</h2>
+        <!-- Evento -->
+        <a routerLink="/detalle/evento">
+            <div class="p-4">
+                <div
+                    class="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-xl bg-[#1F2937]/60 p-6 opacity-70">
+                    <div class="flex flex-[2_2_0px] flex-col gap-4">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="flex flex-col items-center justify-center bg-[#121212] p-3 rounded-lg w-16 h-16 text-center">
+                                <span class="text-primary/70 font-bold text-2xl leading-none">15</span>
+                                <span class="text-[#9CA3AF]/70 text-xs uppercase tracking-wider">SEP</span>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <p class="text-[#E5E7EB]/70 text-xl font-bold leading-tight">Poesía
+                                    moderna: Un recorrido por la Generación del 27</p>
+                                <p class="text-[#9CA3AF]/70 text-sm font-normal leading-normal">
+                                    Revisamos las obras y el contexto de poetas como Lorca, Alberti y
+                                    Cernuda.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6 mt-2">
+                            <button
+                                class="flex min-w-21 max-w-120 cursor-not-allowed items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-white/5 text-white/40 text-sm font-medium leading-normal gap-2">
+                                <span class="truncate">Ver Resumen</span>
+                            </button>
+                            <div class="flex items-center gap-2 text-[#9CA3AF]/70">
+                                <span class="material-symbols-outlined" style="font-size: 20px;">groups</span>
+                                <span class="text-sm font-medium">Asistieron 25 miembros</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full sm:w-40 bg-center bg-no-repeat aspect-2/3 bg-cover rounded-lg shrink-0"
+                        data-alt="Abstract image representing poetry, with ink and paper"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCczpiS25cwfivRPOaPXTaeXAfUMmrE0gDTL9F3ryTywkBVT8A_6cpA21AjBCHylxXNfebt98hxmaWptrEGLlnrV-NLbCzN2Z_4fWn9m3HhFvN9Y3oG7ww0wkc9md-iaGNRgDBAFxA3FMTrfgnZ_2B5G-JaxcPaYlwTBpywq7-3DJWMcGLhxCxQPxee9RsNp32JNRlQt2Ga6HBqCSEjexPEexIrAp_6tC9fcXO9J9LZjY2RKJAO0KgPw3LmmnirSNGDehyx66I_ig");'>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </section>
+</div>
