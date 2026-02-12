@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { SearchBar } from '@app/shared/components/searchBar/searchBar';
 
 @Component({
     selector: 'app-bienvenida',
-    imports: [SearchBar],
+    imports: [],
     templateUrl: './bienvenida.html',
 })
 export class Bienvenida {}
