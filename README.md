@@ -1,59 +1,74 @@
-# CirculoLecturaFronted
+# Circulo Lectura - Fronted
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+Proyecto frontend para el TFC - Círculo de Lectura Local.
 
-## Development server
+## Requisitos mínimos
 
-To start a local development server, run:
+- **Node.js** >= 22.21.1 (recomendado usar Volta para gestionar versiones)
+- **npm** >= 11.6.4
+- **Angular CLI** >= 21
 
-```bash
-ng serve
-```
+## Instalación
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. Instala Node.js y npm (preferentemente usando [Volta](https://volta.sh/)).
+2. Instala Angular CLI globalmente si no lo tienes:
 
-## Code scaffolding
+    ```bash
+    npm install -g @angular/cli@21
+     ```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+3. Instala las dependencias del proyecto:
 
-```bash
-ng generate component component-name
-```
+ ```bash
+ npm install
+ ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Dependencias principales
 
-```bash
-ng generate --help
-```
+- Angular 21
+- TailwindCSS y DaisyUI (para estilos)
+- RxJS
 
-## Building
+## Edición de ficheros/credenciales
 
-To build the project run:
+- Renombra **_environments.ts** a **environments.ts** en `src/app/environments/`.
+- Por defecto, la API está configurada en **<http://localhost:3000>**.
+- Para acceder desde un dispositivo externo en red local, edita **environments.ts** y reemplaza `localhost` por la IP o dominio local del backend (consulta las indicaciones dentro del propio fichero).
 
-```bash
-ng build
-```
+## Uso y Scripts útiles
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- `npm start` o `ng serve`: Inicia el servidor de desarrollo en modo local (por defecto en <http://localhost:4200>).
+- `ng serve --host 0.0.0.0`: Inicia el servidor permitiendo acceso desde otros dispositivos de la red local (requiere configurar la IP en **environments.ts** y en el backend, archivo **.env**).
 
-## Running unit tests
+## Estructura del proyecto
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+El código fuente está organizado en las siguientes carpetas y archivos:
 
-```bash
-ng test
-```
+- **src/app/**
+  - **app.ts, app.routes.ts, app.html, app.config.ts**: Configuración y entrada principal.
+  - **environments/_environments.ts**: Configuración de entornos (versión limpia para compartir y editar).
+  - **pages/**: Páginas de la aplicación.
+    - **auth/**: auth.ts, auth.html, auth.css
+    - **bienvenida/**: bienvenida.ts, bienvenida.html
+    - **perfil/**: perfil.ts, perfil.html
+    - **catalogos/**: libros, listas, eventos (cada uno con sus archivos .ts y .html)
+    - **detalle/**: evento, libro, lista (cada uno con sus archivos .ts y .html)
+  - **services/**: Servicios de la aplicación.
+    - **servicioLibros/servicioLibros.ts**
+    - **servicioUsuario/servicioUsuario.ts**
+    - **themeService/theme.ts**
+  - **shared/components/**: Componentes reutilizables.
+    - **comentarioExistente/**: comentarioExistente.ts, comentarioExistente.html
+    - **comentarioNuevo/**: comentarioNuevo.ts, comentarioNuevo.html
+    - **footer/**: footer.ts, footer.html
+    - **header/**: header.ts, header.html
+    - **searchBar/**: searchBar.ts, searchBar.html, searchBar.css
+  - **interfaces/**: Modelos de datos.
+    - **modelosApp/modelosApp.ts**
+    - **modelosBD/modelosBD.ts**
 
-## Running end-to-end tests
+## Recursos adicionales
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Para más información sobre Angular CLI, visitar la [documentación oficial](https://angular.dev/tools/cli).
+- [Repositorio Principal del TFC](https://github.com/glavadoj01/TrabajoFinGradoDAW)
+- [Backend Asociado (NodeJs/Express)](https://github.com/glavadoj01/BackEnd_Circulo_Lectura)
