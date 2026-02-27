@@ -5,10 +5,14 @@
 // Entidades Fuertes
 export interface UsuarioBD {
     id_usuario: number;
-    nombre_usuario: string;
+    nombre_usuario: NombreUsuario;
     nombre_real: string;
     apellido_usuario?: string;
     esAdministrador: boolean; // 0: No, 1: Mod, 2: Admin
+}
+
+export interface NombreUsuario {
+    nombre_usuario: string;
 }
 
 export interface GeneroBD {
