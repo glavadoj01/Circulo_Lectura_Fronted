@@ -109,10 +109,18 @@
             <div class="flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center gap-4 mb-6">
                 <div class="flex min-w-72 flex-col gap-1">
                     <p class="text-gray-900 dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">
-                        Explora nuestra Biblioteca</p>
+                        Explora nuestra Biblioteca
+                    </p>
                     <p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">
-                        Mostrando
-                        12 de 248 resultados</p>
+                        @if (!cargando() && !errorCarga()) {
+                        Mostrando {{ primeraPosicionPagina() }}-{{ ultimaPosicionPagina() }} de {{ totalResultados() }}
+                        resultados
+                        } @else if (cargando()) {
+                        Cargando catalogo...
+                        } @else {
+                        Error cargando el catalogo
+                        }
+                    </p>
                 </div>
                 <div class="flex items-center gap-2">
                     <p class="text-sm text-gray-500 dark:text-gray-400">Ordenar por:</p>
@@ -125,312 +133,55 @@
                     </select>
                 </div>
             </div>
+
+            @if (cargando()) {
+            <app-banner-cargando [elemento]="'Catálogo de libros'"></app-banner-cargando>
+            } @else if (errorCarga()) {
+            <app-banner-error [elemento]="'Catálogo de libros'"></app-banner-error>
+            } @else if (librosPagina().length === 0) {
+            <section class="rounded-xl bg-gray-100 dark:bg-white/5 p-6">
+                <h2 class="text-black dark:text-white text-2xl font-bold">Sin libros disponibles</h2>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">No hay resultados para mostrar.</p>
+            </section>
+            } @else {
             <!-- Contenedor CatalogoLibros -->
             <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Libro -->
+                @for (libro of librosPagina(); track libro.id_libro) {
                 <div class="flex flex-col group">
-                    <a routerLink="/detalle/libro/1">
+                    <a [routerLink]="['/detalle/libro', libro.id_libro]">
                         <div
                             class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
                             <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                data-alt="Book cover of Dune"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA13miaF_P1rfWWlnFdI0noPVOGgsvt9LeJJkaDvkdrgIR-jw-HggurbVuZpoYf37FKBTTH6CI43yT9hhmbvBItVClGLWekwk4bov-b1okUi00GviPXXV4EFrd53WSfNhhINbPGG2eoZ9llAq6xqpS73M0h3KIYLPrBYFbzAyQdXaqmTiGPKozoNN8cV7YeMFExfH-gKqlnpf3_x3FH-HGVBFd4jqipzYeAjPc6prg9Hr3bVabo6Uv2Ub24NGjrSXMZO2eIl8ckGw" />
+                                [src]="portadaLibro(libro.id_libro)" [alt]="'Portada de ' + libro.titulo_libro" />
                             <div
                                 class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
+                                <button type="button"
                                     class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
                                         class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-                                <button
+                                <button type="button"
                                     class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
                                         class="material-symbols-outlined text-xl!">visibility</span></button>
                             </div>
                         </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate">Dune</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Frank Herbert</p>
+                        <h3 class="font-bold text-gray-900 dark:text-white truncate">{{ libro.titulo_libro }}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ autorPrincipal(libro) }}</p>
                         <div class="flex items-center gap-1 mt-1 text-yellow-500">
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star_half</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(4.8)</span>
+                            <app-estrellas-puntuacion
+                                [puntuacion]="libro.calificacionPromedio"></app-estrellas-puntuacion>
+                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">({{ puntuacionTexto(libro)
+                                }})</span>
                         </div>
                     </a>
                 </div>
-                <!-- Libro -->
-                <div class="flex flex-col group">
-                    <a routerLink="/detalle/libro/1">
-                        <div
-                            class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
-                            <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                data-alt="Book cover of The Hobbit"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLorX79pUZpXqFKSIOW8BkkFBeVhJCjftClZmfd2Ovm5a5odAkxokrJu1IzED66K0-4_H6bOiHrCrQRSS-Gspsc9ZddWJm8d6NhCI5rAWOC0lMXMAGk9dTvRWHLNcpfQUvZKPgAfQ9h7O_P0nOvQm3FphmLTrOWFIGLUb3MGVNR_RvqwgWFJZb5VRiHavGCPp4aCSnsr1XWHYOmO8N_Xg5GsVRtYeSlfoWD-TVN9J713OInwGc8OaAmdhUkUKOmqmZAJF0z56fvg" />
-                            <div
-                                class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">visibility</span></button>
-                            </div>
-                        </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate">El Hobbit</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">J.R.R. Tolkien</p>
-                        <div class="flex items-center gap-1 mt-1 text-yellow-500">
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span
-                                class="material-symbols-outlined text-base! text-gray-300 dark:text-gray-600">star</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(4.2)</span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Libro -->
-                <div class="flex flex-col group">
-                    <a routerLink="/detalle/libro/1">
-                        <div
-                            class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
-                            <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                data-alt="Book cover of 1984"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiqC3Gw_TExwq0aMg7z5oDfU91HEWcGw3i67OkRSk2iq1vhquHpR2L_UgpfD-2-Ftmxk7VNp9YsmK4lT5vV5tnRfz7_ijq-l8WLCrbCacL-VLnpvyV_M6EAzBuko01ZPlbv07hNWFrF2H0RrHD7kGxQYfTyeRy26bq80QNvh1Rk8ncXMNmjsBE2Ms9EP5m_QVH316Z1HLg-WPzB_yIe-2OnI_66JcoopudwMxnQIcLcYScOb-icyEmi3BxDNoW-C68CZ2q5f1AkA" />
-                            <div
-                                class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">visibility</span></button>
-                            </div>
-                        </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate">1984</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">George Orwell</p>
-                        <div class="flex items-center gap-1 mt-1 text-yellow-500">
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(5.0)</span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Libro -->
-                <div class="flex flex-col group">
-                    <a routerLink="/detalle/libro/1">
-                        <div
-                            class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
-                            <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                data-alt="Book cover of The Great Gatsby"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLLI4zdDAOxaq7sHMol4aIcmQCMWRwB6521N2-2w-WUGJ7bwN0KsHXFuv2tNcZSg-seGJbX32hgpSwuN8sefwtVMtuPfcPQ2DPWeaHqV9pbmxVQUDn8zYd67B94Mv9IyIO9J5n_dL3QfzJoI70fVUyuSX4eNVepoU0L2K7W79FlrL-a_dYp2XAc4SX2y_nni9R8UZDgL_mzhLVP1eva382wD-hZCZePAILzG1s0oSxDEQ_rRHfYUhtVoWdYA86jOveR2zBlVl7ZQ" />
-                            <div
-                                class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">visibility</span></button>
-                            </div>
-                        </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate">El Gran Gatsby</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">F. Scott Fitzgerald</p>
-                        <div class="flex items-center gap-1 mt-1 text-yellow-500">
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span
-                                class="material-symbols-outlined text-base! text-gray-300 dark:text-gray-600">star</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(4.0)</span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Libro -->
-                <div class="flex flex-col group">
-                    <a routerLink="/detalle/libro/1">
-                        <div
-                            class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
-                            <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                data-alt="Book cover of Pride and Prejudice"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm3DnP5EjA4G2QgMKxQLuwfmWpfbYPIRWe9lrwocij6oCxfH1DfdBBYvsYsho1BbpP-LCX8YIan5EbWm1AorZcHvWMW_zNDf4lZVZWmB7Mosu6oJ99BYqSKjznvv0bn9snX9HsPBRpTOy4vfEM0GJGAbd4qvv_YFzVXaUv4kck-KrlH7NNr9nrc6wdQMobxsgRhFz4VEXAD-eWXF3qLyhRBOkeyKDUwNUJKKrS5Izwd7gPQYoi78uSXKODSklS2IxEFN8Z1S14YA" />
-                            <div
-                                class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">visibility</span></button>
-                            </div>
-                        </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate">Orgullo y Prejuicio</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Jane Austen</p>
-                        <div class="flex items-center gap-1 mt-1 text-yellow-500">
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star_half</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(4.6)</span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Libro -->
-                <div class="flex flex-col group">
-                    <a routerLink="/detalle/libro/1">
-                        <div
-                            class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
-                            <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                data-alt="Book cover of To Kill a Mockingbird"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUajr-mZCUBQHPyhN9DTAwyEzR_1Rw_T5V7NnKQAP2Cm0U530X0hbbSTQf4mGNLA8RhXrzBDwC2U5h1wfJUHB777qbAY5ZFuzDLn_WbfFyaVxkQphPMRFhxSFG6CRJ9Bhcv8J_zHr-54smAwDZAdZ_cYPWrO-mGs3FSNdQk0zyuc6J_2n7IvVTjCZL44JuiHli-fzLVdScdVbk9F9_z2dEoEvbPIIMkS9a6ZCvdX4jGm_0BRqgiNG3OLqe43CkqrZTtO7sBKvJwg" />
-                            <div
-                                class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">visibility</span></button>
-                            </div>
-                        </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate">Matar a un Ruiseñor</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Harper Lee</p>
-                        <div class="flex items-center gap-1 mt-1 text-yellow-500">
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(4.9)</span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Libro -->
-                <div class="flex flex-col group">
-                    <a routerLink="/detalle/libro/1">
-                        <div
-                            class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
-                            <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                data-alt="Book cover of One Hundred Years of Solitude"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo7Pe8u_BjZZpAuktwbcJ8uVzNeM4BT82KxqaZ9szNUzykJQGo9zQVPX5w8lorvstkxI2ENxZ6T4WB7dN8LmYhi2L4IYtLlJB7o1qP4Dyen7GquHFLVpNvNuzfi5umgyh3KuHTU7JDwijB3qFp5K4ArKOK6j1WePTDpBjhTVaWSo66VBZoWxvJGLUoP-PJJJJagOieQ7J7SllRiDeIPJSJUT4VktuefrytPKlGhZsosyTefuy1JHasferNxYt7ELP534BQnPyJCw" />
-                            <div
-                                class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">visibility</span></button>
-                            </div>
-                        </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate">Cien Años de Soledad</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Gabriel García Márquez</p>
-                        <div class="flex items-center gap-1 mt-1 text-yellow-500">
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star_half</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(4.7)</span>
-                        </div>
-                    </a>
-                </div>
-                <!-- Libro -->
-                <div class="flex flex-col group">
-                    <a routerLink="/detalle/libro/1">
-                        <div
-                            class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
-                            <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                data-alt="Book cover of Harry Potter"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYcspVzjK7xFOHDkIQlcKnUgOVLJREkP-j1KMqjxGDMsHzjUEfVtKkKMgKg80a_11opwqAHh1SCCDj_KP9S4CN8U7Pa-M-uX17r-qZulfKe8LGT1cz7lyDuIt9CQcg0MIbzefmd1yQRfJWB7mVAXr0akxVVRwQpI9VHt1kNPXvZtn-C5f27-aIaVw7ne4zXIrijDQGcvw0WlqSMO_hqCEkxTqXeiwlexmsakiLoLMcGWCZAQD6dzqOuppXSRJsx_GIveWJiYNnew" />
-                            <div
-                                class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-                                <button
-                                    class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                                        class="material-symbols-outlined text-xl!">visibility</span></button>
-                            </div>
-                        </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate">Harry Potter</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">J.K. Rowling</p>
-                        <div class="flex items-center gap-1 mt-1 text-yellow-500">
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="material-symbols-outlined text-base!"
-                                style="font-variation-settings: 'FILL' 1;">star_half</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(4.9)</span>
-                        </div>
-                    </a>
-                </div>
+                }
             </div>
+
             <!-- Paginación -->
             <div class="flex justify-center mt-12">
-                <nav aria-label="Pagination" class="flex items-center gap-2">
-                    <a class="inline-flex items-center justify-center size-9 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800"
-                        href="#">
-                        <span class="material-symbols-outlined">chevron_left</span>
-                    </a>
-                    <a class="inline-flex items-center justify-center size-9 rounded-lg bg-primary text-white font-bold text-sm"
-                        href="#">1</a>
-                    <a class="inline-flex items-center justify-center size-9 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 font-medium text-sm"
-                        href="#">2</a>
-                    <a class="inline-flex items-center justify-center size-9 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 font-medium text-sm"
-                        href="#">3</a>
-                    <span
-                        class="inline-flex items-center justify-center size-9 text-gray-500 dark:text-gray-400">...</span>
-                    <a class="inline-flex items-center justify-center size-9 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 font-medium text-sm"
-                        href="#">12</a>
-                    <a class="inline-flex items-center justify-center size-9 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800"
-                        href="#">
-                        <span class="material-symbols-outlined">chevron_right</span>
-                    </a>
-                </nav>
+                <app-paginacion [paginaActual]="paginaActual()" [totalPaginas]="totalPaginas()"
+                    (paginaSeleccionada)="cambiarPagina($event)"></app-paginacion>
             </div>
+            }
         </div>
     </div>
 </div>

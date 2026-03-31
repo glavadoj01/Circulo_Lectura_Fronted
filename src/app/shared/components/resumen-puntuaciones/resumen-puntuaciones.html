@@ -5,11 +5,7 @@
         <p class="text-black dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
             {{ puntuacionPromedio() != null ? (puntuacionPromedio() | number:'1.1-2') : 'N/A' }}
         </p>
-        <div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
-            @for (indice of [1, 2, 3, 4, 5]; track indice) {
-            <span class="material-symbols-outlined" [style.font-variation-settings]="estiloEstrella(indice)">{{ iconoEstrella(indice) }}</span>
-            }
-        </div>
+        <app-estrellas-puntuacion [puntuacion]="puntuacionPromedio()"></app-estrellas-puntuacion>
         <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal">
             {{ textoTotal() }}
         </p>
