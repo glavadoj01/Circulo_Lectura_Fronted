@@ -1,8 +1,24 @@
 {
   "name": "circulo-lectura-fronted",
-  "version": "0.0.0",
+  "version": "0.3.1",
+  "description": "Frontend de la aplicación Círculo de Lectura",
+
+  "homepage": "https://github.com/glavadoj01/Circulo_Lectura_Fronted#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glavadoj01/Circulo_Lectura_Fronted.git"
+  },
+  "bugs": {
+    "url": "https://github.com/glavadoj01/Circulo_Lectura_Fronted/issues"
+  },
+  
+  "license": "GNU General Public License v3.0",
+  "author": "Gonzalo Lavado",
+  "type": "module",
+  "main": "src/main.ts",
+
   "volta": {
-    "node": "22.21.1",
+    "node": "22.22.2",
     "npm": "11.6.4"
   },
   "scripts": {
@@ -24,6 +40,7 @@
     ]
   },
   "private": true,
+
   "dependencies": {
     "@angular/common": "^21",
     "@angular/compiler": "^21",
@@ -35,6 +52,7 @@
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
+
   "devDependencies": {
     "@angular/build": "^21",
     "@angular/cli": "^21",
