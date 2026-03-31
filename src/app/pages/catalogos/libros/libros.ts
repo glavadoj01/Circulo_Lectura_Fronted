@@ -1,19 +1,23 @@
-import { Component, signal, computed } from '@angular/core';
-import { RouterLink } from '@angular/router';
+// Importaciones node_modules
+import { Component, signal, computed, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
-import { LibroApp } from '@app/interfaces/modelosApp/modelosApp';
-import { EstrellasPuntuacion } from '@app/shared/components/estrellas-puntuacion/estrellas-puntuacion';
-import { BannerCargando } from '@app/shared/components/banner-cargando/banner-cargando';
-import { BannerError } from '@app/shared/components/banner-error/banner-error';
-import { Paginacion } from '@app/shared/components/paginacion/paginacion';
+// Importaciones propias
+import { LibroApp } from '@interfaces/modelosApp/modelosApp';
 import { servicioLibros } from '@services/servicioLibros/servicioLibros';
+import { BannerCargando } from '@sharedComponents/banner-cargando/banner-cargando';
+import { BannerError } from '@sharedComponents/banner-error/banner-error';
+import { Paginacion } from '@sharedComponents/paginacion/paginacion';
+import { LibroCard } from '@sharedComponents/libro-card/libro-card';
 
 @Component({
     selector: 'app-libros',
-    imports: [RouterLink, EstrellasPuntuacion, BannerCargando, BannerError, Paginacion],
+    imports: [BannerCargando, BannerError, Paginacion, LibroCard],
     templateUrl: './libros.html',
 })
 export class Libros {
+    private readonly destroyRef = inject(DestroyRef);
+
     librosPagina = signal<LibroApp[]>([]);
     paginaActual = signal(1);
     readonly tamanioPagina = 10;
@@ -51,23 +55,10 @@ export class Libros {
         }
 
         this.paginaActual.set(nuevaPagina);
+        this.servicioLibros.setPaginaCatalogoActual(nuevaPagina);
         console.log('[CatalogoLibros] Cambio de pagina:', nuevaPagina);
         this.cargarPagina(nuevaPagina);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    portadaLibro(idLibro: number): string {
-        return `https://picsum.photos/seed/libro-${idLibro}/400/600`;
-    }
-
-    autorPrincipal(libro: LibroApp): string {
-        const autor = libro.autores?.[0]?.nombre_autor;
-        return autor ?? 'Autor desconocido';
-    }
-
-    puntuacionTexto(libro: LibroApp): string {
-        const puntuacion = Number(libro.calificacionPromedio ?? 0);
-        return puntuacion.toFixed(1);
     }
 
     private cargarCatalogo(): void {
@@ -77,19 +68,27 @@ export class Libros {
 
         this.servicioLibros
             .getTotalLibros()
-            .pipe(finalize(() => this.cargando.set(false)))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (total) => {
                     console.log('[CatalogoLibros] total recibido:', total);
                     this.totalResultados.set(total);
-                    this.paginaActual.set(1);
 
                     if (total === 0) {
+                        this.paginaActual.set(1);
+                        this.servicioLibros.setPaginaCatalogoActual(1);
                         this.librosPagina.set([]);
+                        this.cargando.set(false);
                         return;
                     }
 
-                    this.cargarPagina(1);
+                    const totalPaginas = Math.max(1, Math.ceil(total / this.tamanioPagina));
+                    const paginaPersistida = this.servicioLibros.getPaginaCatalogoActual();
+                    const paginaInicial = Math.min(Math.max(1, paginaPersistida), totalPaginas);
+
+                    this.paginaActual.set(paginaInicial);
+                    this.servicioLibros.setPaginaCatalogoActual(paginaInicial);
+                    this.cargarPagina(paginaInicial);
                 },
                 error: (error: unknown) => {
                     const mensaje = error instanceof Error ? error.message : 'ERROR_DESCONOCIDO';
@@ -97,6 +96,7 @@ export class Libros {
                     console.error('[CatalogoLibros] Detalle error catalogo:', error);
                     this.errorCarga.set(true);
                     this.librosPagina.set([]);
+                    this.cargando.set(false);
                 },
             });
     }
@@ -111,9 +111,12 @@ export class Libros {
 
         this.servicioLibros
             .getCatalogoLibrosPaginado(pagina, this.tamanioPagina)
-            .pipe(finalize(() => this.cargando.set(false)))
+            .pipe(
+                finalize(() => this.cargando.set(false)),
+                takeUntilDestroyed(this.destroyRef),
+            )
             .subscribe({
-                next: (libros) => {
+                next: (libros: LibroApp[]) => {
                     console.log('[CatalogoLibros] pagina recibida:', {
                         pagina,
                         items: libros.length,

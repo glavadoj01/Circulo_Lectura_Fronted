@@ -11,9 +11,9 @@
         </p>
     </div>
 
+    @if (hayDistribucion()) {
     <div class="grid min-w-50 max-w-100 flex-1 grid-cols-[20px_1fr_110px] items-center gap-y-2">
         @for (fila of distribucion(); track fila.nota) {
-        @if (fila.nota > 0) {
         <p class="text-black dark:text-white text-sm font-normal leading-normal">
             {{ fila.nota }}
         </p>
@@ -24,6 +24,12 @@
             {{ fila.frecuencia }}% - Total: {{ fila.cantidad }}
         </p>
         }
-        }
     </div>
+    } @else {
+    <div class="flex-1 flex items-center justify-center py-4 px-6">
+        <p class="text-gray-400 dark:text-gray-500 text-sm italic">
+            Aún no hay calificaciones para este libro
+        </p>
+    </div>
+    }
 </div>

@@ -1,5 +1,7 @@
+// Importaciones node_modules
 import { Component, ElementRef, ViewChild, HostListener, signal, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+// Importaciones propias
 import { Theme } from '@services/themeService/theme';
 import { SearchBar } from '@sharedComponents/searchBar/searchBar';
 

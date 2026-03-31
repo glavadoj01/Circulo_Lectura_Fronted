@@ -5,14 +5,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, finalize, of } from 'rxjs';
 // Importaciones propias
-import { LibroCritica } from '@app/interfaces/modelosBD/modelosBD';
+import { LibroCritica } from '@interfaces/modelosBD/modelosBD';
 import { LibroApp } from '@interfaces/modelosApp/modelosApp';
 import { servicioLibros } from '@services/servicioLibros/servicioLibros';
-import { ComentarioNuevo } from '@app/shared/components/comentarioNuevo/comentarioNuevo';
-import { ComentarioExistente } from '@app/shared/components/comentarioExistente/comentarioExistente';
-import { BannerCargando } from '@app/shared/components/banner-cargando/banner-cargando';
-import { BannerError } from '@app/shared/components/banner-error/banner-error';
-import { ResumenPuntuaciones } from '@app/shared/components/resumen-puntuaciones/resumen-puntuaciones';
+import { ComentarioNuevo } from '@sharedComponents/comentarioNuevo/comentarioNuevo';
+import { ComentarioExistente } from '@sharedComponents/comentarioExistente/comentarioExistente';
+import { BannerCargando } from '@sharedComponents/banner-cargando/banner-cargando';
+import { BannerError } from '@sharedComponents/banner-error/banner-error';
+import { ResumenPuntuaciones } from '@sharedComponents/resumen-puntuaciones/resumen-puntuaciones';
+import { LibroMetadatos } from '@sharedComponents/libro-metadatos/libro-metadatos';
 
 @Component({
     selector: 'app-libro-detalle',
@@ -22,6 +23,7 @@ import { ResumenPuntuaciones } from '@app/shared/components/resumen-puntuaciones
         BannerCargando,
         BannerError,
         ResumenPuntuaciones,
+        LibroMetadatos,
         DecimalPipe,
     ],
     templateUrl: './detalleLibro.html',
@@ -35,6 +37,10 @@ export class DetalleLibro {
     errorCriticas = false;
 
     private destroyRef = inject(DestroyRef);
+
+    tieneSinopsisValida(): boolean {
+        return this.libro?.sinopsis ? this.libro.sinopsis.trim().length > 0 : false;
+    }
 
     constructor(
         private rutaActiva: ActivatedRoute,

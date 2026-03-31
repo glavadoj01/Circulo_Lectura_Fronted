@@ -1,71 +1,41 @@
-import { Component, effect, Input, signal } from '@angular/core';
+import { Component, effect, input } from '@angular/core';
 import { LibroCritica } from '@app/interfaces/modelosBD/modelosBD';
 import { ServicioUsuario } from '@services/servicioUsuario/servicioUsuario';
+import { EstrellasPuntuacion } from '@sharedComponents/estrellas-puntuacion/estrellas-puntuacion';
+import { PuntuacionNormalizadaPipe } from '@sharedPipes/puntuacion-normalizada.pipe';
+import { TiempoRelativoPipe } from '@sharedPipes/tiempo-relativo.pipe';
 
 @Component({
     selector: 'app-comentario-existente',
-    imports: [],
+    imports: [EstrellasPuntuacion, PuntuacionNormalizadaPipe, TiempoRelativoPipe],
     templateUrl: './comentarioExistente.html',
 })
 export class ComentarioExistente {
-    @Input() critica!: Partial<LibroCritica>;
+    critica = input.required<Partial<LibroCritica>>();
     usuarioNombre: string = '';
-    intervaloT: string = '';
 
-    constructor(private ServicioUsuario: ServicioUsuario) {
-        effect(() => {
-            const critica = this.critica;
-            if (!critica) return;
+    constructor(private servicioUsuario: ServicioUsuario) {
+        effect((onCleanup) => {
+            const critica = this.critica();
+            this.usuarioNombre = 'Desconocido';
 
-            if (critica.id_usuario) {
-                this.ServicioUsuario.getUsuarioPorId(
-                    critica.id_usuario,
-                    'nombre_usuario',
-                ).subscribe((data: any) => {
-                    // Si la respuesta es un array, toma el primer elemento
+            const idUsuario = Number(critica.id_usuario);
+            if (!Number.isInteger(idUsuario) || idUsuario <= 0) {
+                return;
+            }
+
+            const sub = this.servicioUsuario
+                .getUsuarioPorId(idUsuario, 'nombre_usuario')
+                .subscribe((data: any) => {
                     if (Array.isArray(data) && data.length > 0) {
-                        this.usuarioNombre = data[0].nombre_usuario;
-                    } else if (data && data.nombre_usuario) {
-                        this.usuarioNombre = data.nombre_usuario;
-                    } else {
-                        this.usuarioNombre = 'Desconocido';
+                        this.usuarioNombre = data[0].nombre_usuario || 'Desconocido';
+                        return;
                     }
+
+                    this.usuarioNombre = data?.nombre_usuario || 'Desconocido';
                 });
-                this.intervaloT = this.calcularIntervaloTiempo(critica.fecha_critica);
-            }
+
+            onCleanup(() => sub.unsubscribe());
         });
-    }
-
-    private calcularIntervaloTiempo(fecha: Date | string | undefined): string {
-        if (!fecha) return 'Hace un momento';
-        let fechaConvertida: Date;
-        if (fecha instanceof Date) {
-            fechaConvertida = fecha;
-        } else if (typeof fecha === 'string') {
-            fechaConvertida = new Date(fecha.trim());
-            if (isNaN(fechaConvertida.getTime())) {
-                return 'Fecha inválida';
-            }
-        } else {
-            return 'Fecha no reconocida';
-        }
-
-        const ahora = new Date();
-        const diferenciaMs = ahora.getTime() - fechaConvertida.getTime();
-        const diferenciaMinutos = Math.floor(diferenciaMs / (1000 * 60));
-        if (diferenciaMinutos < 1) return 'Hace un momento';
-        if (diferenciaMinutos < 60)
-            return `Hace ${diferenciaMinutos} minuto${diferenciaMinutos > 1 ? 's' : ''}`;
-        const diferenciaHoras = Math.floor(diferenciaMinutos / 60);
-        if (diferenciaHoras < 24)
-            return `Hace ${diferenciaHoras} hora${diferenciaHoras > 1 ? 's' : ''}`;
-        const diferenciaDias = Math.floor(diferenciaHoras / 24);
-        if (diferenciaDias < 30)
-            return `Hace ${diferenciaDias} día${diferenciaDias > 1 ? 's' : ''}`;
-        const diferenciaMeses = Math.floor(diferenciaDias / 30);
-        if (diferenciaMeses < 12)
-            return `Hace ${diferenciaMeses} mes${diferenciaMeses > 1 ? 'es' : ''}`;
-        const diferenciaAños = Math.floor(diferenciaMeses / 12);
-        return `Hace ${diferenciaAños} año${diferenciaAños > 1 ? 's' : ''}`;
     }
 }

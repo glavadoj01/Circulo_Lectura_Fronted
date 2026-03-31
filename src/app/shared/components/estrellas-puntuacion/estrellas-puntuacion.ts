@@ -1,32 +1,27 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
+import { normalizarPuntuacion } from '@sharedUtils/format.utils';
 
 @Component({
     selector: 'app-estrellas-puntuacion',
-    standalone: true,
     imports: [],
     templateUrl: './estrellas-puntuacion.html',
 })
 export class EstrellasPuntuacion {
     puntuacion = input<number | null | undefined>(null);
 
-    private puntuacionNormalizada(): number {
-        const valor = this.puntuacion();
-
-        if (valor == null || Number.isNaN(valor)) {
-            return 0;
-        }
-
-        return Math.max(0, Math.min(5, valor));
-    }
+    private puntuacionNormalizada = computed(() => {
+        return normalizarPuntuacion(this.puntuacion());
+    });
 
     private tipoEstrella(indice: number): 'full' | 'half' | 'empty' {
         const media = this.puntuacionNormalizada();
+        const indiceSeguro = Math.max(1, Math.min(5, Math.floor(indice)));
 
-        if (media >= indice) {
+        if (media >= indiceSeguro) {
             return 'full';
         }
 
-        if (media >= indice - 0.5) {
+        if (media >= indiceSeguro - 0.5) {
             return 'half';
         }
 

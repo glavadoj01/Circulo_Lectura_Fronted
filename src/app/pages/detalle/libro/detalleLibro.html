@@ -54,39 +54,17 @@
                 </div>
                 <!-- Descripción -->
                 <div class="text-gray-700 dark:text-gray-300 text-base leading-relaxed space-y-4">
-                    <p>{{libro?.sinopsis}}</p>
+                    @if (tieneSinopsisValida()) {
+                    <p>{{ libro?.sinopsis }}</p>
+                    } @else {
+                    <p class="italic text-gray-500 dark:text-gray-400">
+                        Sinopsis no disponible para este libro
+                    </p>
+                    }
                 </div>
-                <!-- Detalles -->
-                <div class="border-t border-white/10 pt-4 mt-2">
-                    <h3 class="text-black dark:text-white text-lg font-bold mb-3">Detalles</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm">
-                        <div class="flex flex-col"><span
-                                class="font-semibold text-gray-500 dark:text-gray-400">Género</span> <span
-                                class="text-gray-700 dark:text-gray-300">
-                                {{ libro?.generos?.length ? libro?.generos?.map(g => g.nombre_genero)?.join('; ') :
-                                'N/A'
-                                }}
-                            </span></div>
-                        <div class="flex flex-col"><span
-                                class="font-semibold text-gray-500 dark:text-gray-400">Publicado</span>
-                            <span class="text-gray-700 dark:text-gray-300">{{libro?.year_publicacion || "N/A"}}</span>
-                        </div>
-                        <div class="flex flex-col"><span
-                                class="font-semibold text-gray-500 dark:text-gray-400">Editorial</span>
-                            <span class="text-gray-700 dark:text-gray-300">DAW Books</span>
-                        </div>
-                        <div class="flex flex-col"><span
-                                class="font-semibold text-gray-500 dark:text-gray-400">Páginas</span> <span
-                                class="text-gray-700 dark:text-gray-300">{{libro?.paginas || "N/A"}}</span></div>
-                        <div class="flex flex-col"><span class="font-semibold text-gray-500 dark:text-gray-400">Idioma
-                                Original</span> <span class="text-gray-700 dark:text-gray-300">{{libro?.idioma_original
-                                || "N/A"}}</span>
-                        </div>
-                        <div class="flex flex-col"><span
-                                class="font-semibold text-gray-500 dark:text-gray-400">ISBN</span> <span
-                                class="text-gray-700 dark:text-gray-300">{{libro?.codigo_isbn || "N/A"}}</span></div>
-                    </div>
-                </div>
+                @if (libro) {
+                <app-libro-metadatos [libro]="libro" [editorial]="'DAW Books'"></app-libro-metadatos>
+                }
             </div>
         </section>
 

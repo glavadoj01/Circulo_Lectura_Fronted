@@ -6,21 +6,15 @@
         </div>
         <div class="flex-1">
             <p class="font-semibold text-black dark:text-white">
-                <span #Nombre>{{usuarioNombre || ""}}</span> - <span #Titulo>{{critica.titulo_critica || ""}}</span>
+                <span>{{usuarioNombre || ""}}</span> - <span>{{critica().titulo_critica || ""}}</span>
             </p>
             <div class="flex items-center gap-2">
-                <div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
-                    <span class="material-symbols-outlined text-base!">star</span>
-                    <span class="material-symbols-outlined text-base!">star</span>
-                    <span class="material-symbols-outlined text-base!">star</span>
-                    <span class="material-symbols-outlined text-base!">star</span>
-                    <span class="material-symbols-outlined text-base!">star</span>
-                </div>
+                <app-estrellas-puntuacion [puntuacion]="critica().calificacion_libro | puntuacionNormalizada"></app-estrellas-puntuacion>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                    {{intervaloT}}
+                    {{critica().fecha_critica | tiempoRelativo}}
                 </p>
             </div>
         </div>
     </div>
-    <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{{critica.texto_critica || ""}}</p>
+    <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{{critica().texto_critica || ""}}</p>
 </div>
