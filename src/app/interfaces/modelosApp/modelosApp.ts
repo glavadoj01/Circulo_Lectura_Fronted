@@ -1,13 +1,13 @@
-import { LibroBD, AutorNombre, GeneroNombre, LibroCritica } from '@interfaces/modelosBD/modelosBD';
+import { LibroBD, LibroCritica } from '@interfaces/modelosBD/modelosBD';
 
 export interface LibroApp extends LibroBD {
-    autores?: AutorNombre[]; // Lista de autores del libro
-    generos?: GeneroNombre[]; // Lista de géneros del libro
+    autores?: Array<{ nombre_autor: string }>; // Lista de autores del libro
+    generos?: Array<{ nombre_genero: string }>; // Lista de géneros del libro
     totalResenas?: number; // Total de reseñas del libro
     calificacionPromedio?: number; // Calificación promedio del libro
 }
 
 export interface RespuestaCriticas {
     criticas: LibroCritica[];
-    frecuencias: number[];
+    frecuencias: [number, number, number, number, number, number];
 }

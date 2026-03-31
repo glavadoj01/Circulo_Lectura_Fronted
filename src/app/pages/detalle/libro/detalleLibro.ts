@@ -1,5 +1,11 @@
-import { Component, ElementRef, ViewChild, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+// Importaciones node_modules
+import { DecimalPipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
+import { catchError, finalize, forkJoin, of } from 'rxjs';
+// Importaciones propias
 import { LibroCritica } from '@app/interfaces/modelosBD/modelosBD';
 import { LibroApp, RespuestaCriticas } from '@interfaces/modelosApp/modelosApp';
 import { servicioLibros } from '@services/servicioLibros/servicioLibros';
@@ -8,73 +14,86 @@ import { ComentarioExistente } from '@app/shared/components/comentarioExistente/
 
 @Component({
     selector: 'app-libro-detalle',
-    imports: [ComentarioNuevo, ComentarioExistente],
+    imports: [ComentarioNuevo, ComentarioExistente, DecimalPipe],
     templateUrl: './detalleLibro.html',
 })
 export class DetalleLibro {
     libro: LibroApp | null = null;
     notasIndividuales: { nota: number; cantidad: number; frecuencia: number }[] = [];
-    criticas: Partial<LibroCritica>[] = [];
+    criticas: LibroCritica[] = [];
+    libroEncontrado = false;
+    cargando = true;
+    errorCriticas = false;
 
-    @ViewChild('ENVIAR') enviarBtn!: ElementRef<HTMLButtonElement>;
-    @ViewChild('selectorIrA') selectorIrA!: ElementRef<HTMLInputElement>;
+    private destroyRef = inject(DestroyRef);
 
-    // Efecto reactivo para obtener la id y pedir el libro
     constructor(
         private rutaActiva: ActivatedRoute,
         private libroService: servicioLibros,
-        private router: Router, // Temporalmente para navegar a otro libro desde el input
     ) {
-        //prettier-ignore
-        this.rutaActiva.paramMap.subscribe((paramMapa) => { // TEMPORAL => usamos una suscripción para reaccionar a cambios en la ruta,
-            const idParam = paramMapa.get('id');           //  cuando se navega a otro libro mediante el input, finalmente sera un effect()
-            const id = idParam ? Number(idParam) : null;  //  que lee la id de la ruta y ejecuta la carga 1 sola vez, sin necesidad de suscribirse a cambios
-            console.log('ID leído de la ruta:', id);
-            this.obtenerLibro(id);
-            this.obtenerCriticas(id);
-        });
-    }
-
-    onSubmitCambiarLibro(event: Event) {
-        event.preventDefault();
-        const id = this.selectorIrA?.nativeElement.value;
-        if (id && !isNaN(Number(id)) && Number(id) > 0) {
-            this.router.navigate([`/detalle/libro/${id}`]);
-        }
-    }
-
-    obtenerLibro(id: number | null) {
-        if (id && !isNaN(id) && id > 0) {
-            this.libroService.getLibroPorId(id).subscribe((data) => {
-                const libroData = Array.isArray(data) ? data[0] : data;
-                const libro: LibroApp = {
-                    ...libroData,
-                    autores: libroData.autores?.map((a: any) => a.nombre_autor),
-                    generos: libroData.generos?.map((g: any) => g.nombre),
-                    calificacionPromedio:
-                        parseFloat(libroData.calificacionPromedio).toFixed(2) || 0,
-                };
-                this.libro = libro;
-            });
+        const id = this.rutaActiva.snapshot.paramMap.get('id');
+        console.log('ID leído de la ruta:', id);
+        const idNum = id ? Number(id) : null;
+        console.log('ID convertido a número:', idNum);
+        if (idNum && !isNaN(idNum) && idNum > 0) {
+            this.cargarDetalle(idNum);
         } else {
             console.error('ID inválido:', id);
+            this.cargando = false;
         }
     }
 
-    obtenerCriticas(id: number | null) {
-        if (id && !isNaN(id) && id > 0) {
-            this.libroService.getCriticasPorIdLibro(id).subscribe((data: RespuestaCriticas) => {
-                this.criticas = data.criticas;
-                const total = data.criticas.length;
-                const notas = data.frecuencias.map((cantidad, nota) => ({
-                    nota,
-                    cantidad,
-                    frecuencia: total > 0 ? Number(((cantidad * 100) / total).toFixed(2)) : 0,
-                }));
-                this.notasIndividuales = notas.sort((a, b) => b.nota - a.nota);
+    private cargarDetalle(id: number) {
+        console.log('[DetalleLibro] inicio carga Id :', id);
+        const libro$ = this.libroService.getLibroPorId(id);
+        const criticas$ = this.libroService.getCriticasPorIdLibro(id).pipe(
+            catchError(() => {
+                this.errorCriticas = true;
+                return of({
+                    criticas: [],
+                    frecuencias: [0, 0, 0, 0, 0, 0],
+                } as RespuestaCriticas);
+            }),
+        );
+
+        forkJoin({ libro: libro$, criticas: criticas$ })
+            .pipe(
+                takeUntilDestroyed(this.destroyRef),
+                finalize(() => (this.cargando = false)),
+            )
+            .subscribe({
+                next: ({ libro, criticas }) => {
+                    console.log('Datos recibidos del servicio:', { libro, criticas });
+
+                    this.libro = libro;
+                    this.libroEncontrado = true;
+
+                    this.criticas = criticas.criticas;
+                    console.log('Críticas recibidas:', this.criticas);
+
+                    const total = criticas.criticas.length;
+                    const notas = criticas.frecuencias.map((cantidad, nota) => ({
+                        nota,
+                        cantidad,
+                        frecuencia: total > 0 ? Number(((cantidad * 100) / total).toFixed(2)) : 0,
+                    }));
+                    console.log('Cálculo de notas individuales:', notas);
+                    console.log('Total de críticas:', total);
+
+                    this.notasIndividuales = notas.sort((a, b) => b.nota - a.nota);
+                    console.log('Notas individuales calculadas:', this.notasIndividuales);
+                },
+                error: (error: HttpErrorResponse) => {
+                    if (error.status === 404) {
+                        console.error('Libro no encontrado');
+                        return;
+                    }
+                    if (error.status === 400) {
+                        console.error('Petición inválida: falta o es incorrecto el id del libro');
+                        return;
+                    }
+                    console.error('Error al cargar el libro o las críticas', error);
+                },
             });
-        } else {
-            console.error('ID inválido para obtener notas individuales:', id);
-        }
     }
 }

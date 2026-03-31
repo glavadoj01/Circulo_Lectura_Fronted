@@ -1,4 +1,23 @@
 <main class="flex-1 px-4 sm:px-10 md:px-20 lg:px-40 py-10">
+    @if (cargando) {
+    <div class="mx-auto max-w-7xl">
+        <section class="rounded-xl bg-gray-100 dark:bg-white/5 p-6">
+            <h2 class="text-black dark:text-white text-2xl font-bold">Cargando libro...</h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">Esperando datos del servidor.</p>
+        </section>
+    </div>
+
+    } @else if (!libroEncontrado) {
+    <div class="mx-auto max-w-7xl">
+        <section class="rounded-xl bg-gray-100 dark:bg-white/5 p-6">
+            <h2 class="text-black dark:text-white text-2xl font-bold">Libro no encontrado</h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">
+                El libro no existe o no está disponible ahora mismo.
+            </p>
+        </section>
+    </div>
+
+    } @else {
     <div class="mx-auto flex max-w-7xl flex-col gap-12">
         <!-- Book Details Section -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
@@ -21,38 +40,27 @@
 
             <!-- Right Column (Informative) -->
             <div class="flex flex-col gap-6 md:col-span-2">
-                <div class="temporal">
-                    <form (submit)="onSubmitCambiarLibro($event)" class="flex items-center gap-2 mb-4">
-                        <input #selectorIrA type="number" name="idLibro" id="selectorIrA"
-                            placeholder="ID del libro para prueba"
-                            class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                            step="1" min="1" max="40">
-                        <label for="selectorIrA" class="ml-2 text-sm text-gray-500">Ir a libro por ID (solo para
-                            pruebas)</label>
-                        <button #IrA type="submit" value="Ir" id="ENVIAR"
-                            class="ml-4 cursor-pointer rounded-lg bg-primary text-white px-4 py-2 hover:bg-primary/90 transition-colors">Cambiar
-                            de libro</button>
-                    </form>
-                </div>
                 <!-- CabeceraDetalle -->
                 <div class="flex min-w-72 flex-col gap-2">
                     <p #tituloLibro
                         class="text-black dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">
-                        {{libro?.titulo_libro || "Autor no encontrado"}}</p>
+                        {{libro?.titulo_libro || "Titulo no encontrado"}}</p>
                     <p #autorLibro class="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal">
-                        {{libro?.autores?.join("; ") || "Autor Desconocido / Anonimo"}}</p>
+                        {{ libro?.autores?.length ? libro?.autores?.map(a => a.nombre_autor)?.join('; ') : 'Autor
+                        Desconocido / Anonimo' }}</p>
                 </div>
                 <!-- Calificación y total Reseñas -->
                 <div class="flex flex-wrap items-center gap-2 text-gray-400 dark:text-gray-500">
                     <span class="flex items-center gap-1 text-yellow-400 dark:text-yellow-500">
                         <span class="material-symbols-outlined text-base">star</span>
-                        <span class="font-bold text-sm">{{libro?.calificacionPromedio || "N/A"}}</span>
+                        <span class="font-bold text-sm">{{ libro?.calificacionPromedio != null ?
+                            (libro?.calificacionPromedio | number:'1.1-2') : 'N/A' }}</span>
                     </span>
                     <span>·</span>
                     <span class="text-sm">{{
-                        libro?.totalResenas! === 0 ? ' Sín Reseñas'
-                        : libro?.totalResenas! === 1 ? libro?.totalResenas + ' reseña'
-                        : libro?.totalResenas + ' reseñas'
+                        (libro?.totalResenas ?? 0) === 0 ? ' Sin Reseñas'
+                        : (libro?.totalResenas ?? 0) === 1 ? ' 1 Reseña'
+                        : (libro?.totalResenas ?? 0) + ' Reseñas'
                         }}
                     </span>
                 </div>
@@ -66,8 +74,11 @@
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm">
                         <div class="flex flex-col"><span
                                 class="font-semibold text-gray-500 dark:text-gray-400">Género</span> <span
-                                class="text-gray-700 dark:text-gray-300">{{libro?.generos?.join("; ") ||
-                                "N/A"}}</span></div>
+                                class="text-gray-700 dark:text-gray-300">
+                                {{ libro?.generos?.length ? libro?.generos?.map(g => g.nombre_genero)?.join('; ') :
+                                'N/A'
+                                }}
+                            </span></div>
                         <div class="flex flex-col"><span
                                 class="font-semibold text-gray-500 dark:text-gray-400">Publicado</span>
                             <span class="text-gray-700 dark:text-gray-300">{{libro?.year_publicacion || "N/A"}}</span>
@@ -101,7 +112,8 @@
                 <!-- Resumen Principal -->
                 <div class="flex flex-col gap-2 items-center md:items-start">
                     <p class="text-black dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
-                        {{libro?.calificacionPromedio || "N/A"}}</p>
+                        {{ libro?.calificacionPromedio != null ? (libro?.calificacionPromedio | number:'1.1-2') : 'N/A'
+                        }}</p>
                     <div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
                         <span class="material-symbols-outlined">star</span>
                         <span class="material-symbols-outlined">star</span>
@@ -109,10 +121,10 @@
                         <span class="material-symbols-outlined">star</span>
                         <span class="material-symbols-outlined">star_half</span>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal">{{
-                        libro?.totalResenas! === 0 ? ' Sín Reseñas'
-                        : libro?.totalResenas! === 1 ? libro?.totalResenas + ' reseña'
-                        : libro?.totalResenas + ' reseñas'
+                    <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal">
+                        {{(libro?.totalResenas ?? 0) === 0 ? ' Sin Reseñas'
+                        : (libro?.totalResenas ?? 0) === 1 ? ' 1 Reseña'
+                        : (libro?.totalResenas ?? 0) + ' Reseñas'
                         }}
                     </p>
                 </div>
@@ -137,10 +149,20 @@
             <app-comentario-nuevo></app-comentario-nuevo>
             <!-- Existing Reviews List -->
             <div class="flex flex-col gap-6">
+                @if (errorCriticas) {
+                <div
+                    class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-800 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300">
+                    No se pudieron cargar las críticas en este momento. Por favor, inténtalo de nuevo más tarde.
+                </div>
+                } @else if (criticas.length === 0) { <p class="text-gray-600 dark:text-gray-400 text-sm">
+                    Todavía no hay críticas para este libro. </p>
+                } @else {
                 @for (critica of criticas; track critica.id_usuario) {
                 <app-comentario-existente [critica]="critica"></app-comentario-existente>
+                }
                 }
             </div>
         </section>
     </div>
+    }
 </main>
