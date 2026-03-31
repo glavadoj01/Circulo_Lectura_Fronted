@@ -3,7 +3,8 @@
     <div class="flex flex-col gap-4 p-6 bg-gray-100 dark:bg-white/5 rounded-xl">
         <div class="flex items-center gap-4">
             <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                data-alt="User avatar placeholder"
+                role="img"
+                aria-label="Avatar de usuario"
                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBm_-cOrFLQaxOmnp0o8faY7czMcQr0-jjIxlOPQ7qyUrrtjjXvApUfg6Pnrs3wqWOe4czo161Ad8GUm0FSgVv9YqpanIrznGj_SV2HJcQ4dZJ02wa08Cwl1BynUDMyY0534yjcBdJWeui7fMyc7Pih3H1pv8TwEj0XKEWm7_N8uDR7eFvgT-kiD3NLQ1Rreb_iVJIQQKm8RzTnlZXyjvDMBRlzy4olUcPSoH7FyfsEHRsVmcaPbJhf5m4ou4tIMCp7z1Mlj-K2yw");'>
             </div>
             <div class="flex flex-col">
@@ -23,10 +24,11 @@
             </div>
         </div>
         <textarea
+            aria-label="Escribe tu reseña"
             class="form-textarea w-full resize-y rounded-lg text-black dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border-gray-300 dark:border-white/20 bg-gray-200 dark:bg-white/5 h-28 placeholder:text-gray-500 dark:placeholder:text-gray-500 text-base font-normal leading-normal p-4"
             placeholder="Comparte tu opinión sobre este libro..."></textarea>
         <div class="flex justify-end">
-            <button
+            <button type="button" aria-label="Publicar reseña"
                 class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                 <span class="truncate">Publicar Reseña</span>
             </button>

@@ -47,7 +47,7 @@ cd Circulo_Lectura_Fronted
 
 ## 3. Edición de ficheros/credenciales
 
-- Renombra **_environments.ts** a **environments.ts** en `src/app/environments/`.
+- Renombra **_environments.ts** a **environments.ts** en `src/environments/`.
 - Por defecto, la API está configurada en **<http://localhost:3000>**.
 - Para acceder desde un dispositivo externo en red local, edita **environments.ts** y reemplaza `localhost` por la IP o dominio local del backend (consulta las indicaciones dentro del propio fichero).
 
@@ -55,6 +55,15 @@ cd Circulo_Lectura_Fronted
 
 - `npm start` o `ng serve`: Inicia el servidor de desarrollo en modo local (por defecto en <http://localhost:4200>).
 - `ng serve --host 0.0.0.0`: Inicia el servidor permitiendo acceso desde otros dispositivos de la red local (requiere configurar la IP en **environments.ts** y en el backend, archivo **.env**).
+
+### 4.1 Scripts disponibles
+
+```bash
+npm start         # Inicia el servidor de desarrollo (ng serve)
+npm run build     # Compila la aplicación para producción
+npm run watch     # Compila en modo watch (desarrollo)
+npm run reinstall # Elimina node_modules y package-lock.json y reinstala dependencias
+```
 
 ## Estructura del proyecto
 
@@ -66,6 +75,7 @@ Circulo_Lectura_Fronted/
 │   └── app/
 │       ├── app.ts, app.routes.ts, app.html, app.config.ts  # Configuración y entrada principal
 │       ├── environments/                                   # Configuración de entornos
+│       │   ├── environments.ts                                 # Usar para desarrollo local
 │       │   └── _environments.ts                                # Versión limpia para compartir y editar
 │       ├── pages/                                          # Páginas de la aplicación
 │       │   ├── auth/                                           # auth.ts, auth.html, auth.css
@@ -81,11 +91,18 @@ Circulo_Lectura_Fronted/
 │       │   └── themeService/
 │       │       └── theme.ts
 │       ├── shared/
-│       │   └── components/                                 # Componentes reutilizables
+│       │   └── components/             # Componentes reutilizables
+│       │       ├── banner-cargando/
+│       │       ├── banner-error/
 │       │       ├── comentarioExistente/
 │       │       ├── comentarioNuevo/
+│       │       ├── estrellas-puntuacion/
 │       │       ├── footer/
 │       │       ├── header/
+│       │       ├── libro-card/
+│       │       ├── libro-metadatos/
+│       │       ├── paginacion/
+│       │       ├── resumen-puntuaciones/
 │       │       └── searchBar/
 │       └── interfaces/           # Modelos de datos
 │           ├── modelosApp/         # Modelos utilizados en la App

@@ -14,13 +14,13 @@
                 <div class="w-full max-w-75 md:max-w-none shadow-2xl shadow-black/50">
                     <div
                         class="w-full gap-1 overflow-hidden bg-background-element @[480px]:gap-2 aspect-2/3 rounded-xl flex">
-                        <div class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none flex-1"
-                            data-alt="Cover of the book The Name of the Wind"
+                        <div class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none flex-1" role="img"
+                            aria-label="Portada del libro {{ libro?.titulo_libro || 'desconocido' }}"
                             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUurYLOr-AQCVI3ks235WBQZPWBUhLkUKRQqF8oQs3GJQJw2AUsQKyBsWDBwLXdYegRCMmBDexIzaaCfA8H4XO9O_RdQKhc6u-27c2NINS5ay6KGqDTp-vkE8S_56efrlDcPaI8OSw8Oe2JK4rYcR7tMuFijNU7fOveAkJ1dTK-WwL1Sjk07jJWxbOBhd2nD4A2vbmY12CydZUjKdkFXYU0w6WiTNJu2EI09IJsYQV6EOKYnAU9Ml8Sd7ZyrSUHwV4k-jU7NJP7Q");'>
                         </div>
                     </div>
                 </div>
-                <button
+                <button type="button" aria-label="Añadir este libro a mi lista"
                     class="flex min-w-21 w-full max-w-75 md:max-w-none cursor-pointer items-center justify-center overflow-hidden rounded-lg max-h-12 px-5 flex-1 bg-primary text-blanco-puro text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                     <span class="truncate">Añadir a mi lista</span>
                 </button>
@@ -30,9 +30,9 @@
             <div class="flex flex-col gap-6 md:col-span-2">
                 <!-- CabeceraDetalle -->
                 <div class="flex min-w-72 flex-col gap-2">
-                    <p #tituloLibro
+                    <h1 #tituloLibro
                         class="text-black dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">
-                        {{libro?.titulo_libro || "Titulo no encontrado"}}</p>
+                        {{libro?.titulo_libro || "Titulo no encontrado"}}</h1>
                     <p #autorLibro class="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal">
                         {{ libro?.autores?.length ? libro?.autores?.map(a => a.nombre_autor)?.join('; ') : 'Autor
                         Desconocido / Anonimo' }}</p>
@@ -81,11 +81,12 @@
             <!-- Existing Reviews List -->
             <div class="flex flex-col gap-6">
                 @if (errorCriticas) {
-                <div
+                <div role="status" aria-live="polite"
                     class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-800 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300">
                     No se pudieron cargar las críticas en este momento. Por favor, inténtalo de nuevo más tarde.
                 </div>
-                } @else if (criticas.length === 0) { <p class="text-gray-600 dark:text-gray-400 text-sm">
+                } @else if (criticas.length === 0) { <p role="status" aria-live="polite"
+                    class="text-gray-600 dark:text-gray-400 text-sm">
                     Todavía no hay críticas para este libro. </p>
                 } @else {
                 @for (critica of criticas; track critica.id_usuario) {

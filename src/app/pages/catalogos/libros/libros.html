@@ -6,8 +6,8 @@
                 <div
                     class="flex flex-col gap-4 p-4 rounded-xl bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800">
                     <div class="flex flex-col mb-2">
-                        <h1 class="text-gray-900 dark:text-white text-lg font-medium leading-normal">Filtros
-                        </h1>
+                        <h2 class="text-gray-900 dark:text-white text-lg font-medium leading-normal">Filtros
+                        </h2>
                         <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
                             Refina tu
                             búsqueda</p>
@@ -23,41 +23,45 @@
                                 </div>
                             </summary>
                             <div class="pt-2">
-                                <label class="flex gap-x-3 py-2 flex-row items-center">
-                                    <input checked=""
-                                        class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
-                                        style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
-                                        type="checkbox" />
-                                    <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
-                                        Ficción</p>
-                                </label>
-                                <label class="flex gap-x-3 py-2 flex-row items-center">
-                                    <input
-                                        class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
-                                        style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
-                                        type="checkbox" />
-                                    <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
-                                        Misterio</p>
-                                </label>
-                                <label class="flex gap-x-3 py-2 flex-row items-center">
-                                    <input
-                                        class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
-                                        style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
-                                        type="checkbox" />
-                                    <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
-                                        Ciencia Ficción</p>
-                                </label>
-                                <label class="flex gap-x-3 py-2 flex-row items-center">
-                                    <input
-                                        class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
-                                        style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
-                                        type="checkbox" />
-                                    <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
-                                        Fantasía</p>
-                                </label>
+                                <fieldset>
+                                    <legend class="sr-only">Seleccionar género</legend>
+                                    <label class="flex gap-x-3 py-2 flex-row items-center">
+                                        <input checked=""
+                                            class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
+                                            style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
+                                            type="checkbox" />
+                                        <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
+                                            Ficción</p>
+                                    </label>
+                                    <label class="flex gap-x-3 py-2 flex-row items-center">
+                                        <input
+                                            class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
+                                            style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
+                                            type="checkbox" />
+                                        <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
+                                            Misterio</p>
+                                    </label>
+                                    <label class="flex gap-x-3 py-2 flex-row items-center">
+                                        <input
+                                            class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
+                                            style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
+                                            type="checkbox" />
+                                        <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
+                                            Ciencia Ficción</p>
+                                    </label>
+                                    <label class="flex gap-x-3 py-2 flex-row items-center">
+                                        <input
+                                            class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
+                                            style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
+                                            type="checkbox" />
+                                        <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
+                                            Fantasía</p>
+                                    </label>
+                                </fieldset>
                             </div>
                         </details>
-                        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group">
+                        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group"
+                            aria-describedby="filtro-autor-ayuda">
                             <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
                                 <p class="text-gray-900 dark:text-white text-sm font-medium leading-normal">
                                     Autor</p>
@@ -66,8 +70,12 @@
                                     <span class="material-symbols-outlined">expand_more</span>
                                 </div>
                             </summary>
+                            <div id="filtro-autor-ayuda" class="sr-only">
+                                Filtro de autor pendiente de implementación.
+                            </div>
                         </details>
-                        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group">
+                        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group"
+                            aria-describedby="filtro-year-ayuda">
                             <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
                                 <p class="text-gray-900 dark:text-white text-sm font-medium leading-normal">
                                     Año
@@ -77,8 +85,12 @@
                                     <span class="material-symbols-outlined">expand_more</span>
                                 </div>
                             </summary>
+                            <div id="filtro-year-ayuda" class="sr-only">
+                                Filtro por año de publicación pendiente de implementación.
+                            </div>
                         </details>
-                        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group">
+                        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group"
+                            aria-describedby="filtro-valoracion-ayuda">
                             <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
                                 <p class="text-gray-900 dark:text-white text-sm font-medium leading-normal">
                                     Valoración</p>
@@ -87,14 +99,17 @@
                                     <span class="material-symbols-outlined">expand_more</span>
                                 </div>
                             </summary>
+                            <div id="filtro-valoracion-ayuda" class="sr-only">
+                                Filtro de valoración pendiente de implementación.
+                            </div>
                         </details>
                     </div>
                     <div class="flex flex-col gap-2 pt-4 border-t border-gray-300 dark:border-gray-700">
-                        <button
+                        <button type="button" aria-label="Aplicar filtros del catálogo"
                             class="flex w-full min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
                             <span class="truncate">Aplicar Filtros</span>
                         </button>
-                        <button
+                        <button type="button" aria-label="Limpiar filtros del catálogo"
                             class="flex w-full min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-800 text-sm font-bold leading-normal tracking-[0.015em]">
                             <span class="truncate">Limpiar</span>
                         </button>
@@ -107,9 +122,9 @@
             <!-- Cabecera Catalogo -->
             <div class="flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center gap-4 mb-6">
                 <div class="flex min-w-72 flex-col gap-1">
-                    <p class="text-gray-900 dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">
+                    <h1 class="text-gray-900 dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">
                         Explora nuestra Biblioteca
-                    </p>
+                    </h1>
                     <p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">
                         @if (!cargando() && !errorCarga()) {
                         Mostrando {{ primeraPosicionPagina() }}-{{ ultimaPosicionPagina() }} de {{ totalResultados() }}
@@ -122,8 +137,8 @@
                     </p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Ordenar por:</p>
-                    <select
+                    <label for="orden-catalogo" class="text-sm text-gray-500 dark:text-gray-400">Ordenar por:</label>
+                    <select id="orden-catalogo" aria-label="Ordenar resultados del catálogo"
                         class="form-select w-48 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 rounded-lg focus:ring-primary focus:border-primary text-sm">
                         <option>Mejor valorados</option>
                         <option>Más recientes</option>
