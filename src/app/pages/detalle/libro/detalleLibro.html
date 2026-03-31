@@ -1,21 +1,9 @@
 <main class="flex-1 px-4 sm:px-10 md:px-20 lg:px-40 py-10">
     @if (cargando) {
-    <div class="mx-auto max-w-7xl">
-        <section class="rounded-xl bg-gray-100 dark:bg-white/5 p-6">
-            <h2 class="text-black dark:text-white text-2xl font-bold">Cargando libro...</h2>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">Esperando datos del servidor.</p>
-        </section>
-    </div>
+    <app-banner-cargando [elemento]="'libro'"></app-banner-cargando>
 
     } @else if (!libroEncontrado) {
-    <div class="mx-auto max-w-7xl">
-        <section class="rounded-xl bg-gray-100 dark:bg-white/5 p-6">
-            <h2 class="text-black dark:text-white text-2xl font-bold">Libro no encontrado</h2>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">
-                El libro no existe o no está disponible ahora mismo.
-            </p>
-        </section>
-    </div>
+    <app-banner-error [elemento]="'libro'"></app-banner-error>
 
     } @else {
     <div class="mx-auto flex max-w-7xl flex-col gap-12">
@@ -105,46 +93,11 @@
 
         <!-- Reviews and Ratings Section -->
         <section class="border-t border-white/10 pt-10 flex flex-col gap-8">
-            <h2 class="text-black dark:text-white text-3xl font-bold tracking-tight">Calificaciones y
-                Reseñas</h2>
             <!-- Rating Summary -->
-            <div class="flex flex-col md:flex-row gap-x-12 gap-y-8 p-6 bg-gray-100 dark:bg-white/5 rounded-xl">
-                <!-- Resumen Principal -->
-                <div class="flex flex-col gap-2 items-center md:items-start">
-                    <p class="text-black dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
-                        {{ libro?.calificacionPromedio != null ? (libro?.calificacionPromedio | number:'1.1-2') : 'N/A'
-                        }}</p>
-                    <div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
-                        <span class="material-symbols-outlined">star</span>
-                        <span class="material-symbols-outlined">star</span>
-                        <span class="material-symbols-outlined">star</span>
-                        <span class="material-symbols-outlined">star</span>
-                        <span class="material-symbols-outlined">star_half</span>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal">
-                        {{(libro?.totalResenas ?? 0) === 0 ? ' Sin Reseñas'
-                        : (libro?.totalResenas ?? 0) === 1 ? ' 1 Reseña'
-                        : (libro?.totalResenas ?? 0) + ' Reseñas'
-                        }}
-                    </p>
-                </div>
-                <!-- Estadisticas por Nota -->
-                <div class="grid min-w-50 max-w-100 flex-1 grid-cols-[20px_1fr_110px] items-center gap-y-2">
-                    @for (nota of notasIndividuales; track nota.nota) {
-                    @if (nota.nota > 0) {
-                    <p class="text-black dark:text-white text-sm font-normal leading-normal">
-                        {{nota.nota}}
-                    </p>
-                    <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-gray-300 dark:bg-white/10">
-                        <div class="rounded-full bg-primary" [style.width.%]="nota.frecuencia"></div>
-                    </div>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal text-right">
-                        {{nota.frecuencia}}% - Total: {{nota.cantidad}}</p>
-                    }
-                    }
-                </div>
+            <app-resumen-puntuaciones [puntuacionPromedio]="libro?.calificacionPromedio"
+                [totalElementos]="libro?.totalResenas" [nombreElemento]="'Reseñas'"
+                [distribucion]="notasIndividuales"></app-resumen-puntuaciones>
 
-            </div>
             <!-- Write a Review Form -->
             <app-comentario-nuevo></app-comentario-nuevo>
             <!-- Existing Reviews List -->

@@ -1,0 +1,33 @@
+<h2 class="text-black dark:text-white text-3xl font-bold tracking-tight">Calificaciones y
+    {{ nombreElemento() }}</h2>
+<div class="flex flex-col md:flex-row gap-x-12 gap-y-8 p-6 bg-gray-100 dark:bg-white/5 rounded-xl">
+    <div class="flex flex-col gap-2 items-center md:items-start">
+        <p class="text-black dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
+            {{ puntuacionPromedio() != null ? (puntuacionPromedio() | number:'1.1-2') : 'N/A' }}
+        </p>
+        <div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
+            @for (indice of [1, 2, 3, 4, 5]; track indice) {
+            <span class="material-symbols-outlined" [style.font-variation-settings]="estiloEstrella(indice)">{{ iconoEstrella(indice) }}</span>
+            }
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal">
+            {{ textoTotal() }}
+        </p>
+    </div>
+
+    <div class="grid min-w-50 max-w-100 flex-1 grid-cols-[20px_1fr_110px] items-center gap-y-2">
+        @for (fila of distribucion(); track fila.nota) {
+        @if (fila.nota > 0) {
+        <p class="text-black dark:text-white text-sm font-normal leading-normal">
+            {{ fila.nota }}
+        </p>
+        <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-gray-300 dark:bg-white/10">
+            <div class="rounded-full bg-primary" [style.width.%]="fila.frecuencia"></div>
+        </div>
+        <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal text-right">
+            {{ fila.frecuencia }}% - Total: {{ fila.cantidad }}
+        </p>
+        }
+        }
+    </div>
+</div>
