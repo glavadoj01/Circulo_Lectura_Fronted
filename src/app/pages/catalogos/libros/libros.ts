@@ -4,9 +4,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 // Importaciones propias
 import { LibroApp } from '@interfaces/modelosApp/modelosApp';
-import { servicioLibros } from '@services/servicioLibros/servicioLibros';
+import { servicioCatalogoLibros } from '@services/servicioLibros/servicioCatalogoLibros';
 import { BannerCargando } from '@sharedComponents/banner-cargando/banner-cargando';
 import { BannerError } from '@sharedComponents/banner-error/banner-error';
+import { manejarError } from '@sharedUtils/error.utils';
 import { Paginacion } from '@sharedComponents/paginacion/paginacion';
 import { LibroCard } from '@sharedComponents/libro-card/libro-card';
 
@@ -40,9 +41,14 @@ export class Libros {
     );
 
     // Inyección de servicios y carga inicial del catálogo
-    constructor(private servicioLibros: servicioLibros) {
+    constructor(private servicioLibros: servicioCatalogoLibros) {
         console.log('[CatalogoLibros] Constructor: iniciando carga de catalogo');
         this.cargarCatalogo();
+    }
+
+    // Exponer la señal paginaActual del servicio para el template
+    get paginaActual() {
+        return this.servicioLibros.paginaActual;
     }
 
     /**
@@ -93,9 +99,7 @@ export class Libros {
                     this.cargarPagina(paginaInicial);
                 },
                 error: (error: unknown) => {
-                    const mensaje = error instanceof Error ? error.message : 'ERROR_DESCONOCIDO';
-                    console.error('[CatalogoLibros] Error al cargar catalogo:', mensaje);
-                    console.error('[CatalogoLibros] Detalle error catalogo:', error);
+                    manejarError(error, 'Libros.cargarCatalogo');
                     this.errorCarga.set(true);
                     this.librosPagina.set([]);
                     this.cargando.set(false);
@@ -126,9 +130,7 @@ export class Libros {
                     this.librosPagina.set(libros);
                 },
                 error: (error: unknown) => {
-                    const mensaje = error instanceof Error ? error.message : 'ERROR_DESCONOCIDO';
-                    console.error('[CatalogoLibros] Error al cargar pagina:', mensaje);
-                    console.error('[CatalogoLibros] Detalle error pagina:', error);
+                    manejarError(error, 'Libros.cargarPagina');
                     this.errorCarga.set(true);
                     this.librosPagina.set([]);
                 },

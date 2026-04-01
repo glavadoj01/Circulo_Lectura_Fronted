@@ -4,10 +4,11 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, finalize, of } from 'rxjs';
+import { manejarError } from '@sharedUtils/error.utils';
 // Importaciones propias
 import { LibroCritica } from '@interfaces/modelosBD/modelosBD';
 import { LibroApp } from '@interfaces/modelosApp/modelosApp';
-import { servicioLibros } from '@services/servicioLibros/servicioLibros';
+import { servicioDetalleLibro } from '@services/servicioLibros/servicioDetalleLibro';
 import { ComentarioNuevo } from '@sharedComponents/comentarioNuevo/comentarioNuevo';
 import { ComentarioExistente } from '@sharedComponents/comentarioExistente/comentarioExistente';
 import { BannerCargando } from '@sharedComponents/banner-cargando/banner-cargando';
@@ -44,7 +45,7 @@ export class DetalleLibro {
 
     constructor(
         private rutaActiva: ActivatedRoute,
-        private libroService: servicioLibros,
+        private libroService: servicioDetalleLibro,
     ) {
         const id = this.rutaActiva.snapshot.paramMap.get('id');
         console.log('[DetalleLibro] ID en ruta:', id);
@@ -54,7 +55,7 @@ export class DetalleLibro {
         if (idNum && !isNaN(idNum) && idNum > 0) {
             this.cargarDetalle(idNum);
         } else {
-            console.error('[DetalleLibro] Error: ID inválido recibido en ruta:', id);
+            manejarError('detallelibro_id_invalido', 'DetalleLibro.constructor', { id });
             this.cargando = false;
         }
     }
@@ -68,9 +69,7 @@ export class DetalleLibro {
                 // takeUntilDestroyed: Se asegura de que si el componente se destruye (ej: el usuario navega a otra página) se cancele la suscripción al observable para evitar memory leaks.
                 takeUntilDestroyed(this.destroyRef),
                 catchError((error: unknown) => {
-                    // error.message contiene: LIBRO_NOT_FOUND, LIBRO_BAD_REQUEST, etc
-                    const tipo = error instanceof Error ? error.message : 'UNKNOWN';
-                    console.warn('[DetalleLibro] Error:', tipo);
+                    manejarError(error, 'DetalleLibro.cargarDetalle', { id });
                     this.libroEncontrado = false;
                     this.errorCriticas = false;
                     return of(null);
