@@ -18,43 +18,47 @@ import { LibroCard } from '@sharedComponents/libro-card/libro-card';
 export class Libros {
     private readonly destroyRef = inject(DestroyRef);
 
+    // Propiedades de estado reactivas con valor inicial
     librosPagina = signal<LibroApp[]>([]);
-    paginaActual = signal(1);
     readonly tamanioPagina = 10;
     cargando = signal(true);
     errorCarga = signal(false);
     totalResultados = signal(0);
 
+    // Propiedades computadas (reaccionan a cambios en las señales que utilizan)
     totalPaginas = computed(() =>
         Math.max(1, Math.ceil(this.totalResultados() / this.tamanioPagina)),
     );
-
     primeraPosicionPagina = computed(() => {
         if (this.totalResultados() === 0) {
             return 0;
         }
-        return (this.paginaActual() - 1) * this.tamanioPagina + 1;
+        return (this.servicioLibros.paginaActual() - 1) * this.tamanioPagina + 1;
     });
-
     ultimaPosicionPagina = computed(() =>
-        Math.min(this.paginaActual() * this.tamanioPagina, this.totalResultados()),
+        Math.min(this.servicioLibros.paginaActual() * this.tamanioPagina, this.totalResultados()),
     );
 
+    // Inyección de servicios y carga inicial del catálogo
     constructor(private servicioLibros: servicioLibros) {
         console.log('[CatalogoLibros] Constructor: iniciando carga de catalogo');
         this.cargarCatalogo();
     }
 
+    /**
+     *
+     * @param nuevaPagina
+     * @returns void
+     */
     cambiarPagina(nuevaPagina: number): void {
         if (
             nuevaPagina < 1 ||
             nuevaPagina > this.totalPaginas() ||
-            nuevaPagina === this.paginaActual()
+            nuevaPagina === this.servicioLibros.paginaActual()
         ) {
             return;
         }
 
-        this.paginaActual.set(nuevaPagina);
         this.servicioLibros.setPaginaCatalogoActual(nuevaPagina);
         console.log('[CatalogoLibros] Cambio de pagina:', nuevaPagina);
         this.cargarPagina(nuevaPagina);
@@ -75,7 +79,6 @@ export class Libros {
                     this.totalResultados.set(total);
 
                     if (total === 0) {
-                        this.paginaActual.set(1);
                         this.servicioLibros.setPaginaCatalogoActual(1);
                         this.librosPagina.set([]);
                         this.cargando.set(false);
@@ -86,7 +89,6 @@ export class Libros {
                     const paginaPersistida = this.servicioLibros.getPaginaCatalogoActual();
                     const paginaInicial = Math.min(Math.max(1, paginaPersistida), totalPaginas);
 
-                    this.paginaActual.set(paginaInicial);
                     this.servicioLibros.setPaginaCatalogoActual(paginaInicial);
                     this.cargarPagina(paginaInicial);
                 },

@@ -3,17 +3,16 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "baseUrl": "src",
+        "rootDir": "./src",
         "paths": {
-            "@app/*": ["app/*"],
-            "@services/*": ["app/services/*"],
-            "@sharedComponents/*": ["app/shared/components/*"],
-            "@sharedUtils/*": ["app/shared/utils/*"],
-            "@sharedPipes/*": ["app/shared/pipes/*"],
-            "@interfaces/*": ["app/interfaces/*"],
-            "@environments/*": ["environments/*"]
+            "@app/*": ["./src/app/*"],
+            "@services/*": ["./src/app/services/*"],
+            "@sharedComponents/*": ["./src/app/shared/components/*"],
+            "@sharedUtils/*": ["./src/app/shared/utils/*"],
+            "@sharedPipes/*": ["./src/app/shared/pipes/*"],
+            "@interfaces/*": ["./src/app/interfaces/*"],
+            "@environments/*": ["./src/environments/*"]
         },
-        "outDir": "./out-tsc/app",
         "types": []
     },
     "include": ["src/**/*.ts"],
