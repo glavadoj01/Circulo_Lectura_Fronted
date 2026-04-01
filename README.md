@@ -4,8 +4,8 @@ Proyecto frontend para el TFC - Círculo de Lectura Local.
 
 ## Requisitos mínimos
 
-- **Node.js** >= 22.21.1 (recomendado usar Volta para gestionar versiones)
-- **npm** >= 11.6.4
+- **Node.js** >= 22.21.x (recomendado usar Volta para gestionar versiones)
+- **npm** >= 11.6.x
 - **Angular CLI** >= 21
 
 ## Instalación y Configuración
