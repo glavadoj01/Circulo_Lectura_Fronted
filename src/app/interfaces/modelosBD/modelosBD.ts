@@ -13,6 +13,8 @@ export interface UsuarioBD {
 
 export interface NombreUsuario {
     nombre_usuario: string;
+
+    trim(): string;
 }
 
 export interface GeneroBD {
@@ -24,6 +26,8 @@ export interface GeneroBD {
 // Para typado externo (sin ID)
 export interface GeneroNombre {
     nombre_genero: string;
+
+    trim(): string;
 }
 
 export interface IdiomaBD {
@@ -34,6 +38,8 @@ export interface IdiomaBD {
 // Para typado externo (sin ID)
 export interface IdiomaNombre {
     nombre_idioma: string;
+
+    trim(): string;
 }
 
 export interface LibroBD {
@@ -57,9 +63,13 @@ export interface AutorBD {
 // Para typado externo (sin ID)
 export interface AutorNombre {
     nombre_autor: string;
+
+    trim(): string;
 }
 export interface AutorApellido {
     apellido_autor: string;
+
+    trim(): string;
 }
 
 // Entidades Débiles

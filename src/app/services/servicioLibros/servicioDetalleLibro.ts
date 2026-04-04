@@ -1,22 +1,25 @@
 // Servicio para detalle de libro (detalle, críticas, distribución)
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of, switchMap } from 'rxjs';
 import { environment } from '@environments/environments';
-import { LibroApp, RespuestaCriticas } from '@interfaces/modelosApp/modelosApp';
+import {
+    DetalleLibroCompleto,
+    LibroApp,
+    RespuestaCriticas,
+} from '@interfaces/modelosApp/modelosApp';
 import { LibroCritica } from '@interfaces/modelosBD/modelosBD';
 import { BaseLibros } from './baseLibros';
 import { manejarError, AppError } from '@app/shared/utils/error.utils';
-
-interface DetalleLibroCompleto {
-    libro: LibroApp;
-    criticas: LibroCritica[];
-    notasDistribucion: { nota: number; cantidad: number; frecuencia: number }[];
-    errorCriticas: boolean;
-}
+import { valorNumeroSeguro } from '@app/shared/utils/validation.utils';
+import { normalizarPuntuacion } from '@app/shared/utils/format.utils';
 
 @Injectable({ providedIn: 'root' })
 export class servicioDetalleLibro {
+    /**
+     * Inicializa el servicio con el cliente HTTP de Angular para realizar las solicitudes al backend.
+     * @param http Cliente HTTP de Angular para realizar las solicitudes al backend.
+     */
     constructor(private http: HttpClient) {}
 
     /**
@@ -49,9 +52,9 @@ export class servicioDetalleLibro {
         return this.http.get<RespuestaCriticas>(url).pipe(
             map((resp) => {
                 const frec = Array.isArray(resp.frecuencias) ? resp.frecuencias : [];
-                const frecuenciasNormalizadas = [0, 1, 2, 3, 4, 5].map((i) => {
-                    const val = Number(frec[i] ?? 0);
-                    return Number.isFinite(val) ? val : 0;
+                const frecuenciasNormalizadas = [1, 2, 3, 4, 5].map((i) => {
+                    const val = valorNumeroSeguro(frec[i - 1] ?? 0);
+                    return normalizarPuntuacion(val);
                 });
                 return {
                     ...resp,
@@ -61,36 +64,28 @@ export class servicioDetalleLibro {
                         number,
                         number,
                         number,
-                        number,
                     ],
                 };
             }),
             catchError((error) => {
-                manejarError(error, 'servicioDetalleLibro.getCriticasPorIdLibro', { id });
-                return of({ criticas: [], frecuencias: [0, 0, 0, 0, 0, 0] } as RespuestaCriticas);
+                throw manejarError(error, 'servicioDetalleLibro.getCriticasPorIdLibro', { id });
             }),
         );
     }
 
     /**
      * Calcula distribución de notas a partir de críticas y frecuencias
-     * @param criticas Array de críticas del libro
      * @param frecuencias Array de frecuencias por nota
      * @returns Array con la distribución de notas (nota, cantidad, frecuencia)
      */
     private calcularDistribucion(
-        criticas: LibroCritica[],
         frecuencias: number[],
     ): { nota: number; cantidad: number; frecuencia: number }[] {
-        const total = criticas.length;
-        if (total === 0) {
-            return [];
-        }
+        const total = frecuencias.reduce((sum, val) => sum + val, 0);
         return [5, 4, 3, 2, 1].map((nota) => {
-            const cantidad = Number(frecuencias[nota] ?? 0);
-            const cantidadSegura = Number.isFinite(cantidad) && cantidad > 0 ? cantidad : 0;
-            const frecuencia = total > 0 ? Number(((cantidadSegura * 100) / total).toFixed(2)) : 0;
-            return { nota, cantidad: cantidadSegura, frecuencia };
+            const cantidad = valorNumeroSeguro(Number(frecuencias[nota - 1] ?? 0));
+            const frecuencia = total > 0 ? Number(((cantidad * 100) / total).toFixed(2)) : 0;
+            return { nota, cantidad, frecuencia };
         });
     }
 
@@ -111,12 +106,18 @@ export class servicioDetalleLibro {
                         errorCriticas: false,
                     })),
                     catchError((error) => {
-                        manejarError(error, 'servicioDetalleLibro.getDetalleLibro.criticas', { id });
                         return of({
                             libro,
                             criticas: [],
-                            frecuencias: [0, 0, 0, 0, 0, 0],
+                            frecuencias: [0, 0, 0, 0, 0],
                             errorCriticas: true,
+                            error: manejarError(
+                                error,
+                                'servicioDetalleLibro.getDetalleLibro.criticas',
+                                {
+                                    id,
+                                },
+                            ),
                         });
                     }),
                 );
@@ -124,7 +125,7 @@ export class servicioDetalleLibro {
             map((data) => ({
                 libro: data.libro,
                 criticas: data.criticas,
-                notasDistribucion: this.calcularDistribucion(data.criticas, data.frecuencias),
+                notasDistribucion: this.calcularDistribucion(data.frecuencias),
                 errorCriticas: data.errorCriticas,
             })),
             catchError((error) => {

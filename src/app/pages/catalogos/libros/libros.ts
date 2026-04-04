@@ -1,5 +1,5 @@
 // Importaciones node_modules
-import { Component, signal, computed, inject, DestroyRef } from '@angular/core';
+import { Component, signal, computed, inject, DestroyRef, WritableSignal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 // Importaciones propias
@@ -11,6 +11,12 @@ import { manejarError } from '@sharedUtils/error.utils';
 import { Paginacion } from '@sharedComponents/paginacion/paginacion';
 import { LibroCard } from '@sharedComponents/libro-card/libro-card';
 
+/**
+ * Componente para mostrar un catálogo de libros con paginación. Permite navegar entre páginas de libros, mostrando un número limitado de libros por página. El componente maneja el estado de carga y errores, y utiliza servicios para obtener los datos del catálogo desde el backend.
+ * El componente utiliza señales para manejar el estado de los libros, la página actual, el total de resultados, y los estados de carga y error. También incluye propiedades computadas para calcular el total de páginas y las posiciones de los libros mostrados en la página actual.
+ * La lógica de carga del catálogo se realiza en dos pasos: primero se obtiene el total de libros para calcular el número de páginas, y luego se carga la página específica de libros. El componente también maneja la persistencia de la página actual en el servicio para mantener la navegación consistente.
+ */
+
 @Component({
     selector: 'app-libros',
     imports: [BannerCargando, BannerError, Paginacion, LibroCard],
@@ -18,10 +24,10 @@ import { LibroCard } from '@sharedComponents/libro-card/libro-card';
 })
 export class Libros {
     private readonly destroyRef = inject(DestroyRef);
+    readonly tamanioPagina: number = 10;
 
     // Propiedades de estado reactivas con valor inicial
     librosPagina = signal<LibroApp[]>([]);
-    readonly tamanioPagina = 10;
     cargando = signal(true);
     errorCarga = signal(false);
     totalResultados = signal(0);
@@ -40,37 +46,19 @@ export class Libros {
         Math.min(this.servicioLibros.paginaActual() * this.tamanioPagina, this.totalResultados()),
     );
 
-    // Inyección de servicios y carga inicial del catálogo
+    /**
+     * Inicializa el componente, inyectando el servicio de catálogo de libros y cargando el catálogo inicial. El constructor también establece la página actual del catálogo en el servicio y maneja la carga de datos, incluyendo la gestión de estados de carga y error.
+     * @param servicioLibros Servicio para obtener los datos del catálogo de libros desde el backend. Se inyecta para permitir la separación de responsabilidades y facilitar las pruebas unitarias. El servicio proporciona métodos para obtener el total de libros, obtener libros paginados, y gestionar la página actual del catálogo.
+     */
     constructor(private servicioLibros: servicioCatalogoLibros) {
         console.log('[CatalogoLibros] Constructor: iniciando carga de catalogo');
         this.cargarCatalogo();
     }
 
-    // Exponer la señal paginaActual del servicio para el template
-    get paginaActual() {
-        return this.servicioLibros.paginaActual;
-    }
-
     /**
-     *
-     * @param nuevaPagina
-     * @returns void
+     * Carga el catálogo de libros, obteniendo primero el total de libros para calcular el número de páginas, y luego cargando la página específica de libros. Maneja los estados de carga y error, y persiste la página actual en el servicio para mantener la navegación consistente. En caso de error, muestra un mensaje de error y limpia la lista de libros.
+     * El método utiliza el operador `takeUntilDestroyed` para asegurar que las suscripciones se limpien automáticamente cuando el componente se destruya, evitando fugas de memoria. También utiliza el operador `finalize` para asegurar que el estado de carga se actualice correctamente al finalizar la carga, independientemente de si fue exitosa o si ocurrió un error.
      */
-    cambiarPagina(nuevaPagina: number): void {
-        if (
-            nuevaPagina < 1 ||
-            nuevaPagina > this.totalPaginas() ||
-            nuevaPagina === this.servicioLibros.paginaActual()
-        ) {
-            return;
-        }
-
-        this.servicioLibros.setPaginaCatalogoActual(nuevaPagina);
-        console.log('[CatalogoLibros] Cambio de pagina:', nuevaPagina);
-        this.cargarPagina(nuevaPagina);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     private cargarCatalogo(): void {
         console.log('[CatalogoLibros] cargarCatalogo: inicio');
         this.cargando.set(true);
@@ -107,6 +95,10 @@ export class Libros {
             });
     }
 
+    /**
+     * Carga una página específica de libros, actualizando el estado de carga y error según corresponda. El método obtiene los libros paginados desde el servicio, y en caso de éxito actualiza la lista de libros para la página actual. En caso de error, muestra un mensaje de error y limpia la lista de libros.
+     * @param pagina Número de página a cargar. Debe ser un número entero positivo que corresponda a una página válida dentro del total de páginas calculado. El método valida que la página sea válida antes de realizar la carga, y maneja los estados de carga y error de manera adecuada para proporcionar una experiencia de usuario consistente.
+     */
     private cargarPagina(pagina: number): void {
         console.log('[CatalogoLibros] cargarPagina: inicio', {
             pagina,
@@ -116,7 +108,7 @@ export class Libros {
         this.errorCarga.set(false);
 
         this.servicioLibros
-            .getCatalogoLibrosPaginado(pagina, this.tamanioPagina)
+            .getCatalogoLibrosPaginado(pagina, 'id_libro', this.tamanioPagina)
             .pipe(
                 finalize(() => this.cargando.set(false)),
                 takeUntilDestroyed(this.destroyRef),
@@ -135,5 +127,32 @@ export class Libros {
                     this.librosPagina.set([]);
                 },
             });
+    }
+
+    /**
+     * Obtiene la página actual del catálogo desde el servicio. Esta propiedad es computada para asegurar que siempre refleje el valor actual del servicio, permitiendo que el componente reaccione a cambios en la página actual de manera automática. La página actual se utiliza para calcular las posiciones de los libros mostrados y para gestionar la navegación entre páginas.
+     * @returns Número de página actual del catálogo, obtenido del servicio. Debe ser un número entero positivo que corresponda a una página válida dentro del total de páginas calculado. El valor se obtiene directamente del servicio para asegurar la consistencia en la navegación y la gestión del estado de la página actual.
+     */
+    get paginaActual(): WritableSignal<number> {
+        return this.servicioLibros.paginaActual;
+    }
+
+    /**
+     * Cambia la página actual del catálogo y carga los libros correspondientes. Valida que la nueva página sea válida y diferente a la página actual antes de realizar el cambio. Si la página es válida, actualiza la página actual en el servicio, carga los libros de la nueva página, y desplaza la ventana hacia arriba para mejorar la experiencia del usuario.
+     * @param nuevaPagina Número de la nueva página a cargar. Debe ser un número entero positivo que corresponda a una página válida dentro del total de páginas calculado. El método valida que la página sea válida antes de realizar el cambio.
+     */
+    cambiarPagina(nuevaPagina: number): void {
+        if (
+            nuevaPagina < 1 ||
+            nuevaPagina > this.totalPaginas() ||
+            nuevaPagina === this.servicioLibros.paginaActual()
+        ) {
+            return;
+        }
+
+        this.servicioLibros.setPaginaCatalogoActual(nuevaPagina);
+        console.log('[CatalogoLibros] Cambio de pagina:', nuevaPagina);
+        this.cargarPagina(nuevaPagina);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }

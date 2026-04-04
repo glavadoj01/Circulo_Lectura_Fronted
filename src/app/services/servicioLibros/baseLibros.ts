@@ -1,40 +1,58 @@
 // Métodos utilitarios y de mapeo/validación compartidos para libros
-// No depende de Angular, solo lógica pura
 import { LibroApp } from '@interfaces/modelosApp/modelosApp';
-import { valorTextoSeguro, validarAutores, validarGeneros } from '@sharedUtils/validation.utils';
+import {
+    valorTextoSeguro,
+    validarAutores,
+    validarGeneros,
+    valorNumeroSeguro,
+} from '@sharedUtils/validation.utils';
 
 export class BaseLibros {
-    /** Mapeo y limpieza de datos para un libro */
+    /**
+     * Mapea un objeto LibroApp, asegurando que sus propiedades estén normalizadas y validadas.
+     * @param libro Objeto LibroApp a mapear.
+     * @returns Objeto LibroApp mapeado y validado.
+     */
     static mapLibroApp(libro: LibroApp): LibroApp {
-        const promedioRaw = libro.calificacionPromedio;
-        const calificacionNum = typeof promedioRaw === 'number' ? promedioRaw : Number(promedioRaw);
-        const nombreIdioma = valorTextoSeguro(libro.nombre_idioma_original) || 'N/A';
-        const sinopsis = valorTextoSeguro(libro.sinopsis);
-        const titulo = valorTextoSeguro(libro.titulo_libro);
-        const isbn = valorTextoSeguro(libro.codigo_isbn);
-        const paginas = Number.isFinite(Number(libro.paginas)) ? Number(libro.paginas) : 0;
+        const tituloSeguro = valorTextoSeguro(libro.titulo_libro);
+        const idiomaOriginalSeguro = valorTextoSeguro(libro.nombre_idioma_original);
+        const sinopsisSegura = valorTextoSeguro(libro.sinopsis);
+        const isbnSeguro = valorTextoSeguro(libro.codigo_isbn);
+        const paginasSeguras = valorNumeroSeguro(libro.paginas);
+        const calificacionPromedioSegura = valorNumeroSeguro(libro.calificacionPromedio);
+        const totalResenasSeguras = valorNumeroSeguro(libro.totalResenas);
 
         return {
             ...libro,
-            titulo_libro: titulo || 'Título no disponible',
-            nombre_idioma_original: nombreIdioma,
-            sinopsis: sinopsis || 'Sinopsis no disponible',
-            codigo_isbn: isbn || 'N/A',
-            paginas,
-            calificacionPromedio: Number.isFinite(calificacionNum) ? calificacionNum : 0,
+            titulo_libro: tituloSeguro != '' ? tituloSeguro : 'Título no disponible',
+            nombre_idioma_original: idiomaOriginalSeguro != '' ? idiomaOriginalSeguro : 'N/A',
+            sinopsis: sinopsisSegura != '' ? sinopsisSegura : 'Sinopsis no disponible',
+            codigo_isbn: isbnSeguro != '' ? isbnSeguro : 'N/A',
+            paginas: paginasSeguras > 0 ? paginasSeguras : undefined,
+            calificacionPromedio: calificacionPromedioSegura,
+            totalResenas: totalResenasSeguras,
             autores: validarAutores(libro.autores),
             generos: validarGeneros(libro.generos),
-            totalResenas: Number.isFinite(Number(libro.totalResenas))
-                ? Number(libro.totalResenas)
-                : 0,
         };
     }
 
-    /** Normaliza y ordena libros por id */
-    static normalizarYOrdenarLibros(libros: LibroApp[]): LibroApp[] {
+    /**
+     * Normaliza y ordena un array de libros, asegurando que cada libro esté mapeado correctamente.
+     * @param libros Array de libros a normalizar y ordenar.
+     * @param sort Propiedad por la cual ordenar los libros (por defecto 'id_libro').
+     * @returns Array de libros normalizados y ordenados.
+     */
+    static normalizarYOrdenarLibros(libros: LibroApp[], sort = 'id_libro'): LibroApp[] {
         const lista = Array.isArray(libros) ? libros : [];
         return lista
             .map((libro) => BaseLibros.mapLibroApp(libro))
-            .sort((a, b) => Number(a.id_libro) - Number(b.id_libro));
+            .sort((a, b) => {
+                const valueA = a[sort as keyof LibroApp] ?? '';
+                const valueB = b[sort as keyof LibroApp] ?? '';
+                if (typeof valueA === 'string' && typeof valueB === 'string') {
+                    return valueA.localeCompare(valueB);
+                }
+                return Number(valueA) - Number(valueB);
+            });
     }
 }

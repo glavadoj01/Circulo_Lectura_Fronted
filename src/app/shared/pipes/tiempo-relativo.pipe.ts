@@ -1,4 +1,14 @@
+import { valorTextoSeguro } from '@app/shared/utils/validation.utils';
 import { Pipe, PipeTransform } from '@angular/core';
+
+/**
+ * Pipe para mostrar el tiempo relativo desde una fecha dada hasta el momento actual.
+ * Si la fecha es inválida, se muestra "Fecha invalida".
+ * Ejemplo de uso en plantilla: {{ libro.fecha_publicacion | tiempoRelativo }}
+ * Ejemplo de salida: "Hace 3 días", "Hace 2 horas", "Hace un momento", etc.
+ * @param value Fecha de la que se quiere calcular el tiempo relativo. Puede ser una cadena de texto o un objeto Date.
+ * @returns Cadena de texto que indica el tiempo transcurrido desde la fecha dada hasta ahora, o "Fecha invalida" si la fecha no es válida.
+ */
 
 @Pipe({
     name: 'tiempoRelativo',
@@ -37,6 +47,12 @@ export class TiempoRelativoPipe implements PipeTransform {
         return `Hace ${diferenciaAnios} anio${diferenciaAnios > 1 ? 's' : ''}`;
     }
 
+    /**
+     * Asegura que la fecha se pueda convertir a un objeto Date válido, aceptando tanto objetos Date como cadenas de texto en formatos comunes.
+     * @param fecha Valor a convertir a fecha. Puede ser un objeto Date, una cadena de texto o undefined.
+     * @returns Objeto Date válido o null si la conversión falla.
+     */
+
     private parseFechaFlexible(fecha: Date | string | undefined): Date | null {
         if (!fecha) {
             return null;
@@ -50,7 +66,7 @@ export class TiempoRelativoPipe implements PipeTransform {
             return null;
         }
 
-        const valor = fecha.trim();
+        const valor = valorTextoSeguro(fecha);
         if (!valor) {
             return null;
         }

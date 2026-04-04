@@ -13,6 +13,7 @@ import { PuntuacionTextoPipe } from '@sharedPipes/puntuacion-texto.pipe';
 export class LibroCard {
     libro = input.required<LibroApp>();
 
+    // TODO Portada Real -> While placeholder random webIMG
     portadaLibro(idLibro: number): string {
         return `https://picsum.photos/seed/libro-${idLibro}/400/600`;
     }

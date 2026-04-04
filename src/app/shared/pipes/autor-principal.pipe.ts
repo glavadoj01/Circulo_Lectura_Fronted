@@ -1,5 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { valorTextoSeguro } from '@sharedUtils/validation.utils';
 import { LibroApp } from '@interfaces/modelosApp/modelosApp';
+
+/**
+ * Pipe para obtener el nombre del autor principal de un libro.
+ * Si el libro no tiene autores o el primer autor no es válido, devuelve "Autor desconocido".
+ * Ejemplo de uso en plantilla: {{ libro | autorPrincipal }}
+ * @returns Nombre completo del autor principal o "Autor desconocido" si no es válido.
+ */
 
 @Pipe({
     name: 'autorPrincipal',
@@ -13,13 +21,11 @@ export class AutorPrincipalPipe implements PipeTransform {
 
         // Obtiene el primer autor
         const autor =
-            (libro as LibroApp)?.autores?.[0]?.nombre_autor + ' ' + 'PLACEHOLDER APELLIDO';
+            (libro as LibroApp)?.autores?.[0]?.nombre_autor +
+            ' ' +
+            (libro as LibroApp)?.autores?.[0]?.apellido_autor;
 
-        // Valida que sea string no vacío
-        if (typeof autor === 'string' && autor.trim().length > 0) {
-            return autor.trim();
-        }
-
-        return 'Autor desconocido';
+        const nombre = valorTextoSeguro(autor);
+        return nombre.length > 0 ? nombre : 'Autor desconocido';
     }
 }

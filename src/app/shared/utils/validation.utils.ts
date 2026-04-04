@@ -1,3 +1,13 @@
+import { AutorApellido, AutorNombre, GeneroNombre } from '@app/interfaces/modelosBD/modelosBD';
+
+/**
+ * Convierte un valor desconocido a una cadena de texto segura.
+ * Si el valor es una cadena, se devuelve la cadena sin espacios al principio y al final.
+ * Si el valor es un número finito, se convierte a cadena y se devuelve.
+ * En cualquier otro caso, se devuelve una cadena vacía.
+ * @param valor Valor a convertir a texto seguro.
+ * @returns Cadena de texto segura.
+ */
 export function valorTextoSeguro(valor: unknown): string {
     if (typeof valor === 'string') {
         const limpio = valor.trim();
@@ -9,18 +19,69 @@ export function valorTextoSeguro(valor: unknown): string {
     return '';
 }
 
-export function validarAutores(autores: unknown): Array<{ nombre_autor: string }> {
+/**
+ * Verifica si un valor es un número finito y lo devuelve, o devuelve 0 si no es un número válido.
+ * @param valor Valor a validar como número seguro.
+ * @returns Número seguro o 0 si el valor no es un número finito.
+ */
+export function valorNumeroSeguro(valor: unknown): number {
+    if (typeof valor === 'number' && Number.isFinite(valor)) {
+        return valor;
+    }
+    return 0;
+}
+
+/**
+ * Valida si un valor es un número finito o una cadena que representa un número, y devuelve su representación en texto.
+ * Si el valor es un número finito, se convierte a cadena y se devuelve.
+ * Si el valor es una cadena que representa un número, se devuelve la cadena sin espacios al principio y al final.
+ * En cualquier otro caso, se devuelve una cadena vacía.
+ * @param valor Valor a validar como número o cadena numérica segura.
+ * @returns Número en formato de texto seguro o una cadena vacía si el valor no es válido.
+ */
+export function valorNumeroTextoSeguro(valor: unknown): string {
+    if (typeof valor === 'number' && Number.isFinite(valor)) {
+        return String(valor);
+    } else if (typeof valor === 'string') {
+        const limpio = valor.trim();
+        return limpio.length > 0 && !isNaN(Number(limpio)) ? limpio : '';
+    }
+    return '';
+}
+
+/**
+ * Valida y procesa un array de autores.
+ * @param autores Array de objetos que representan autores.
+ * @returns Array de objetos con los nombres de los autores validados y limpios.
+ */
+export function validarAutores(
+    autores: unknown,
+): Array<{ nombre_autor: AutorNombre; apellido_autor: AutorApellido; id_autor: number }> {
     if (!Array.isArray(autores)) {
         return [];
     }
     return autores
-        .filter((item) => item && typeof item.nombre_autor === 'string')
+        .filter(
+            (item) =>
+                item &&
+                typeof item.nombre_autor === 'string' &&
+                typeof item.apellido_autor === 'string' &&
+                typeof item.id_autor === 'number' &&
+                Number.isFinite(item.id_autor),
+        )
         .map((item) => ({
             nombre_autor: item.nombre_autor.trim(),
+            apellido_autor: item.apellido_autor.trim(),
+            id_autor: item.id_autor,
         }));
 }
 
-export function validarGeneros(generos: unknown): Array<{ nombre_genero: string }> {
+/**
+ * Valida y procesa un array de géneros.
+ * @param generos Array de objetos que representan géneros.
+ * @returns Array de objetos con los nombres de los géneros validados y limpios.
+ */
+export function validarGeneros(generos: unknown): Array<{ nombre_genero: GeneroNombre }> {
     if (!Array.isArray(generos)) {
         return [];
     }
