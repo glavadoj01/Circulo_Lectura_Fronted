@@ -98,6 +98,7 @@ export class DetalleLibro {
                 }),
             )
             .subscribe((detalle) => {
+                console.log('[DetalleLibro] Detalle recibido:', detalle);
                 if (!detalle) return;
 
                 this.libro = detalle.libro;

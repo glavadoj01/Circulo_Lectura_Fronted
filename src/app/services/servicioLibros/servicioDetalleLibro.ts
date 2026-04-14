@@ -8,7 +8,6 @@ import {
     LibroApp,
     RespuestaCriticas,
 } from '@interfaces/modelosApp/modelosApp';
-import { LibroCritica } from '@interfaces/modelosBD/modelosBD';
 import { BaseLibros } from './baseLibros';
 import { manejarError, AppError } from '@app/shared/utils/error.utils';
 import { valorNumeroSeguro } from '@app/shared/utils/validation.utils';
@@ -29,8 +28,9 @@ export class servicioDetalleLibro {
      */
     private getLibroPorId(id: number): Observable<LibroApp> {
         const url = `${environment.apiUrl}:${environment.puerto}/libro/${id}`;
-        return this.http.get<LibroApp>(url).pipe(
-            map((libro) => {
+        return this.http.get<DetalleLibroCompleto>(url).pipe(
+            map((resp) => {
+                const libro = resp.libro;
                 if (!libro || !libro.id_libro) {
                     throw new AppError('libro_respuesta_invalida', { id });
                 }

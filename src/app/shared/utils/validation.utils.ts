@@ -28,6 +28,9 @@ export function valorNumeroSeguro(valor: unknown): number {
     if (typeof valor === 'number' && Number.isFinite(valor)) {
         return valor;
     }
+    if (typeof valor === 'string' && valor.trim().length > 0 && !isNaN(Number(valor))) {
+        return Number(valor);
+    }
     return 0;
 }
 
@@ -64,14 +67,24 @@ export function validarAutores(
         .filter(
             (item) =>
                 item &&
-                typeof item.nombre_autor === 'string' &&
-                typeof item.apellido_autor === 'string' &&
+                (typeof item.nombre_autor === 'string' ||
+                    (typeof item.nombre_autor === 'object' &&
+                        typeof item.nombre_autor.nombre_autor === 'string')) &&
+                (typeof item.apellido_autor === 'string' ||
+                    (typeof item.apellido_autor === 'object' &&
+                        typeof item.apellido_autor.apellido_autor === 'string')) &&
                 typeof item.id_autor === 'number' &&
                 Number.isFinite(item.id_autor),
         )
         .map((item) => ({
-            nombre_autor: item.nombre_autor.trim(),
-            apellido_autor: item.apellido_autor.trim(),
+            nombre_autor:
+                typeof item.nombre_autor === 'string'
+                    ? item.nombre_autor.trim()
+                    : item.nombre_autor.nombre_autor.trim(),
+            apellido_autor:
+                typeof item.apellido_autor === 'string'
+                    ? item.apellido_autor.trim()
+                    : item.apellido_autor.apellido_autor.trim(),
             id_autor: item.id_autor,
         }));
 }
@@ -86,8 +99,17 @@ export function validarGeneros(generos: unknown): Array<{ nombre_genero: GeneroN
         return [];
     }
     return generos
-        .filter((item) => item && typeof item.nombre_genero === 'string')
+        .filter(
+            (item) =>
+                item &&
+                (typeof item.nombre_genero === 'string' ||
+                    (typeof item.nombre_genero === 'object' &&
+                        typeof item.nombre_genero.nombre_genero === 'string')),
+        )
         .map((item) => ({
-            nombre_genero: item.nombre_genero.trim(),
+            nombre_genero:
+                typeof item.nombre_genero === 'string'
+                    ? item.nombre_genero.trim()
+                    : item.nombre_genero.nombre_genero.trim(),
         }));
 }

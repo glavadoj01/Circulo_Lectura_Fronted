@@ -14,6 +14,7 @@ export class BaseLibros {
      * @returns Objeto LibroApp mapeado y validado.
      */
     static mapLibroApp(libro: LibroApp): LibroApp {
+        console.log('Mapeando libro:', libro);
         const tituloSeguro = valorTextoSeguro(libro.titulo_libro);
         const idiomaOriginalSeguro = valorTextoSeguro(libro.nombre_idioma_original);
         const sinopsisSegura = valorTextoSeguro(libro.sinopsis);
