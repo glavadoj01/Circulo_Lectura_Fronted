@@ -1,75 +1,70 @@
 {
-  "name": "circulo-lectura-fronted",
-  "version": "0.3.2",
-  "description": "Frontend de la aplicación Círculo de Lectura",
-
-  "homepage": "https://github.com/glavadoj01/Circulo_Lectura_Fronted#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/glavadoj01/Circulo_Lectura_Fronted.git"
-  },
-  "bugs": {
-    "url": "https://github.com/glavadoj01/Circulo_Lectura_Fronted/issues"
-  },
-  
-  "license": "GNU General Public License v3.0",
-  "author": "Gonzalo Lavado",
-  "type": "module",
-  "main": "src/main.ts",
-
-  "volta": {
-    "node": "22.22.2",
-    "npm": "11.6.4"
-  },
-  "scripts": {
-    "reinstall": "rm -rf node_modules package-lock.json && npm install",
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "run": "npm run reinstall && npm run start"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
-  },
-  "private": true,
-
-  "dependencies": {
-    "@angular/common": "^21",
-    "@angular/compiler": "^21",
-    "@angular/core": "^21",
-    "@angular/forms": "^21",
-    "@angular/platform-browser": "^21",
-    "@angular/router": "^21",
-    "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
-  },
-
-  "devDependencies": {
-    "@angular/build": "^21",
-    "@angular/cli": "^21",
-    "@angular/compiler-cli": "^21",
-    "@tailwindcss/postcss": "^4.1.18",
-    "@types/jasmine": "~5.1.0",
-    "daisyui": "^5.5.14",
-    "jasmine-core": "~5.9.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
-    "typescript": "~5.9.2"
-  }
+    "name": "circulo-lectura-fronted",
+    "version": "0.3.3",
+    "description": "Frontend de la aplicación Círculo de Lectura",
+    "homepage": "https://github.com/glavadoj01/Circulo_Lectura_Fronted#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/glavadoj01/Circulo_Lectura_Fronted.git"
+    },
+    "bugs": {
+        "url": "https://github.com/glavadoj01/Circulo_Lectura_Fronted/issues"
+    },
+    "license": "GNU General Public License v3.0",
+    "author": "Gonzalo Lavado",
+    "type": "module",
+    "main": "src/main.ts",
+    "volta": {
+        "node": "22.22.2",
+        "npm": "11.6.4"
+    },
+    "scripts": {
+        "reinstall": "rm -rf node_modules package-lock.json && npm install",
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build",
+        "watch": "ng build --watch --configuration development",
+        "run": "npm run reinstall && npm run start"
+    },
+    "prettier": {
+        "printWidth": 100,
+        "singleQuote": true,
+        "overrides": [
+            {
+                "files": "*.html",
+                "options": {
+                    "parser": "angular"
+                }
+            }
+        ]
+    },
+    "private": true,
+    "dependencies": {
+        "@angular/common": "^21",
+        "@angular/compiler": "^21",
+        "@angular/core": "^21",
+        "@angular/forms": "^21",
+        "@angular/platform-browser": "^21",
+        "@angular/router": "^21",
+        "rxjs": "~7.8.0",
+        "tslib": "^2.3.0",
+        "zone.js": "~0.15.0"
+    },
+    "devDependencies": {
+        "@angular/build": "^21",
+        "@angular/cli": "^21",
+        "@angular/compiler-cli": "^21",
+        "@tailwindcss/postcss": "^4.1.18",
+        "@types/jasmine": "~5.1.0",
+        "daisyui": "^5.5.14",
+        "jasmine-core": "~5.9.0",
+        "karma": "~6.4.0",
+        "karma-chrome-launcher": "~3.2.0",
+        "karma-coverage": "~2.2.0",
+        "karma-jasmine": "~5.1.0",
+        "karma-jasmine-html-reporter": "~2.1.0",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^4.1.18",
+        "typescript": "~5.9.2"
+    }
 }

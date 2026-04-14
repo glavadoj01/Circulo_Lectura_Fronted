@@ -1,5 +1,6 @@
 // Métodos utilitarios y de mapeo/validación compartidos para libros
 import { LibroApp } from '@interfaces/modelosApp/modelosApp';
+import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
 import {
     valorTextoSeguro,
     validarAutores,
@@ -38,18 +39,25 @@ export class BaseLibros {
     }
 
     /**
-     * Normaliza y ordena un array de libros, asegurando que cada libro esté mapeado correctamente.
-     * @param libros Array de libros a normalizar y ordenar.
-     * @param sort Propiedad por la cual ordenar los libros (por defecto 'id_libro').
-     * @returns Array de libros normalizados y ordenados.
+     * Normaliza y ordena un array de libros para el catálogo, devolviendo solo los campos mínimos requeridos (LibroResumen).
+     * @param libros Array de libros crudos del backend
+     * @param sort Campo por el que ordenar (por defecto id_libro)
      */
-    static normalizarYOrdenarLibros(libros: LibroApp[], sort = 'id_libro'): LibroApp[] {
-        const lista = Array.isArray(libros) ? libros : [];
-        return lista
-            .map((libro) => BaseLibros.mapLibroApp(libro))
+    static normalizarYOrdenarLibros(libros: any[], sort: string = 'id_libro'): LibroResumen[] {
+        return [...libros]
+            .map((libro) => ({
+                id_libro: libro.id_libro,
+                titulo_libro: libro.titulo_libro,
+                autores:
+                    libro.autores?.map((a: any) => ({
+                        nombre_autor: a.nombre_autor,
+                        apellido_autor: a.apellido_autor,
+                    })) ?? [],
+                calificacionPromedio: libro.calificacionPromedio,
+            }))
             .sort((a, b) => {
-                const valueA = a[sort as keyof LibroApp] ?? '';
-                const valueB = b[sort as keyof LibroApp] ?? '';
+                const valueA = a[sort as keyof LibroResumen] ?? '';
+                const valueB = b[sort as keyof LibroResumen] ?? '';
                 if (typeof valueA === 'string' && typeof valueB === 'string') {
                     return valueA.localeCompare(valueB);
                 }

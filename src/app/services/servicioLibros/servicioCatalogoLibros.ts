@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { manejarError, AppError } from '@app/shared/utils/error.utils';
 import { environment } from '@environments/environments';
-import { LibroApp } from '@interfaces/modelosApp/modelosApp';
+import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
 import { BaseLibros } from './baseLibros';
 
 /**
@@ -16,7 +16,7 @@ import { BaseLibros } from './baseLibros';
  */
 interface CacheCatalogoLibros {
     total: number | null;
-    pages: Record<string, LibroApp[]>;
+    pages: Record<string, LibroResumen[]>;
     currentPage: number;
 }
 
@@ -69,17 +69,15 @@ export class servicioCatalogoLibros {
      * @param limit Número de libros por página (por defecto es 10).
      * @returns Lista de libros correspondientes a la página solicitada.
      */
-    getCatalogoLibrosPaginado(page: number, sort = 'id_libro', limit = 10): Observable<LibroApp[]> {
+    getCatalogoLibrosPaginado(page: number, sort = 'id_libro', limit = 10): Observable<LibroResumen[]> {
         const key = `${page}_${limit}`;
-
         try {
             let cacheActual = this.leerCacheCatalogo();
             if (cacheActual.pages[key]) {
                 return of(cacheActual.pages[key]);
             }
-
             const url = `${environment.apiUrl}:${environment.puerto}/libros?page=${page}&limit=${limit}`;
-            return this.http.get<LibroApp[]>(url).pipe(
+            return this.http.get<LibroResumen[]>(url).pipe(
                 map((libros) => {
                     const normalizados = BaseLibros.normalizarYOrdenarLibros(libros, sort);
                     this.guardarCacheCatalogo({

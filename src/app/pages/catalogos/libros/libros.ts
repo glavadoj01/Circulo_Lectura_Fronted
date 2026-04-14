@@ -10,6 +10,7 @@ import { BannerError } from '@sharedComponents/banner-error/banner-error';
 import { manejarError } from '@sharedUtils/error.utils';
 import { Paginacion } from '@sharedComponents/paginacion/paginacion';
 import { LibroCard } from '@sharedComponents/libro-card/libro-card';
+import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
 
 /**
  * Componente para mostrar un catálogo de libros con paginación. Permite navegar entre páginas de libros, mostrando un número limitado de libros por página. El componente maneja el estado de carga y errores, y utiliza servicios para obtener los datos del catálogo desde el backend.
@@ -27,7 +28,7 @@ export class Libros {
     readonly tamanioPagina: number = 10;
 
     // Propiedades de estado reactivas con valor inicial
-    librosPagina = signal<LibroApp[]>([]);
+    librosPagina = signal<LibroResumen[]>([]);
     cargando = signal(true);
     errorCarga = signal(false);
     totalResultados = signal(0);
@@ -114,7 +115,7 @@ export class Libros {
                 takeUntilDestroyed(this.destroyRef),
             )
             .subscribe({
-                next: (libros: LibroApp[]) => {
+                next: (libros: LibroResumen[]) => {
                     console.log('[CatalogoLibros] pagina recibida:', {
                         pagina,
                         items: libros.length,

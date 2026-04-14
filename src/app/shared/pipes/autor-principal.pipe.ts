@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { valorTextoSeguro } from '@sharedUtils/validation.utils';
-import { LibroApp } from '@interfaces/modelosApp/modelosApp';
+import { LibroApp, LibroResumen } from '@interfaces/modelosApp/modelosApp';
 
 /**
  * Pipe para obtener el nombre del autor principal de un libro.
@@ -13,17 +13,14 @@ import { LibroApp } from '@interfaces/modelosApp/modelosApp';
     name: 'autorPrincipal',
 })
 export class AutorPrincipalPipe implements PipeTransform {
-    transform(libro: LibroApp | null | undefined): string {
+    transform(libro: LibroApp | LibroResumen | null | undefined): string {
         // Valida que sea un objeto válido
         if (!libro || typeof libro !== 'object') {
             return 'Autor desconocido';
         }
 
         // Obtiene el primer autor
-        const autor =
-            (libro as LibroApp)?.autores?.[0]?.nombre_autor +
-            ' ' +
-            (libro as LibroApp)?.autores?.[0]?.apellido_autor;
+        const autor = libro.autores?.[0]?.nombre_autor + ' ' + libro.autores?.[0]?.apellido_autor;
 
         const nombre = valorTextoSeguro(autor);
         return nombre.length > 0 ? nombre : 'Autor desconocido';
