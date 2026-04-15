@@ -1,7 +1,7 @@
 /* Colorizar la X del input search 
     No funciona en Firefox (webkit only)
 */
-input[type='search']::-webkit-search-cancel-button {
+:host input[type='search']::-webkit-search-cancel-button {
     -webkit-appearance: none;
     appearance: none;
     height: 12px;

@@ -1,5 +1,6 @@
-<div class="flex gap-0.5 text-yellow-400 dark:text-yellow-500">
-    @for (indice of [1, 2, 3, 4, 5]; track indice) {
-    <span class="material-symbols-outlined" [style.font-variation-settings]="estiloEstrella(indice)">{{ iconoEstrella(indice) }}</span>
-    }
+<div class="estrellas-contenedor flex text-yellow-400 dark:text-yellow-500">
+  @for (indice of [1, 2, 3, 4, 5]; track indice) {
+  <span class="material-symbols-outlined" [style.font-variation-settings]="estiloEstrella(indice)">{{
+    iconoEstrella(indice) }}</span>
+  }
 </div>

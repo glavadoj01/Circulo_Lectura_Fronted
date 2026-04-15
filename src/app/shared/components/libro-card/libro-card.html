@@ -1,20 +1,20 @@
 <a [routerLink]="['/detalle/libro', libro().id_libro]"
-   [attr.aria-label]="'Ver detalle de ' + (libro().titulo_libro || 'libro sin título')"
-   class="flex flex-col group no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg">
-    <div class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
-        <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
-            [src]="portadaLibro(libro().id_libro)"
-            [alt]="'Portada de ' + (libro().titulo_libro || 'libro sin título')" />
-        <div class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <button type="button" aria-label="Añadir libro a marcadores"
-                class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
-                    class="material-symbols-outlined text-xl!">bookmark_add</span></button>
-        </div>
+  [attr.aria-label]="'Ver detalle de ' + (libro().titulo_libro || 'libro sin título')"
+  class="flex flex-col group no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg">
+  <div class="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3">
+    <img class="w-full h-full object-cover transition-transform group-hover:scale-105"
+      [src]="portadaLibro(libro().id_libro)" [alt]="'Portada de ' + (libro().titulo_libro || 'libro sin título')" />
+    <div class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <button type="button" aria-label="Añadir libro a marcadores"
+        class="flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-primary"><span
+          class="material-symbols-outlined text-xl!">bookmark_add</span></button>
     </div>
-    <h3 class="font-bold text-gray-900 dark:text-white truncate">{{ libro().titulo_libro }}</h3>
-    <p class="text-sm text-gray-500 dark:text-gray-400">{{ libro() | autorPrincipal }}</p>
-    <div class="flex items-center gap-1 mt-1 text-yellow-500">
-        <app-estrellas-puntuacion [puntuacion]="libro().calificacionPromedio"></app-estrellas-puntuacion>
-        <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">({{ libro().calificacionPromedio | puntuacionTexto }})</span>
-    </div>
+  </div>
+  <h3 class="font-bold text-gray-900 dark:text-white truncate">{{ libro().titulo_libro }}</h3>
+  <p class="text-sm text-gray-500 dark:text-gray-400">{{ libro() | autorPrincipal }}</p>
+  <div class="contenedor-puntuacion flex flex-wrap items-center gap-1 mt-1 text-yellow-500">
+    <app-estrellas-puntuacion [puntuacion]="libro().calificacionPromedio"></app-estrellas-puntuacion>
+    <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">({{ libro().calificacionPromedio | puntuacionTexto
+      }})</span>
+  </div>
 </a>

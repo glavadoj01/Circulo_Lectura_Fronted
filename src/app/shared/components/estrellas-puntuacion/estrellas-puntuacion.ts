@@ -10,6 +10,7 @@ import { normalizarPuntuacion } from '@sharedUtils/format.utils';
     selector: 'app-estrellas-puntuacion',
     imports: [],
     templateUrl: './estrellas-puntuacion.html',
+    styleUrl: './estrellas-puntuacion.css',
 })
 export class EstrellasPuntuacion {
     puntuacion = input<number | null | undefined>(null);

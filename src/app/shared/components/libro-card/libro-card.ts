@@ -9,6 +9,7 @@ import { PuntuacionTextoPipe } from '@sharedPipes/puntuacion-texto.pipe';
     selector: 'app-libro-card',
     imports: [RouterLink, EstrellasPuntuacion, AutorPrincipalPipe, PuntuacionTextoPipe],
     templateUrl: './libro-card.html',
+    styleUrl: './libro-card.css',
 })
 export class LibroCard {
     libro = input.required<LibroResumen>();

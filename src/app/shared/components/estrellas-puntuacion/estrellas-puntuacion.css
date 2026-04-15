@@ -1,0 +1,19 @@
+:host {
+    display: block;
+    width: fit-content;
+}
+:host .estrellas-contenedor {
+    display: flex;
+    gap: 0.15em;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: min(1.6vw, 1.2rem);
+}
+:host .estrellas-contenedor .material-symbols-outlined {
+    width: 1.8em;
+    height: 1em;
+    font-size: inherit;
+    min-width: 0;
+    max-width: 100%;
+}

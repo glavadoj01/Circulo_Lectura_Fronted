@@ -1,0 +1,14 @@
+:host {
+    .contenedor-detalle {
+        grid-template-columns: auto 1fr;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    aside {
+        position: sticky;
+        top: 0;
+    }
+}

@@ -6,9 +6,9 @@
   } @else {
   <div class="mx-auto flex max-w-7xl flex-col gap-12">
     <!-- Detalle de la lista -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+    <section class="grid gap-8 md:gap-20 contenedor-detalle">
       <!-- Columna izquierda (información) -->
-      <aside class="w-full flex flex-col gap-4 bg-gray-900/40 rounded-xl p-6">
+      <aside class="w-fit h-fit border border-accent flex flex-col gap-4 bg-gray-900/40 rounded-xl p-6">
         <h2 class="text-xl font-bold mb-2">{{detalle?.lista?.nombre_lista}}</h2>
         <p class="text-gray-400">{{detalle?.lista?.descripcion_lista}}</p>
         <div class="mt-4">
@@ -18,14 +18,14 @@
         </div>
       </aside>
       <!-- Columna derecha (libros) -->
-      <main class="flex-1">
+      <div class="flex-1">
         <h1 class="text-2xl font-bold mb-4">{{detalle?.lista?.nombre_lista}}</h1>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           @for (libro of detalle?.libros ?? []; track libro.id_libro) {
           <app-libro-card [libro]="libro"></app-libro-card>
           }
         </div>
-      </main>
+      </div>
     </section>
 
     <!-- Comentarios -->

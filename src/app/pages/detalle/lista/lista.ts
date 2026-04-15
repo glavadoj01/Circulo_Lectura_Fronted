@@ -21,6 +21,7 @@ import { LibroCard } from '@sharedComponents/libro-card/libro-card';
     selector: 'app-lista-detalle',
     imports: [BannerCargando, BannerError, ComentarioExistente, LibroCard],
     templateUrl: './lista.html',
+    styleUrl: './lista.css',
 })
 export class DetalleLista {
     private destroyRef = inject(DestroyRef);

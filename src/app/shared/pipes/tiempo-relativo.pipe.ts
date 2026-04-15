@@ -44,7 +44,7 @@ export class TiempoRelativoPipe implements PipeTransform {
         }
 
         const diferenciaAnios = Math.floor(diferenciaMeses / 12);
-        return `Hace ${diferenciaAnios} anio${diferenciaAnios > 1 ? 's' : ''}`;
+        return `Hace ${diferenciaAnios} año${diferenciaAnios > 1 ? 's' : ''}`;
     }
 
     /**
