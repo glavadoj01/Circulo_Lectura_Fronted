@@ -1,10 +1,20 @@
 import { Component, effect, input } from '@angular/core';
-import { LibroCritica } from '@app/interfaces/modelosBD/modelosBD';
+import type {
+    LibroCritica,
+    ListaComentarios,
+    EventoComentario,
+} from '@app/interfaces/modelosBD/modelosBD';
 import { valorNumeroSeguro } from '@app/shared/utils/validation.utils';
 import { ServicioUsuario } from '@services/servicioUsuario/servicioUsuario';
 import { EstrellasPuntuacion } from '@sharedComponents/estrellas-puntuacion/estrellas-puntuacion';
 import { PuntuacionNormalizadaPipe } from '@sharedPipes/puntuacion-normalizada.pipe';
 import { TiempoRelativoPipe } from '@sharedPipes/tiempo-relativo.pipe';
+import { saltosLinea } from '@sharedPipes/saltosLinea.pipe';
+
+type ComentarioConPuntuacion =
+    | Partial<LibroCritica & { calificacion_lista?: number | null }>
+    | Partial<ListaComentarios & { calificacion_lista?: number | null }>
+    | Partial<EventoComentario & { calificacion_evento?: number | null }>;
 
 /**
  * Componente para mostrar un comentario existente, incluyendo la puntuación, el texto del comentario, el nombre del usuario que lo realizó y el tiempo relativo desde que se publicó. Utiliza validaciones para asegurar que los datos sean seguros y presenta la información de manera clara y concisa.
@@ -14,11 +24,11 @@ import { TiempoRelativoPipe } from '@sharedPipes/tiempo-relativo.pipe';
 
 @Component({
     selector: 'app-comentario-existente',
-    imports: [EstrellasPuntuacion, PuntuacionNormalizadaPipe, TiempoRelativoPipe],
+    imports: [EstrellasPuntuacion, PuntuacionNormalizadaPipe, TiempoRelativoPipe, saltosLinea],
     templateUrl: './comentarioExistente.html',
 })
 export class ComentarioExistente {
-    critica = input.required<Partial<LibroCritica>>();
+    critica = input.required<ComentarioConPuntuacion>();
     usuarioNombre: string = '';
 
     /**
@@ -49,5 +59,32 @@ export class ComentarioExistente {
 
             onCleanup(() => sub.unsubscribe());
         });
+    }
+
+    get tituloComentario(): string {
+        const c = this.critica();
+        return 'titulo_comentario' in c && typeof c.titulo_comentario === 'string'
+            ? c.titulo_comentario!
+            : '';
+    }
+
+    get textoComentario(): string {
+        const c = this.critica();
+        return 'texto_comentario' in c && typeof c.texto_comentario === 'string'
+            ? c.texto_comentario!
+            : '';
+    }
+
+    get fechaComentario(): string | Date {
+        const c = this.critica();
+        return 'fecha_comentario' in c ? c.fecha_comentario! : '';
+    }
+
+    get calificacion(): number | null | undefined {
+        const c = this.critica();
+        if ('calificacion_comentario' in c) return c.calificacion_comentario!;
+        if ('calificacion_lista' in c) return c.calificacion_lista!;
+        if ('calificacion_evento' in c) return c.calificacion_evento!;
+        return null;
     }
 }
