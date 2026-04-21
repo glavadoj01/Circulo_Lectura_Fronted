@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 
 @Component({
     selector: 'busqueda-listas',
@@ -8,14 +8,11 @@ import { Component, signal } from '@angular/core';
 export class BusquedaListasComponent {
     termino = signal('');
 
-    buscarCallback: (() => void) | null = null;
 
-    setBuscarCallback(cb: () => void) {
-        this.buscarCallback = cb;
-    }
+    @Output() buscar = new EventEmitter<string>();
 
     onBuscar() {
-        if (this.buscarCallback) this.buscarCallback();
+        this.buscar.emit(this.termino());
     }
 
     onInput(e: Event) {

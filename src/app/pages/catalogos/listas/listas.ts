@@ -116,4 +116,10 @@ export class Listas {
         this.servicio.setPaginaCatalogoActual(p);
         this.cargarListas();
     }
+
+    LimpiarFiltros() {
+        console.log('[CatalogoListas] Limpiando filtros y búsqueda');
+        this.filtroCategoria.set('Todas');
+        this.terminoBusqueda.set('');
+    }
 }
