@@ -1,0 +1,15 @@
+:host button {
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+:host button.active {
+  background-color: var(--color-btn-primary);
+  color: var(--color-primary);
+}
+
+:host button:hover {
+  background-color: var(--color-accent);
+  color: var(--color-btn-primary);
+}

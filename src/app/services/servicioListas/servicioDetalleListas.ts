@@ -7,8 +7,8 @@ import { ListaComentarios } from '@interfaces/modelosBD/modelosBD';
 import { manejarError, AppError } from '@app/shared/utils/error.utils';
 
 @Injectable({ providedIn: 'root' })
-export class servicioDetalleListas {
-    constructor(private http: HttpClient) {}
+export class ServicioDetalleListas {
+    constructor(readonly http: HttpClient) {}
 
     /**
      * Obtiene el detalle de una lista por su ID, incluyendo los libros asociados en formato resumen.
@@ -19,7 +19,7 @@ export class servicioDetalleListas {
         const url = `${environment.apiUrl}:${environment.puerto}/lista/${id}`;
         return this.http.get<ListaApp>(url).pipe(
             map((resp) => {
-                if (!resp || !resp.id_lista) {
+                if (!resp?.id_lista) {
                     throw new AppError('lista_respuesta_invalida', { id });
                 }
                 return resp;

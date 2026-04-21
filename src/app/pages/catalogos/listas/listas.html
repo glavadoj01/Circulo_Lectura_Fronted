@@ -1,10 +1,8 @@
-<h2>Listas Placeholder - WIP</h2>
 <div class="flex flex-col gap-4 mt-8">
-  <!-- Cabecera Catalogo Listas -->
+  <!-- Cabecera -->
   <div class="flex flex-wrap justify-between gap-4 p-4 items-center">
     <div class="flex min-w-72 flex-col gap-3">
-      <p class="text-4xl font-black leading-tight tracking-[-0.033em]">Explora las Listas de
-        Lectura</p>
+      <p class="text-4xl font-black leading-tight tracking-[-0.033em]">Explora las Listas de Lectura</p>
       <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">
         Descubre colecciones creadas por y para amantes de los libros de nuestra comunidad.
       </p>
@@ -14,299 +12,33 @@
       <span class="truncate">Crea tu Propia Lista</span>
     </button>
   </div>
-  <!-- Barra de Busqueda Listas -->
-  <div class="flex flex-col sm:flex-row gap-4 px-4 py-3">
-    <div class="grow">
-      <label class="flex flex-col min-w-40 h-12 w-full">
-        <div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-surface-light dark:bg-surface-dark">
-          <div class="text-text-secondary-light dark:text-text-secondary-dark flex items-center justify-center pl-4">
-            <span class="material-symbols-outlined">search</span>
-          </div>
-          <input
-            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-main-light dark:text-text-main-dark focus:outline-0 focus:ring-0 border-none bg-transparent focus:border-none h-full placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark px-2 text-base font-normal leading-normal"
-            placeholder="Busca listas por título o creador" value="" />
-        </div>
-      </label>
+
+  <!-- Barra de búsqueda y filtros -->
+  <div class="flex flex-col sm:flex-row gap-4 justify-between items-center px-4 py-3">
+    <div class="grow max-w-1/3">
+      <busqueda-listas #busqueda></busqueda-listas>
     </div>
-    <div class="flex gap-2 p-1 overflow-x-auto">
-      <button
-        class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 dark:bg-primary/20 text-primary px-4">
-        <p class="text-sm font-medium leading-normal">Populares</p>
-      </button>
-      <button
-        class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-surface-light dark:bg-surface-dark px-4 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
-        <p class="text-sm font-medium leading-normal">Recientes</p>
-      </button>
-      <button
-        class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-surface-light dark:bg-surface-dark px-4 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
-        <p class="text-sm font-medium leading-normal">Fantasía</p>
-      </button>
-      <button
-        class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-surface-light dark:bg-surface-dark px-4 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
-        <p class="text-sm font-medium leading-normal">No Ficción</p>
-      </button>
-    </div>
+    <filtros-listas #filtros [filtro]="filtroCategoria" [categorias]="categorias()"
+      (filtroChange)="filtroCategoria.set($event)"></filtros-listas>
   </div>
-  <!-- Contenedor Listas -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-    <!-- Lista -->
-    <a routerLink="//detalle/lista/1">
-      <div
-        class="flex flex-col gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-300 transform hover:-translate-y-1">
-        <div class="relative h-32 flex justify-center">
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-12 top-2 left-12 shadow-lg bg-center bg-no-repeat"
-            data-alt="Book cover for Dune"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtgnxOd9nMfhMG3aA6PjGSsUHVbyOpsu4Q3Sa-G2obUDqvQmh3wLc7YSWMKvZPqWHpTg8SiCMSccKKMhOgQshX0hzkqRqQlvKQnx7dnsLeCDZFYzIeTduvVc2NVVkoheZg1cBqjg_yPMYPyB6fJf-KQ0ysyqRMTli0YvynKKHxlHuDdxz_EyxW_ZCBC-ScgvQKTfgMXMFU6ost7MldGdk-XQuCwnYvXsJqvQFZYdIqu-AdY9czRYSCp_lNSzrLe1XnoPq5h1i1_g");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform rotate-6 top-4 shadow-lg bg-center bg-no-repeat"
-            data-alt="Book cover for Foundation"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_UIDJTRifuaNAaTn6OJZ42qP1FvptqJ0ZiI11BtdBDfBkvEHpia72OkfxVPBqALAZxaKl6ugxyOnHU6c1z4njepifCm-Idul08WYScny119OK7LaKOgRn5cgOMP8T1CKaq3aBdsdU0KanQmJ1_RCRZQpyRMlmgmD_6LpfbMr0-39CodoOAX_LGkm_oEcMvZDgGyeO-Lwk5AYRmS-o-_ZcGH9ygbAfGE7ZgJA4ciUETJd3jwsKsgXJR2nbUVRUOnHBCE-Pc22ONA");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-3 top-1 shadow-lg z-10 bg-center bg-no-repeat"
-            data-alt="Book cover for a classic novel"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBSS7w0WYHn8LWPCN_h-G2xsIfrxaVScwL-U0QQIlY2imLzVBorV7MXBTIcmx3cH-R-nce3BUsF-yBavLBq5WWA2hmhpunaOpdzmcXIyQgLIqx3aF8cGJtkLB-dDu3lgcJe7PS6dRXCBn13rfZdSHoDpkgUVTzsg4fwzmfI40SbWTqdk-uuYSaRdwbMKCzmYgavrXyNA6QA1RyHILG-9szypq96fphpUhI3eycdK1FLNV8BNIePT0ploYC5JZFVZXQ7Otaxyoy3ew");'>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <p class="text-lg font-bold leading-normal">Clásicos de la Ciencia Ficción</p>
-          <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-            Un viaje por las obras fundacionales que definieron un género y exploraron
-            futuros posibles.</p>
-          <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">
-            Creado por <span class="font-semibold text-text-main-light dark:text-text-main-dark">Alex_R</span>
-          </p>
-        </div>
-        <div
-          class="flex items-center gap-4 pt-2 border-t border-white/10 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-          <div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">book</span><span>15
-              libros</span></div>
-          <div class="flex items-center gap-1.5"><span
-              class="material-symbols-outlined text-base">favorite</span><span>128 me
-              gusta</span></div>
-        </div>
-      </div>
-    </a>
-    <!-- Lista -->
-    <a routerLink="/detalle/lista/1">
-      <div
-        class="flex flex-col gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-300 transform hover:-translate-y-1">
-        <div class="relative h-32 flex justify-center">
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-12 top-2 left-12 shadow-lg bg-center bg-no-repeat"
-            data-alt="Graphic novel cover art"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAO3v-_wzZ5Q5hUaStFobvDpHcu9Fn51wF0Dj2nwNDNErIKVZiTTsMrfe89syTSSNWoD_SmjWz6hfjPDSVVNco3wPsijxbsdCRlRy4N9-AA4auSoA5ahNYuvzYxDpwxf3Jg94eIE4tXmZBGsxmWUEJlBLify_0Ble9zHG5gWILhSeUBCdMeM3-NvS1_13gjUK53d7iafB0CjgC16xajol_VVxh0goDMefITWKLjmSJzbVmr-NHMISS5ZTmW6yCsbDveRJIgreGfIA");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform rotate-6 top-4 shadow-lg bg-center bg-no-repeat"
-            data-alt="Comic book illustration"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB7J0q8K2mev8tLpNOZxWa9GOgwmlA5wt2o2YVDpdGggffl-HT98efEoMeWIEE_ZJkDo75I0NfNAGNLkSM-OXujhtI0s3YxidvhyjLnepbhTs9b0EdH90TYouVDzLmlVjYL0qKhIfN1sfO3EIMaBWkgesn5gcRNHjB0Cu9a_txdeZLt0_MPQ3kRbmSV_rXk1GuQy2DbxNF06LDRpWGce-kpPH8JNWv2Qf6yLdVOg2kpZ-ctKjzmB9Bo_VpNls1xgtSIPBnk5ECvPQ");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-3 top-1 shadow-lg z-10 bg-center bg-no-repeat"
-            data-alt="Abstract graphic art"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAd_pClsmiMNxQvlIdTyIcEDZNfzs68u6idSGIIi4nFZaF-Gf5pMDr_S8Wc79OXvzHRk00mG3wToZCMsCweA9g8o9wtXfsAb3TJKtxRNPeJHiDnJMTFiMwzrGj2U_K0_ZWTVZewnrU4HxhnhyFK9HlYMe6QUBP0Kqv7pJEfiJnUq5wg-ThdZzLJ4sS5y1xXD3nCP952d1I6JzL6VmOms2F43eJHvg1gCilc9qiD_SemfQjIsP7z97lykVUFZSkAtXXElFE2bEER7A");'>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <p class="text-lg font-bold leading-normal">Novelas Gráficas que Cambiaron el Mundo
-          </p>
-          <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-            Explora el poder narrativo del noveno arte con estas obras maestras visuales.
-          </p>
-          <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">
-            Creado por <span class="font-semibold text-text-main-light dark:text-text-main-dark">Maria_G</span>
-          </p>
-        </div>
-        <div
-          class="flex items-center gap-4 pt-2 border-t border-white/10 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-          <div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">book</span><span>22
-              libros</span></div>
-          <div class="flex items-center gap-1.5"><span
-              class="material-symbols-outlined text-base">favorite</span><span>97 me
-              gusta</span></div>
-        </div>
-      </div>
-    </a>
-    <!-- Lista -->
-    <a routerLink="/detalle/lista">
-      <div
-        class="flex flex-col gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-300 transform hover:-translate-y-1">
-        <div class="relative h-32 flex justify-center">
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-12 top-2 left-12 shadow-lg bg-center bg-no-repeat"
-            data-alt="Spooky forest scene for a horror book"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD-RQMK9VHWE5Gcs6q6bCIBVWUKnoDlZdHfiLXrmZZu1jDswvnHBagNbEzeDvnQ6Q1W4BEfql2VawUwWg5xqpnDgzXoMnXG3UuksWWfQaP4VovOxsgOvVpA_q4zDg1k3FlOXpsLT6IdT3WbrKMdL-uiuHvD44PHJ0u4f4Y0O4OlgWzPIbA50WFl-eKL15dnrqXPGfXxe6TM9gcuuTxXNUDWnDtqPlhGpgJJSsOlrnNHAuEB6fd7mLxOIJ235rYTn0UK7n_ClkpCZw");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform rotate-6 top-4 shadow-lg bg-center bg-no-repeat"
-            data-alt="Dark, mysterious book cover"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBkPBhpCnOvFp8xh8OY2FD1IpXTRLtfroI5xcTFmAHHpaPvu2ncSTVgFIpWKxqU9SfzS70rvxTrROo10hy2Bzb9tAtKbRksjSjjQQeLlBUDynnX67UnXirzDEuejVw_nkk_OLYZWAjOaOGnur0G90rA4uW13Qd5UsE1U6_xsyaLjJMppP_GZyKWIr43hioJ3HQzxi1rAnUgp65opkv4bBTWSkRr5FI43h1lwWVKLUn6FRO2zRHa9RjrsiahCxbKFIUJeEQaLn20gQ");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-3 top-1 shadow-lg z-10 bg-center bg-no-repeat"
-            data-alt="Psychological thriller book cover"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB2Dr1v9NhmCa_JMhR5tRroqlTr7JB45wEmgTDx0NZAO-7_Mh6_mbIFk_pYzBt7TCq_JZHtTwud9OPXS0RlLUJ0sBVLMSqGW8uSod_GApQmXYDgayKElEy8DLXGECXCY0o6KKwdaymkopJq9Z0Ba8weZlTublKwD6LXGYqPqccWsrVdD89sLbFyXvmDODnlLCHCFbyrn439FXPwR8y55fr3Wog_ygylrL_1pgyJpop4Q5mWh9TEDmvsktJ56rTT9Ugq6bwGPYmqWw");'>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <p class="text-lg font-bold leading-normal">Recomendaciones de Terror Psicológico
-          </p>
-          <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-            Sumérgete en historias que desafían tu mente y tus miedos más profundos.</p>
-          <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">
-            Creado por <span class="font-semibold text-text-main-light dark:text-text-main-dark">Carlos_F</span>
-          </p>
-        </div>
-        <div
-          class="flex items-center gap-4 pt-2 border-t border-white/10 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-          <div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">book</span><span>10
-              libros</span></div>
-          <div class="flex items-center gap-1.5"><span
-              class="material-symbols-outlined text-base">favorite</span><span>204 me
-              gusta</span></div>
-        </div>
-      </div>
-    </a>
-    <!-- Lista -->
-    <a routerLink="/detalle/lista">
-      <div
-        class="flex flex-col gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-300 transform hover:-translate-y-1">
-        <div class="relative h-32 flex justify-center">
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-12 top-2 left-12 shadow-lg bg-center bg-no-repeat"
-            data-alt="Fantasy landscape for an adventure book"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhiqnoRrv4MpF1Zuu6DUqVp_7r4fA7G3qUsZqLTsiHobTPdqscbYcDvyQQGFyFGTuU5KrmejPf_SN8Yu3txPeekseQ-Q7diwCDJ3tJisoB9mfD0LMkovYEUuFZG6tnsZ275qovHme1X5DPUT9VVuqoGVVwg0P3A5INQZS8JQAAgXkkLA-qM60CaNDhuqy6HPKznTA75ut4C4EiodOM9_O3FEb6ccBFBWNV2kgA3zQq8MkKwPM2ima4voK-AWTE-seaYuz_z1U3nw");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform rotate-6 top-4 shadow-lg bg-center bg-no-repeat"
-            data-alt="Cover of an epic saga"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8mCFARFwxeKKOyJW5fglIqWwY45Qy0Ay5Wp2KVrMxdn4emmzId8Mu8GW22N59r5QCB2RbYV32rQf1hqTVV7J50RR_ufX_LFGG9Iv2MCN_mh35btp3yoGBnYa8YHpNDqCxNobXGAPAedd-gjZ7z0v7EONKRZw_oJvf9WYO7FopUlce_ic-whWnVDOllZJDtAOs7WwHc2yDW3lHQ7RtNl9uxmZ_bzEvTSEFjS70lnaUG5koAwTMONTwEXZaYEej8cBHtgjON4yc4A");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-3 top-1 shadow-lg z-10 bg-center bg-no-repeat"
-            data-alt="Modern adventure novel cover"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7Jm4ceCTVJBpo58V270lEgLneK6DgFk2LR035mpeCahogcq0vJzoBhE07gjP3PUSpEFqqktsy-nGOvcNbg_8hWLWT9LbE8G-L5wkwGAwpBmz7j6syl_ccL1DcrwiCO6wRkFrNJULpxqc_mKBUb9c4gQa6UQNfpzHDzkorjTVYX3Uvs1tJSf9SyePR0JDXE3oAnUVUIm4Yia1sg0fnmID5ccuA2SPJk3XNn1G7QpZfxF7dTe9iyyl2UgsJo7WfJLxJD6qFI66mJQ");'>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <p class="text-lg font-bold leading-normal">Aventuras Épicas Modernas</p>
-          <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-            Viajes inolvidables y héroes contemporáneos en mundos fantásticos y reales.</p>
-          <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">
-            Creado por <span class="font-semibold text-text-main-light dark:text-text-main-dark">Sofia_L</span>
-          </p>
-        </div>
-        <div
-          class="flex items-center gap-4 pt-2 border-t border-white/10 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-          <div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">book</span><span>18
-              libros</span></div>
-          <div class="flex items-center gap-1.5"><span
-              class="material-symbols-outlined text-base">favorite</span><span>76 me
-              gusta</span></div>
-        </div>
-      </div>
-    </a>
-    <!-- Lista -->
-    <a routerLink="/detalle/lista">
-      <div
-        class="flex flex-col gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-300 transform hover:-translate-y-1">
-        <div class="relative h-32 flex justify-center">
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-12 top-2 left-12 shadow-lg bg-center bg-no-repeat"
-            data-alt="Snowy landscape for a Nordic mystery"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZAcu6VFy9zX0z0YQIPH33CNy-qe-H95TBVy7wgSwfnqOfddrVWcouEjAMTDy9T6ww771mbnPqgvXLkMcWVDRAkli6WqlOtCoQPpzFEcz20ql3-7B_qMy5tF5soLvT2klkNClPJgaJm--su7J8rk3UC3D6pfNd5HV78ZpgIMLyQXQO96rEzQAG7XUUo7fe0DnZtjKSBLVH8haBXhbKH71Z5SjCzUolp0CDJy2sy8RDWKs77BRt98gF31wKz1yT1z1g7lBxVZgblw");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform rotate-6 top-4 shadow-lg bg-center bg-no-repeat"
-            data-alt="Cover of a suspenseful crime novel"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA5QTLUR83jQm-22ltscC4rNesCq-GxO-JlQVQJ-yklFEu1w3_iEr1ZtJ5lw9mXGhe7t1riHXI3xgSmbXwMYrPw1CN-2svKBV59D9nrFclZqQnxwH4IT_tuNAKtW4JH9ISaGvjcjX-OBZiDrqAlaiqmhjGS3NwY4ob-obZxXix33Uft6g4o_HPtLzqmYcSO8fcBA2NzFd2l4Fmucu3vPbUm6HIZvFssh12f5iVDJCcIpj_58SPAqaMLgLYkfPuRjBJHC8bd_qKEgA");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-3 top-1 shadow-lg z-10 bg-center bg-no-repeat"
-            data-alt="Detective story book cover"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC1JPFTyL2yA47by-OdpcyBKBoaDiE203-WwwRk4LhXgfYAdK_6wpNwfGNofZeWgEU9PnEFv8jUxDD5kCoqHC0m1ruwlgisJLkikc55ntRBaYKJHNBQb6W-JgntPiC58CLBQ3zqwuMc_SaInNvopRdkUii8a4_mQPN0Mf8mf35zuu6PNl8ygVKvmCb5gw0gEd-61ecMvoxgdX9Sr2YKlgyVDM9G44ZaWMUaYzG1DggTK9qktyZupig-Fc8jV4k4Tagp0SIxaOO64g");'>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <p class="text-lg font-bold leading-normal">Misterios Nórdicos Imprescindibles</p>
-          <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-            Adéntrate en el frío y la oscuridad con los mejores thrillers escandinavos.</p>
-          <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">
-            Creado por <span class="font-semibold text-text-main-light dark:text-text-main-dark">David_M</span>
-          </p>
-        </div>
-        <div
-          class="flex items-center gap-4 pt-2 border-t border-white/10 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-          <div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">book</span><span>12
-              libros</span></div>
-          <div class="flex items-center gap-1.5"><span
-              class="material-symbols-outlined text-base">favorite</span><span>150 me
-              gusta</span></div>
-        </div>
-      </div>
-    </a>
-    <!-- Lista -->
-    <a routerLink="/detalle/lista">
-      <div
-        class="flex flex-col gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-300 transform hover:-translate-y-1">
-        <div class="relative h-32 flex justify-center">
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-12 top-2 left-12 shadow-lg bg-center bg-no-repeat"
-            data-alt="Biography cover of a famous person"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD_9LZwy2w0MzoI9kzTJmErJjEkLk5SGAJtkcRnqN-xvZUkZxMdXldmt4SgI5t6K-ElTxshVJUBLa5VvzFg8tO9k4OtWgQHJupkmFD9yR5ru7xqTq5r55RFKnLjwIBx24E2fuY7m_YS_9o30HAEHVQxZYhMK9-p1YEjn4ZFdjEH_x7GIgWX4MEDfRxSHQs-M9ylz0Vq29QusOK8SFQWpNZNG-G3bkyP4-p1O4Nersxsh92Q_OtXiyu5-oUTxOAT53KGh3yQse7CZQ");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform rotate-6 top-4 shadow-lg bg-center bg-no-repeat"
-            data-alt="Inspiring autobiography cover"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC34NQBqXj4GCmBbVweGFgGLs2jpvJ8djjRenmd3tI4Rzk0Vk0b8t4zQCIjyCaGd1Iif97XzrNpUCVeDtlkaEYIE62_VN6PUY_qLYXU5wH6pNefciOA3EeDOk9i9lUOSvaKegjnu8uWe_h-e5AZhK4nlZEUAjRU7SjgyF_CuG6Ssj7CDYdD9Wrv0HZqKX4_WshMDjMMr-2HgM99C3R7A6edj8pp0rtBDG1LIoc6daB-lK6VXd7NpCMqNIErCoJwjIDAsW6u9pYT5Q");'>
-          </div>
-          <div
-            class="absolute w-20 aspect-3/4 bg-cover rounded-md transform -rotate-3 top-1 shadow-lg z-10 bg-center bg-no-repeat"
-            data-alt="Cover of a book about an innovator"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAA4ATsHmwhgOFya0ncSnnHS4WP51lp1zBtP6vKOSyGqyYwlA3lw3XHrMhD8i13KrX9pccKUReLyrxx0GwbuX8PWiA_HMedmrA2iVSG07_G9q3p37f30Oupj931ZPmyhI8z92t1I0uOcZifEQiUK1HlEghbjwrkld33tmSUKfsEE8DRdhoH-mnCiSup0J2tlMK2ZTzP9OzadRtBfbBDIZEZ8D7vnbrr1Qjk2GTMEP76j2OICji1RIlEQ5Vcq09oXznCzCFSdFFabw");'>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <p class="text-lg font-bold leading-normal">Biografías Inspiradoras</p>
-          <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-            Vidas extraordinarias que nos enseñan sobre resiliencia, creatividad y
-            superación.</p>
-          <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">
-            Creado por <span class="font-semibold text-text-main-light dark:text-text-main-dark">Elena_P</span>
-          </p>
-        </div>
-        <div
-          class="flex items-center gap-4 pt-2 border-t border-white/10 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-          <div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">book</span><span>25
-              libros</span></div>
-          <div class="flex items-center gap-1.5"><span
-              class="material-symbols-outlined text-base">favorite</span><span>88 me
-              gusta</span></div>
-        </div>
-      </div>
-    </a>
+
+  @if(this.cargando()) {
+  <app-banner-cargando elemento="listas"></app-banner-cargando>
+  } @else if (this.error() || !listas() || listas().length === 0) {
+  <app-banner-error elemento="listas"></app-banner-error>
+  } @else if (listasFiltradas().length > 0) {
+  <!-- Contenedor de listas -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 p-4">
+    @for (lista of listasFiltradas(); track lista.id_lista) {
+    <lista-card [lista]="lista"></lista-card>
+    }
   </div>
-  <!-- Paginación -->
+
+  <!-- Paginación (placeholder, lógica real pendiente de integración) -->
   <div class="flex justify-center p-4 mt-8">
-    <nav class="flex items-center gap-2">
-      <button
-        class="flex items-center justify-center size-10 rounded-lg hover:bg-surface-light dark:hover:bg-surface-dark transition-colors text-text-secondary-light dark:text-text-secondary-dark"><span
-          class="material-symbols-outlined">chevron_left</span></button>
-      <button
-        class="flex items-center justify-center size-10 rounded-lg bg-primary/20 text-primary font-bold">1</button>
-      <button
-        class="flex items-center justify-center size-10 rounded-lg hover:bg-surface-light dark:hover:bg-surface-dark transition-colors font-medium">2</button>
-      <button
-        class="flex items-center justify-center size-10 rounded-lg hover:bg-surface-light dark:hover:bg-surface-dark transition-colors font-medium">3</button>
-      <span class="text-text-secondary-light dark:text-text-secondary-dark">...</span>
-      <button
-        class="flex items-center justify-center size-10 rounded-lg hover:bg-surface-light dark:hover:bg-surface-dark transition-colors font-medium">12</button>
-      <button
-        class="flex items-center justify-center size-10 rounded-lg hover:bg-surface-light dark:hover:bg-surface-dark transition-colors text-text-secondary-light dark:text-text-secondary-dark"><span
-          class="material-symbols-outlined">chevron_right</span></button>
-    </nav>
+    <app-paginacion [paginaActual]="pagina()" [totalPaginas]="totalPaginas()"
+      (paginaSeleccionada)="onPaginaChange($event)">
+    </app-paginacion>
   </div>
+  }
 </div>

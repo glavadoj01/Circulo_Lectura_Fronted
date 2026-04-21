@@ -1,0 +1,18 @@
+:host button,
+:host .boton-filtro {
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+:host button.active,
+:host .boton-filtro-activo {
+  background-color: var(--color-btn-primary);
+  color: var(--color-primary);
+}
+
+:host button:hover,
+:host .boton-filtro:hover {
+  background-color: var(--color-accent);
+  color: var(--color-btn-primary);
+}

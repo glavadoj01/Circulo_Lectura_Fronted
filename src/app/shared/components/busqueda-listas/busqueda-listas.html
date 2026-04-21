@@ -1,0 +1,16 @@
+<label
+  class="flex flex-col min-w-40 h-12 w-full border rounded-lg bg-surface-light dark:bg-surface-dark focus-within:ring-2 focus-within:ring-primary transition-colors">
+  <div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-surface-light dark:bg-surface-dark">
+    <div class="text-text-secondary-light dark:text-text-secondary-dark flex items-center justify-center pl-4">
+      <span class="material-symbols-outlined">search</span>
+    </div>
+    <input
+      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-main-light dark:text-text-main-dark focus:outline-0 focus:ring-0 border-none bg-transparent focus:border-none h-full placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark px-2 text-base font-normal leading-normal"
+      placeholder="Busca listas por título o creador" [value]="termino()" (input)="onInput($event)"
+      (keydown)="onKeyDown($event)" aria-label="Buscar listas" name="BuscarTermino" />
+    <button type="button" class="ml-2 px-3 py-1 rounded bg-primary text-black font-bold" (click)="onBuscar()"
+      aria-label="Buscar">
+      Buscar
+    </button>
+  </div>
+</label>

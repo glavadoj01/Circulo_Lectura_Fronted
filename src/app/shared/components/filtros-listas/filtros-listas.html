@@ -1,0 +1,10 @@
+<div class="flex gap-2 p-1 overflow-x-auto" role="tablist">
+  @for (cat of categorias; track cat) {
+  <button
+    class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg px-4 text-sm font-medium leading-normal"
+    [class.boton-filtro-activo]="filtro() === cat" [class.boton-filtro]="filtro() !== cat" (click)="seleccionar(cat)"
+    [attr.aria-selected]="filtro() === cat" role="tab" tabindex="0">
+    {{cat}}
+  </button>
+  }
+</div>

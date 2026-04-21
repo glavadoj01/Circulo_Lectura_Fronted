@@ -1,0 +1,33 @@
+<a [routerLink]="['/detalle/lista', lista.id_lista]">
+  <article
+    class="flex flex-col gap-4 p-4 rounded-xl cursor-pointer  bg-background-element border border-primary hover:ring-2 hover:ring-primary transition-all duration-300 transform hover:-translate-y-1"
+    aria-label="{{lista.nombre_lista}}">
+    <div class="relative h-32 flex justify-center w-full">
+      @for (idLibro of lista.librosPortada.slice(0, 3); track idLibro) {
+      <div class="absolute w-20 aspect-3/4 bg-cover rounded-md shadow-lg bg-center bg-no-repeat" [ngClass]="{
+            '-rotate-12 top-4 left-1/2 -translate-x-10' : $index === 0,
+            'top-6 left-1/2' : $index === 1,
+            'rotate-12 top-8 z-10 left-1/2 translate-x-4' : $index === 2,
+        }" [attr.data-alt]="'Portada libro ' + ($index+1)"
+        [style.background-image]="'url(' + portadaLibro(idLibro) + ')'">
+      </div>
+      }
+    </div>
+    <div class="flex flex-col gap-2">
+      <p class="text-lg font-bold leading-normal">{{lista.nombre_lista}}</p>
+      <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+        {{lista.descripcion_lista || ''}}</p>
+      <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">
+        Creado por <span
+          class="font-semibold text-text-main-light dark:text-text-main-dark">{{lista.nombreCreador}}</span>
+      </p>
+    </div>
+    <div
+      class="flex items-center gap-4 pt-2 border-t border-white/10 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+      <div class="flex items-center gap-1.5"><span
+          class="material-symbols-outlined text-base">book</span><span>{{lista.totalLibros}} libros</span></div>
+      <div class="flex items-center gap-1.5"><span
+          class="material-symbols-outlined text-base">favorite</span><span>{{lista.totalMeGusta}} me gusta</span></div>
+    </div>
+  </article>
+</a>

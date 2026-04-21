@@ -12,11 +12,11 @@ interface CacheCatalogoListas {
 }
 
 @Injectable({ providedIn: 'root' })
-export class servicioCatalogoListas {
+export class ServicioCatalogoListas {
     private readonly cacheCatalogoKey = 'cacheCatalogoListas';
     readonly paginaActual = signal<number>(1);
 
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
         this.paginaActual.set(this.getPaginaCatalogoActual());
     }
 
@@ -34,11 +34,11 @@ export class servicioCatalogoListas {
                     return total;
                 }),
                 catchError((error) => {
-                    throw manejarError(error, 'servicioCatalogoListas.getTotalListas.http');
+                    throw manejarError(error, 'ServicioCatalogoListas.getTotalListas.http');
                 }),
             );
         } catch (error) {
-            throw manejarError(error, 'servicioCatalogoListas.getTotalListas.cache');
+            throw manejarError(error, 'ServicioCatalogoListas.getTotalListas.cache');
         }
     }
 
@@ -64,12 +64,12 @@ export class servicioCatalogoListas {
                 catchError((error) => {
                     throw manejarError(
                         error,
-                        'servicioCatalogoListas.getCatalogoListasPaginado.http',
+                        'ServicioCatalogoListas.getCatalogoListasPaginado.http',
                     );
                 }),
             );
         } catch (error) {
-            throw manejarError(error, 'servicioCatalogoListas.getCatalogoListasPaginado.cache');
+            throw manejarError(error, 'ServicioCatalogoListas.getCatalogoListasPaginado.cache');
         }
     }
 
@@ -78,7 +78,7 @@ export class servicioCatalogoListas {
             const cache = this.leerCacheCatalogo();
             return cache.currentPage;
         } catch (error) {
-            throw manejarError(error, 'servicioCatalogoListas.getPaginaCatalogoActual');
+            throw manejarError(error, 'ServicioCatalogoListas.getPaginaCatalogoActual');
         }
     }
 
@@ -92,15 +92,15 @@ export class servicioCatalogoListas {
             });
             this.paginaActual.set(paginaSegura);
         } catch (error) {
-            throw manejarError(error, 'servicioCatalogoListas.setPaginaCatalogoActual');
+            throw manejarError(error, 'ServicioCatalogoListas.setPaginaCatalogoActual');
         }
     }
 
     private leerCacheCatalogo(): CacheCatalogoListas {
-        if (typeof window === 'undefined') {
+        if (globalThis.window === undefined) {
             throw new AppError('catalogo_cache_no_window');
         }
-        const raw = window.sessionStorage.getItem(this.cacheCatalogoKey);
+        const raw = globalThis.window.sessionStorage.getItem(this.cacheCatalogoKey);
         if (!raw) {
             return { total: null, pages: {}, currentPage: 1 };
         }
@@ -125,11 +125,11 @@ export class servicioCatalogoListas {
     }
 
     private guardarCacheCatalogo(cache: CacheCatalogoListas): void {
-        if (typeof window === 'undefined') {
+        if (globalThis.window === undefined) {
             throw new AppError('catalogo_cache_no_window');
         }
         try {
-            window.sessionStorage.setItem(this.cacheCatalogoKey, JSON.stringify(cache));
+            globalThis.window.sessionStorage.setItem(this.cacheCatalogoKey, JSON.stringify(cache));
         } catch (error) {
             throw new AppError('catalogo_cache_guardar', { error });
         }

@@ -6,7 +6,7 @@ import { catchError, finalize, of } from 'rxjs';
 import { manejarError } from '@sharedUtils/error.utils';
 // Importaciones propias
 import { DetalleListaCompleta } from '@interfaces/modelosApp/modelosApp';
-import { servicioDetalleListas } from '@services/servicioListas/servicioDetalleListas';
+import { ServicioDetalleListas } from '@services/servicioListas/servicioDetalleListas';
 import { valorNumeroSeguro } from '@sharedUtils/validation.utils';
 import { ComentarioExistente } from '@sharedComponents/comentarioExistente/comentarioExistente';
 import { BannerCargando } from '@sharedComponents/banner-cargando/banner-cargando';
@@ -14,7 +14,7 @@ import { BannerError } from '@sharedComponents/banner-error/banner-error';
 import { LibroCard } from '@sharedComponents/libro-card/libro-card';
 
 /**
- * Componente para mostrar el detalle de una lista, incluyendo su información general y comentarios. Utiliza el servicio `servicioDetalleListas` para obtener los datos de la lista a partir de su ID, que se obtiene de la ruta activa. El componente maneja estados de carga, error y éxito para proporcionar una experiencia de usuario fluida.
+ * Componente para mostrar el detalle de una lista, incluyendo su información general y comentarios. Utiliza el servicio `ServicioDetalleListas` para obtener los datos de la lista a partir de su ID, que se obtiene de la ruta activa. El componente maneja estados de carga, error y éxito para proporcionar una experiencia de usuario fluida.
  * El componente muestra un banner de carga mientras se obtienen los datos, y un banner de error si ocurre algún problema durante la carga. Si la lista se carga correctamente, se muestra su información y una lista de comentarios utilizando `ComentarioExistente`.
  */
 @Component({
@@ -24,7 +24,7 @@ import { LibroCard } from '@sharedComponents/libro-card/libro-card';
     styleUrl: './lista.css',
 })
 export class DetalleLista {
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     detalle: DetalleListaCompleta | null = null;
     listaEncontrada = false;
@@ -37,12 +37,12 @@ export class DetalleLista {
      * @param listaService Servicio para obtener los detalles de la lista y sus comentarios.
      */
     constructor(
-        private rutaActiva: ActivatedRoute,
-        private listaService: servicioDetalleListas,
+        private readonly rutaActiva: ActivatedRoute,
+        private readonly listaService: ServicioDetalleListas,
     ) {
         const id = this.rutaActiva.snapshot.paramMap.get('id');
         const idNum = valorNumeroSeguro(id ?? -1);
-        if (idNum && !isNaN(idNum) && idNum > 0) {
+        if (idNum && !Number.isNaN(idNum) && idNum > 0) {
             this.cargarDetalle(idNum);
         } else {
             manejarError('detallelista_id_invalido', 'ListaDetalle.constructor', { id });
@@ -69,7 +69,7 @@ export class DetalleLista {
                     this.cargando = false;
                 }),
             )
-            .subscribe((detalle) => {
+            .subscribe((detalle: DetalleListaCompleta | null) => {
                 if (!detalle) return;
                 this.detalle = detalle;
                 this.listaEncontrada = true;
