@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { normalizarPuntuacion } from '@sharedUtils/format.utils';
 
 /**

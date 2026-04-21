@@ -120,7 +120,7 @@ export class ServicioCatalogoListas {
                         : 1,
             };
         } catch (error) {
-            throw new AppError('catalogo_cache_parse', { raw });
+            throw new AppError('catalogo_cache_parse', { raw, error });
         }
     }
 

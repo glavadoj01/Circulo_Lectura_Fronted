@@ -4,14 +4,14 @@ import { Injectable, signal, effect } from '@angular/core';
     providedIn: 'root',
 })
 export class Theme {
-    private themeSignal = signal<'light' | 'dark'>('dark');
+    private readonly themeSignal = signal<'light' | 'dark'>('dark');
     readonly theme = this.themeSignal.asReadonly();
 
     constructor() {
         const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
         this.themeSignal.set(saved === 'light' || saved === 'dark' ? saved : 'dark');
         effect(() => {
-            document.documentElement.setAttribute('data-theme', this.themeSignal());
+            document.documentElement.dataset['theme'] = this.themeSignal();
             localStorage.setItem('theme', this.themeSignal());
         });
     }

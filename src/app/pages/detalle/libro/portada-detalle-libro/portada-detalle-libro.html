@@ -1,14 +1,12 @@
 <div class="flex flex-col gap-6 md:col-span-1 items-center md:items-start">
-    <div class="w-full max-w-75 md:max-w-none shadow-2xl shadow-black/50">
-        <div class="w-full gap-1 overflow-hidden bg-background-element @[480px]:gap-2 aspect-2/3 rounded-xl flex">
-            <div class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none flex-1" role="img"
-                aria-label="Portada del libro {{ tituloLibro() }}"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUurYLOr-AQCVI3ks235WBQZPWBUhLkUKRQqF8oQs3GJQJw2AUsQKyBsWDBwLXdYegRCMmBDexIzaaCfA8H4XO9O_RdQKhc6u-27c2NINS5ay6KGqDTp-vkE8S_56efrlDcPaI8OSw8Oe2JK4rYcR7tMuFijNU7fOveAkJ1dTK-WwL1Sjk07jJWxbOBhd2nD4A2vbmY12CydZUjKdkFXYU0w6WiTNJu2EI09IJsYQV6EOKYnAU9Ml8Sd7ZyrSUHwV4k-jU7NJP7Q");'>
-            </div>
-        </div>
+  <div class="w-full max-w-75 md:max-w-none shadow-2xl shadow-black/50">
+    <div class="w-full gap-1 overflow-hidden bg-background-element @[480px]:gap-2 aspect-2/3 rounded-xl flex">
+      <img [src]="portadaLibro()" alt="Portada del libro {{ tituloLibro() }}"
+        class="w-full aspect-auto rounded-xl object-cover object-center">
     </div>
-    <button type="button" aria-label="Añadir este libro a mi lista"
-        class="flex min-w-21 w-full max-w-75 md:max-w-none cursor-pointer items-center justify-center overflow-hidden rounded-lg max-h-12 px-5 flex-1 bg-primary text-blanco-puro text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-        <span class="truncate">Añadir a mi lista</span>
-    </button>
+  </div>
+  <button type="button" aria-label="Añadir este libro a mi lista"
+    class="flex min-w-21 w-full max-w-75 md:max-w-none cursor-pointer items-center justify-center overflow-hidden rounded-lg max-h-12 px-5 flex-1 bg-primary text-blanco-puro text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+    <span class="truncate">Añadir a mi lista</span>
+  </button>
 </div>

@@ -14,12 +14,12 @@ import { valorNumeroSeguro } from '@app/shared/utils/validation.utils';
 import { normalizarPuntuacion } from '@app/shared/utils/format.utils';
 
 @Injectable({ providedIn: 'root' })
-export class servicioDetalleLibro {
+export class ServicioDetalleLibro {
     /**
      * Inicializa el servicio con el cliente HTTP de Angular para realizar las solicitudes al backend.
      * @param http Cliente HTTP de Angular para realizar las solicitudes al backend.
      */
-    constructor(private http: HttpClient) {}
+    constructor(private readonly http: HttpClient) {}
 
     /**
      * Obtiene libro por ID, valida estructura y mapea campos
@@ -31,13 +31,13 @@ export class servicioDetalleLibro {
         return this.http.get<DetalleLibroCompleto>(url).pipe(
             map((resp) => {
                 const libro = resp.libro;
-                if (!libro || !libro.id_libro) {
+                if (!libro?.id_libro) {
                     throw new AppError('libro_respuesta_invalida', { id });
                 }
                 return BaseLibros.mapLibroApp(libro);
             }),
             catchError((error) => {
-                throw manejarError(error, 'servicioDetalleLibro.getLibroPorId', { id });
+                throw manejarError(error, 'ServicioDetalleLibro.getLibroPorId', { id });
             }),
         );
     }
@@ -68,7 +68,7 @@ export class servicioDetalleLibro {
                 };
             }),
             catchError((error) => {
-                throw manejarError(error, 'servicioDetalleLibro.getCriticasPorIdLibro', { id });
+                throw manejarError(error, 'ServicioDetalleLibro.getCriticasPorIdLibro', { id });
             }),
         );
     }
@@ -113,7 +113,7 @@ export class servicioDetalleLibro {
                             errorCriticas: true,
                             error: manejarError(
                                 error,
-                                'servicioDetalleLibro.getDetalleLibro.criticas',
+                                'ServicioDetalleLibro.getDetalleLibro.criticas',
                                 {
                                     id,
                                 },
@@ -129,7 +129,7 @@ export class servicioDetalleLibro {
                 errorCriticas: data.errorCriticas,
             })),
             catchError((error) => {
-                throw manejarError(error, 'servicioDetalleLibro.getDetalleLibro', { id });
+                throw manejarError(error, 'ServicioDetalleLibro.getDetalleLibro', { id });
             }),
         );
     }

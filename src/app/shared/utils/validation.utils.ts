@@ -1,5 +1,3 @@
-import { AutorApellido, AutorNombre, GeneroNombre } from '@app/interfaces/modelosBD/modelosBD';
-
 /**
  * Convierte un valor desconocido a una cadena de texto segura.
  * Si el valor es una cadena, se devuelve la cadena sin espacios al principio y al final.
@@ -28,7 +26,7 @@ export function valorNumeroSeguro(valor: unknown): number {
     if (typeof valor === 'number' && Number.isFinite(valor)) {
         return valor;
     }
-    if (typeof valor === 'string' && valor.trim().length > 0 && !isNaN(Number(valor))) {
+    if (typeof valor === 'string' && valor.trim().length > 0 && !Number.isNaN(Number(valor))) {
         return Number(valor);
     }
     return 0;
@@ -47,7 +45,7 @@ export function valorNumeroTextoSeguro(valor: unknown): string {
         return String(valor);
     } else if (typeof valor === 'string') {
         const limpio = valor.trim();
-        return limpio.length > 0 && !isNaN(Number(limpio)) ? limpio : '';
+        return limpio.length > 0 && !Number.isNaN(Number(limpio)) ? limpio : '';
     }
     return '';
 }
@@ -59,7 +57,7 @@ export function valorNumeroTextoSeguro(valor: unknown): string {
  */
 export function validarAutores(
     autores: unknown,
-): Array<{ nombre_autor: AutorNombre; apellido_autor: AutorApellido; id_autor: number }> {
+): Array<{ nombre_autor: string; apellido_autor: string; id_autor: number }> {
     if (!Array.isArray(autores)) {
         return [];
     }
@@ -94,7 +92,7 @@ export function validarAutores(
  * @param generos Array de objetos que representan géneros.
  * @returns Array de objetos con los nombres de los géneros validados y limpios.
  */
-export function validarGeneros(generos: unknown): Array<{ nombre_genero: GeneroNombre }> {
+export function validarGeneros(generos: unknown): Array<{ nombre_genero: string }> {
     if (!Array.isArray(generos)) {
         return [];
     }

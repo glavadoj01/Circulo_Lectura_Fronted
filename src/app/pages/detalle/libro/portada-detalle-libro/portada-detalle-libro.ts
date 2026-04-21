@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { BaseLibros } from '@services/servicioLibros/baseLibros';
 
 @Component({
     selector: 'app-portada-detalle-libro',
@@ -7,4 +8,9 @@ import { Component, input } from '@angular/core';
 })
 export class PortadaDetalleLibro {
     tituloLibro = input.required<string>();
+    idLibro = input.required<number>();
+
+    portadaLibro(): string {
+        return BaseLibros.portadaLibro(this.idLibro());
+    }
 }

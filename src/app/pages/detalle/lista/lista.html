@@ -32,14 +32,14 @@
     <section class="border-t border-white/10 pt-10 flex flex-col gap-8">
       <h2 class="text-xl font-bold mb-4">Comentarios</h2>
       @if (errorComentarios) {
-      <div role="status" aria-live="polite"
+      <output aria-live="polite"
         class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-800 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300">
         No se pudieron cargar los comentarios en este momento. Por favor, inténtalo de nuevo más tarde.
-      </div>
+      </output>
       } @else if ((detalle?.comentarios?.length ?? 0) === 0) {
-      <p role="status" aria-live="polite" class="text-gray-600 dark:text-gray-400 text-sm">
+      <output aria-live="polite" class="text-gray-600 dark:text-gray-400 text-sm">
         Todavía no hay comentarios para esta lista.
-      </p>
+      </output>
       } @else {
       @for (comentario of detalle?.comentarios ?? []; track comentario.id_listaComentario) {
       <app-comentario-existente [critica]="comentario"></app-comentario-existente>

@@ -96,6 +96,7 @@ export function manejarError(error: unknown, origen: string, meta?: unknown): Re
     let status = -1;
     let codigo = 'error_desconocido';
     let mensaje = MENSAJES_ERROR['error_desconocido'];
+    meta = meta ?? {};
 
     if (error instanceof HttpErrorResponse) {
         status = error.status;
@@ -107,16 +108,16 @@ export function manejarError(error: unknown, origen: string, meta?: unknown): Re
             codigo = cod;
             mensaje = MENSAJES_ERROR[cod];
         } else {
-            meta = { ...(meta ?? {}), detalle: error.message };
+            (meta as any).detalle = error.message;
         }
-        if (error.meta) meta = { ...(meta ?? {}), ...(error.meta as object) };
+        if (error.meta) Object.assign(meta as any, error.meta);
     } else if (error instanceof Error) {
         const cod = (error.message || '').toLowerCase();
         if (MENSAJES_ERROR[cod]) {
             codigo = cod;
             mensaje = MENSAJES_ERROR[cod];
         } else {
-            meta = { ...(meta ?? {}), detalle: error.message };
+            (meta as any).detalle = error.message;
         }
     } else if (typeof error === 'string') {
         const cod = error.toLowerCase();
@@ -124,7 +125,7 @@ export function manejarError(error: unknown, origen: string, meta?: unknown): Re
             codigo = cod;
             mensaje = MENSAJES_ERROR[cod];
         } else {
-            meta = { ...(meta ?? {}), detalle: error };
+            (meta as any).detalle = error;
         }
     }
     return {

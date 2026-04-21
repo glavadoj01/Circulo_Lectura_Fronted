@@ -1,87 +1,87 @@
 <main class="flex-1 px-4 sm:px-10 md:px-20 lg:px-40 py-10">
-    @if (cargando) {
-    <app-banner-cargando [elemento]="'libro'"></app-banner-cargando>
+  @if (cargando) {
+  <app-banner-cargando [elemento]="'libro'"></app-banner-cargando>
 
-    } @else if (!libroEncontrado) {
-    <app-banner-error [elemento]="'libro'"></app-banner-error>
+  } @else if (!libroEncontrado) {
+  <app-banner-error [elemento]="'libro'"></app-banner-error>
 
-    } @else {
-    <div class="mx-auto flex max-w-7xl flex-col gap-12">
-        <!-- Book Details Section -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            <!-- Left Column (Visual) -->
-            <app-portada-detalle-libro
-                [tituloLibro]="libro?.titulo_libro || 'Titulo desconocido'"></app-portada-detalle-libro>
+  } @else {
+  <div class="mx-auto flex max-w-7xl flex-col gap-12">
+    <!-- Book Details Section -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+      <!-- Left Column (Visual) -->
+      <app-portada-detalle-libro [tituloLibro]="libro?.titulo_libro || 'Titulo desconocido'"
+        [idLibro]="libro?.id_libro || 0"></app-portada-detalle-libro>
 
-            <!-- Right Column (Informative) -->
-            <div class="flex flex-col gap-6 md:col-span-2">
-                <!-- CabeceraDetalle -->
-                <div class="flex min-w-72 flex-col gap-2">
-                    <h1 #tituloLibro
-                        class="text-black dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">
-                        {{libro?.titulo_libro || "Titulo no encontrado"}}</h1>
-                    <p #autorLibro class="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal">
-                        {{ libro?.autores?.length ? libro?.autores?.map(a => a.nombre_autor)?.join('; ') : 'Autor
-                        Desconocido / Anonimo' }}</p>
-                </div>
-                <!-- Calificación y total Reseñas -->
-                <div class="flex flex-wrap items-center gap-2 text-gray-400 dark:text-gray-500">
-                    <span class="flex items-center gap-1 text-yellow-400 dark:text-yellow-500">
-                        <span class="material-symbols-outlined text-base">star</span>
-                        <span class="font-bold text-sm">{{ libro?.calificacionPromedio != null ?
-                            (libro?.calificacionPromedio | number:'1.1-2') : 'N/A' }}</span>
-                    </span>
-                    <span>·</span>
-                    <span class="text-sm">{{
-                        (libro?.totalResenas ?? 0) === 0 ? ' Sin Reseñas'
-                        : (libro?.totalResenas ?? 0) === 1 ? ' 1 Reseña'
-                        : (libro?.totalResenas ?? 0) + ' Reseñas'
-                        }}
-                    </span>
-                </div>
-                <!-- Descripción -->
-                <div class="text-gray-700 dark:text-gray-300 text-base leading-relaxed space-y-4">
-                    @if (tieneSinopsisValida()) {
-                    <p>{{ libro?.sinopsis }}</p>
-                    } @else {
-                    <p class="italic text-gray-500 dark:text-gray-400">
-                        Sinopsis no disponible para este libro
-                    </p>
-                    }
-                </div>
-                @if (libro) {
-                <app-libro-metadatos [libro]="libro" [editorial]="'DAW Books'"></app-libro-metadatos>
-                }
-            </div>
-        </section>
+      <!-- Right Column (Informative) -->
+      <div class="flex flex-col gap-6 md:col-span-2">
+        <!-- CabeceraDetalle -->
+        <div class="flex min-w-72 flex-col gap-2">
+          <h1 #tituloLibro
+            class="text-black dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">
+            {{libro?.titulo_libro || "Titulo no encontrado"}}</h1>
+          <p #autorLibro class="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal">
+            {{ libro?.autores?.length ? libro?.autores?.map(a => a.nombre_autor)?.join('; ') : 'Autor
+            Desconocido / Anonimo' }}</p>
+        </div>
+        <!-- Calificación y total Reseñas -->
+        <div class="flex flex-wrap items-center gap-2 text-gray-400 dark:text-gray-500">
+          <span class="flex items-center gap-1 text-yellow-400 dark:text-yellow-500">
+            <span class="material-symbols-outlined text-base">star</span>
+            <span class="font-bold text-sm">{{ libro?.calificacionPromedio != null ?
+              (libro?.calificacionPromedio | number:'1.1-2') : 'N/A' }}</span>
+          </span>
+          <span>·</span>
+          <span class="text-sm">{{
+            (libro?.totalResenas ?? 0) === 0 ? ' Sin Reseñas'
+            : (libro?.totalResenas ?? 0) === 1 ? ' 1 Reseña'
+            : (libro?.totalResenas ?? 0) + ' Reseñas'
+            }}
+          </span>
+        </div>
+        <!-- Descripción -->
+        <div class="text-gray-700 dark:text-gray-300 text-base leading-relaxed space-y-4">
+          @if (tieneSinopsisValida()) {
+          <p>{{ libro?.sinopsis }}</p>
+          } @else {
+          <p class="italic text-gray-500 dark:text-gray-400">
+            Sinopsis no disponible para este libro
+          </p>
+          }
+        </div>
+        @if (libro) {
+        <app-libro-metadatos [libro]="libro" [editorial]="'DAW Books'"></app-libro-metadatos>
+        }
+      </div>
+    </section>
 
 
-        <!-- Reviews and Ratings Section -->
-        <section class="border-t border-white/10 pt-10 flex flex-col gap-8">
-            <!-- Rating Summary -->
-            <app-resumen-puntuaciones [puntuacionPromedio]="libro?.calificacionPromedio"
-                [totalElementos]="libro?.totalResenas" [nombreElemento]="'Reseñas'"
-                [distribucion]="notasIndividuales"></app-resumen-puntuaciones>
+    <!-- Reviews and Ratings Section -->
+    <section class="border-t border-white/10 pt-10 flex flex-col gap-8">
+      <!-- Rating Summary -->
+      <app-resumen-puntuaciones [puntuacionPromedio]="libro?.calificacionPromedio"
+        [totalElementos]="libro?.totalResenas" [nombreElemento]="'Reseñas'"
+        [distribucion]="notasIndividuales"></app-resumen-puntuaciones>
 
-            <!-- Write a Review Form -->
-            <app-comentario-nuevo></app-comentario-nuevo>
-            <!-- Existing Reviews List -->
-            <div class="flex flex-col gap-6">
-                @if (errorCriticas) {
-                <div role="status" aria-live="polite"
-                    class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-800 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300">
-                    No se pudieron cargar las críticas en este momento. Por favor, inténtalo de nuevo más tarde.
-                </div>
-                } @else if (criticas.length === 0) { <p role="status" aria-live="polite"
-                    class="text-gray-600 dark:text-gray-400 text-sm">
-                    Todavía no hay críticas para este libro. </p>
-                } @else {
-                @for (critica of criticas; track critica.id_usuario) {
-                <app-comentario-existente [critica]="critica"></app-comentario-existente>
-                }
-                }
-            </div>
-        </section>
-    </div>
-    }
+      <!-- Write a Review Form -->
+      <app-comentario-nuevo></app-comentario-nuevo>
+      <!-- Existing Reviews List -->
+      <div class="flex flex-col gap-6">
+        @if (errorCriticas) {
+        <output aria-live="polite"
+          class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-800 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300">
+          No se pudieron cargar las críticas en este momento. Por favor, inténtalo de nuevo más tarde.
+        </output>
+        } @else if (criticas.length === 0) {
+        <output aria-live="polite" class="text-gray-600 dark:text-gray-400 text-sm">
+          Todavía no hay críticas para este libro. </output>
+        } @else {
+        @for (critica of criticas; track critica.id_usuario) {
+        <app-comentario-existente [critica]="critica"></app-comentario-existente>
+        }
+        }
+      </div>
+    </section>
+  </div>
+  }
 </main>

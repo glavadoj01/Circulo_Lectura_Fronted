@@ -3,8 +3,7 @@ import { Component, signal, computed, inject, DestroyRef, WritableSignal } from 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 // Importaciones propias
-import { LibroApp } from '@interfaces/modelosApp/modelosApp';
-import { servicioCatalogoLibros } from '@services/servicioLibros/servicioCatalogoLibros';
+import { ServicioCatalogoLibros } from '@services/servicioLibros/servicioCatalogoLibros';
 import { BannerCargando } from '@sharedComponents/banner-cargando/banner-cargando';
 import { BannerError } from '@sharedComponents/banner-error/banner-error';
 import { manejarError } from '@sharedUtils/error.utils';
@@ -25,6 +24,7 @@ import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
 })
 export class Libros {
     private readonly destroyRef = inject(DestroyRef);
+    private readonly servicioLibros = inject(ServicioCatalogoLibros);
     readonly tamanioPagina: number = 10;
 
     // Propiedades de estado reactivas con valor inicial
@@ -48,10 +48,9 @@ export class Libros {
     );
 
     /**
-     * Inicializa el componente, inyectando el servicio de catálogo de libros y cargando el catálogo inicial. El constructor también establece la página actual del catálogo en el servicio y maneja la carga de datos, incluyendo la gestión de estados de carga y error.
-     * @param servicioLibros Servicio para obtener los datos del catálogo de libros desde el backend. Se inyecta para permitir la separación de responsabilidades y facilitar las pruebas unitarias. El servicio proporciona métodos para obtener el total de libros, obtener libros paginados, y gestionar la página actual del catálogo.
+     * Inicializa el componente
      */
-    constructor(private servicioLibros: servicioCatalogoLibros) {
+    constructor() {
         console.log('[CatalogoLibros] Constructor: iniciando carga de catalogo');
         this.cargarCatalogo();
     }

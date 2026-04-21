@@ -4,6 +4,7 @@ import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
 import { EstrellasPuntuacion } from '@sharedComponents/estrellas-puntuacion/estrellas-puntuacion';
 import { AutorPrincipalPipe } from '@sharedPipes/autor-principal.pipe';
 import { PuntuacionTextoPipe } from '@sharedPipes/puntuacion-texto.pipe';
+import { BaseLibros } from '@services/servicioLibros/baseLibros';
 
 @Component({
     selector: 'app-libro-card',
@@ -14,8 +15,7 @@ import { PuntuacionTextoPipe } from '@sharedPipes/puntuacion-texto.pipe';
 export class LibroCard {
     libro = input.required<LibroResumen>();
 
-    // TODO Portada Real -> While placeholder random webIMG
     portadaLibro(idLibro: number): string {
-        return `https://picsum.photos/seed/libro-${idLibro}/400/600`;
+        return BaseLibros.portadaLibro(idLibro);
     }
 }

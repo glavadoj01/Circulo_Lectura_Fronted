@@ -9,7 +9,7 @@ import { ServicioUsuario } from '@services/servicioUsuario/servicioUsuario';
 import { EstrellasPuntuacion } from '@sharedComponents/estrellas-puntuacion/estrellas-puntuacion';
 import { PuntuacionNormalizadaPipe } from '@sharedPipes/puntuacion-normalizada.pipe';
 import { TiempoRelativoPipe } from '@sharedPipes/tiempo-relativo.pipe';
-import { saltosLinea } from '@sharedPipes/saltosLinea.pipe';
+import { SaltosLinea } from '@sharedPipes/saltosLinea.pipe';
 
 type ComentarioConPuntuacion =
     | Partial<LibroCritica & { calificacion_lista?: number | null }>
@@ -24,7 +24,7 @@ type ComentarioConPuntuacion =
 
 @Component({
     selector: 'app-comentario-existente',
-    imports: [EstrellasPuntuacion, PuntuacionNormalizadaPipe, TiempoRelativoPipe, saltosLinea],
+    imports: [EstrellasPuntuacion, PuntuacionNormalizadaPipe, TiempoRelativoPipe, SaltosLinea],
     templateUrl: './comentarioExistente.html',
 })
 export class ComentarioExistente {
@@ -36,7 +36,7 @@ export class ComentarioExistente {
      * El efecto se limpia automáticamente al destruir el componente para evitar fugas de memoria.
      * @param servicioUsuario
      */
-    constructor(private servicioUsuario: ServicioUsuario) {
+    constructor(private readonly servicioUsuario: ServicioUsuario) {
         effect((onCleanup) => {
             const critica = this.critica();
             this.usuarioNombre = 'Desconocido';
@@ -64,14 +64,14 @@ export class ComentarioExistente {
     get tituloComentario(): string {
         const c = this.critica();
         return 'titulo_comentario' in c && typeof c.titulo_comentario === 'string'
-            ? c.titulo_comentario!
+            ? c.titulo_comentario
             : '';
     }
 
     get textoComentario(): string {
         const c = this.critica();
         return 'texto_comentario' in c && typeof c.texto_comentario === 'string'
-            ? c.texto_comentario!
+            ? c.texto_comentario
             : '';
     }
 
@@ -86,5 +86,9 @@ export class ComentarioExistente {
         if ('calificacion_lista' in c) return c.calificacion_lista!;
         if ('calificacion_evento' in c) return c.calificacion_evento!;
         return null;
+    }
+
+    imagenAvatar(): string {
+        return ServicioUsuario.avatarUsuario(this.critica()?.id_usuario ?? 1);
     }
 }

@@ -1,6 +1,5 @@
 // Métodos utilitarios y de mapeo/validación compartidos para libros
-import { LibroApp } from '@interfaces/modelosApp/modelosApp';
-import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
+import { LibroResumen, LibroApp } from '@interfaces/modelosApp/modelosApp';
 import {
     valorTextoSeguro,
     validarAutores,
@@ -26,10 +25,10 @@ export class BaseLibros {
 
         return {
             ...libro,
-            titulo_libro: tituloSeguro != '' ? tituloSeguro : 'Título no disponible',
-            nombre_idioma_original: idiomaOriginalSeguro != '' ? idiomaOriginalSeguro : 'N/A',
-            sinopsis: sinopsisSegura != '' ? sinopsisSegura : 'Sinopsis no disponible',
-            codigo_isbn: isbnSeguro != '' ? isbnSeguro : 'N/A',
+            titulo_libro: tituloSeguro === '' ? 'Título no disponible' : tituloSeguro,
+            nombre_idioma_original: idiomaOriginalSeguro === '' ? 'N/A' : idiomaOriginalSeguro,
+            sinopsis: sinopsisSegura === '' ? 'Sinopsis no disponible' : sinopsisSegura,
+            codigo_isbn: isbnSeguro === '' ? 'N/A' : isbnSeguro,
             paginas: paginasSeguras > 0 ? paginasSeguras : undefined,
             calificacionPromedio: calificacionPromedioSegura,
             totalResenas: totalResenasSeguras,
@@ -63,5 +62,12 @@ export class BaseLibros {
                 }
                 return Number(valueA) - Number(valueB);
             });
+    }
+    /**
+     * Devuelve la URL de la portada de un libro dado su id.
+     * Por ahora usa un placeholder de picsum.photos.
+     */
+    static portadaLibro(idLibro: number): string {
+        return `https://picsum.photos/seed/libro-${idLibro}/400/600`;
     }
 }

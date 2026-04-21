@@ -21,7 +21,7 @@ interface CacheCatalogoLibros {
 }
 
 @Injectable({ providedIn: 'root' })
-export class servicioCatalogoLibros {
+export class ServicioCatalogoLibros {
     private readonly cacheCatalogoKey = 'cacheCatalogoLibros';
     readonly paginaActual = signal<number>(1);
 
@@ -29,7 +29,7 @@ export class servicioCatalogoLibros {
      * Inicializa el servicio, cargando la página actual del catálogo desde la cache si está disponible.
      * @param http Cliente HTTP de Angular para realizar las solicitudes al backend.
      */
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
         this.paginaActual.set(this.getPaginaCatalogoActual());
     }
 
@@ -69,7 +69,11 @@ export class servicioCatalogoLibros {
      * @param limit Número de libros por página (por defecto es 10).
      * @returns Lista de libros correspondientes a la página solicitada.
      */
-    getCatalogoLibrosPaginado(page: number, sort = 'id_libro', limit = 10): Observable<LibroResumen[]> {
+    getCatalogoLibrosPaginado(
+        page: number,
+        sort = 'id_libro',
+        limit = 10,
+    ): Observable<LibroResumen[]> {
         const key = `${page}_${limit}`;
         try {
             let cacheActual = this.leerCacheCatalogo();
@@ -137,10 +141,10 @@ export class servicioCatalogoLibros {
      * @returns Objeto con la información del catálogo almacenada en cache.
      */
     private leerCacheCatalogo(): CacheCatalogoLibros {
-        if (typeof window === 'undefined') {
+        if (globalThis.window === undefined) {
             throw new AppError('catalogo_cache_no_window');
         }
-        const raw = window.sessionStorage.getItem(this.cacheCatalogoKey);
+        const raw = globalThis.sessionStorage.getItem(this.cacheCatalogoKey);
         if (!raw) {
             return { total: null, pages: {}, currentPage: 1 };
         }
@@ -160,7 +164,7 @@ export class servicioCatalogoLibros {
                         : 1,
             };
         } catch (error) {
-            throw new AppError('catalogo_cache_parse', { raw });
+            throw new AppError('catalogo_cache_parse', { raw, error });
         }
     }
 
@@ -169,11 +173,11 @@ export class servicioCatalogoLibros {
      * @param cache Objeto con la información del catálogo que se desea guardar en cache.
      */
     private guardarCacheCatalogo(cache: CacheCatalogoLibros): void {
-        if (typeof window === 'undefined') {
+        if (globalThis.window === undefined) {
             throw new AppError('catalogo_cache_no_window');
         }
         try {
-            window.sessionStorage.setItem(this.cacheCatalogoKey, JSON.stringify(cache));
+            globalThis.sessionStorage.setItem(this.cacheCatalogoKey, JSON.stringify(cache));
         } catch (error) {
             throw new AppError('catalogo_cache_guardar', { error });
         }

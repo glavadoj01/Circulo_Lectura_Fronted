@@ -1,23 +1,24 @@
 <nav aria-label="Pagination" class="flex items-center gap-2">
-    <button type="button"
-        class="inline-flex items-center justify-center size-9 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed"
-        [disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
-        <span class="material-symbols-outlined">chevron_left</span>
-    </button>
+  <button type="button"
+    class="inline-flex items-center justify-center size-9 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed"
+    aria-label="Ir a página anterior" [disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
+    <span class="material-symbols-outlined">chevron_left</span>
+  </button>
 
-    @for (pagina of paginasVisibles(); track pagina) {
-    <button type="button" class="inline-flex items-center justify-center size-9 rounded-lg text-sm font-medium"
-        [class.bg-primary]="pagina === paginaActual()" [class.text-white]="pagina === paginaActual()"
-        [class.text-gray-600]="pagina !== paginaActual()" [class.dark:text-gray-300]="pagina !== paginaActual()"
-        [class.hover:bg-gray-200]="pagina !== paginaActual()" [class.dark:hover:bg-gray-800]="pagina !== paginaActual()"
-        (click)="irAPagina(pagina)">
-        {{ pagina }}
-    </button>
-    }
+  @for (pagina of paginasVisibles(); track pagina) {
+  <button type="button" class="inline-flex items-center justify-center size-9 rounded-lg text-sm font-medium"
+    [class.bg-primary]="pagina === paginaActual()" [class.text-white]="pagina === paginaActual()"
+    [class.text-gray-600]="pagina !== paginaActual()" [class.dark:text-gray-300]="pagina !== paginaActual()"
+    [class.hover:bg-gray-200]="pagina !== paginaActual()" [class.dark:hover:bg-gray-800]="pagina !== paginaActual()"
+    aria-label="Ir a página {{ pagina }}" (click)="irAPagina(pagina)">
+    {{ pagina }}
+  </button>
+  }
 
-    <button type="button"
-        class="inline-flex items-center justify-center size-9 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed"
-        [disabled]="paginaActual() === totalPaginas()" (click)="irAPagina(paginaActual() + 1)">
-        <span class="material-symbols-outlined">chevron_right</span>
-    </button>
+  <button type="button"
+    class="inline-flex items-center justify-center size-9 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed"
+    aria-label="Ir a página siguiente" [disabled]="paginaActual() === totalPaginas()"
+    (click)="irAPagina(paginaActual() + 1)">
+    <span class="material-symbols-outlined">chevron_right</span>
+  </button>
 </nav>
