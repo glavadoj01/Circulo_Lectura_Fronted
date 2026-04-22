@@ -10,6 +10,7 @@ import { manejarError } from '@sharedUtils/error.utils';
 import { Paginacion } from '@sharedComponents/paginacion/paginacion';
 import { LibroCard } from '@sharedComponents/libro-card/libro-card';
 import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
+import { FiltrosLibros } from '@app/shared/components/filtros-libros/filtros-libros';
 
 /**
  * Componente para mostrar un catálogo de libros con paginación. Permite navegar entre páginas de libros, mostrando un número limitado de libros por página. El componente maneja el estado de carga y errores, y utiliza servicios para obtener los datos del catálogo desde el backend.
@@ -19,21 +20,25 @@ import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
 
 @Component({
     selector: 'app-libros',
-    imports: [BannerCargando, BannerError, Paginacion, LibroCard],
+    imports: [BannerCargando, BannerError, Paginacion, LibroCard, FiltrosLibros],
     templateUrl: './libros.html',
 })
 export class Libros {
+    filtrosSeleccionados = signal<{
+        generos: number[];
+        autores: number[];
+        years: number[];
+        valoraciones: number[];
+    } | null>(null);
     private readonly destroyRef = inject(DestroyRef);
     private readonly servicioLibros = inject(ServicioCatalogoLibros);
-    readonly tamanioPagina: number = 10;
+    readonly tamanioPagina: number = 12;
 
-    // Propiedades de estado reactivas con valor inicial
     librosPagina = signal<LibroResumen[]>([]);
     cargando = signal(true);
     errorCarga = signal(false);
     totalResultados = signal(0);
 
-    // Propiedades computadas (reaccionan a cambios en las señales que utilizan)
     totalPaginas = computed(() =>
         Math.max(1, Math.ceil(this.totalResultados() / this.tamanioPagina)),
     );
@@ -53,6 +58,33 @@ export class Libros {
     constructor() {
         console.log('[CatalogoLibros] Constructor: iniciando carga de catalogo');
         this.cargarCatalogo();
+    }
+
+    onFiltrosAplicados(filtros: {
+        generos: number[];
+        autores: number[];
+        years: number[];
+        valoraciones: number[];
+    }) {
+        this.servicioLibros
+            .getTotalLibros(filtros)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+                next: (totalFiltrado) => {
+                    this.totalResultados.set(totalFiltrado);
+
+                    // 2. Resetear página a 1
+                    this.servicioLibros.setPaginaCatalogoActual(1);
+
+                    // 3. Cargar página 1 con filtros
+                    this.cargarPagina(1, filtros);
+                },
+                error: (error) => {
+                    manejarError(error, 'onFiltrosAplicados.totalFiltrado');
+                    this.totalResultados.set(0);
+                    this.librosPagina.set([]);
+                },
+            });
     }
 
     /**
@@ -99,16 +131,25 @@ export class Libros {
      * Carga una página específica de libros, actualizando el estado de carga y error según corresponda. El método obtiene los libros paginados desde el servicio, y en caso de éxito actualiza la lista de libros para la página actual. En caso de error, muestra un mensaje de error y limpia la lista de libros.
      * @param pagina Número de página a cargar. Debe ser un número entero positivo que corresponda a una página válida dentro del total de páginas calculado. El método valida que la página sea válida antes de realizar la carga, y maneja los estados de carga y error de manera adecuada para proporcionar una experiencia de usuario consistente.
      */
-    private cargarPagina(pagina: number): void {
+    private cargarPagina(
+        pagina: number,
+        filtros?: { generos: number[]; autores: number[]; years: number[]; valoraciones: number[] },
+    ): void {
         console.log('[CatalogoLibros] cargarPagina: inicio', {
             pagina,
             tamanio: this.tamanioPagina,
+            filtros,
         });
         this.cargando.set(true);
         this.errorCarga.set(false);
 
         this.servicioLibros
-            .getCatalogoLibrosPaginado(pagina, 'id_libro', this.tamanioPagina)
+            .getCatalogoLibrosPaginado(
+                pagina,
+                'id_libro',
+                this.tamanioPagina,
+                filtros ?? this.filtrosSeleccionados() ?? undefined,
+            )
             .pipe(
                 finalize(() => this.cargando.set(false)),
                 takeUntilDestroyed(this.destroyRef),
@@ -152,7 +193,7 @@ export class Libros {
 
         this.servicioLibros.setPaginaCatalogoActual(nuevaPagina);
         console.log('[CatalogoLibros] Cambio de pagina:', nuevaPagina);
-        this.cargarPagina(nuevaPagina);
+        this.cargarPagina(nuevaPagina, this.filtrosSeleccionados() ?? undefined);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }

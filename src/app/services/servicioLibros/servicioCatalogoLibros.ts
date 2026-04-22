@@ -2,10 +2,11 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
-import { manejarError, AppError } from '@app/shared/utils/error.utils';
+import { manejarError, AppError } from '@sharedUtils/error.utils';
 import { environment } from '@environments/environments';
 import { LibroResumen } from '@interfaces/modelosApp/modelosApp';
 import { BaseLibros } from './baseLibros';
+import { valorTextoSeguro } from '@sharedUtils/validation.utils';
 
 /**
  * Cache para el catálogo de libros, almacenando el total de libros, las páginas ya cargadas y la página actual.
@@ -15,7 +16,7 @@ import { BaseLibros } from './baseLibros';
  * - currentPage: número de la página actual que el usuario está viendo.
  */
 interface CacheCatalogoLibros {
-    total: number | null;
+    total: Record<string, number | null>;
     pages: Record<string, LibroResumen[]>;
     currentPage: number;
 }
@@ -37,19 +38,36 @@ export class ServicioCatalogoLibros {
      * Obtiene el número total de libros en el catálogo. Primero intenta leerlo desde la cache, y si no está disponible, realiza una solicitud HTTP al backend.
      * @returns Número total de libros en el catálogo.
      */
-    getTotalLibros(): Observable<number> {
+    getTotalLibros(filtros?: {
+        titulo?: string;
+        generos?: number[];
+        autores?: number[];
+        years?: number[];
+        valoraciones?: number[];
+    }): Observable<number> {
         try {
-            let cacheActual = this.leerCacheCatalogo();
-            if (cacheActual.total !== null) {
-                return of(cacheActual.total);
+            const cacheActual = this.leerCacheCatalogo();
+            const filtrosKey = this.generarFiltrosKey(filtros);
+
+            if (
+                cacheActual.total[filtrosKey] !== undefined &&
+                cacheActual.total[filtrosKey] !== null
+            ) {
+                return of(cacheActual.total[filtrosKey]);
             }
-            const url = `${environment.apiUrl}:${environment.puerto}/libros/total`;
+
+            const params = this.construirParams(1, 1, filtros);
+            const url = `${environment.apiUrl}:${environment.puerto}/libros/total?${params.toString()}`;
+
             return this.http.get<{ total: number }>(url).pipe(
                 map((resp) => {
                     const total = Number(resp?.total ?? 0);
                     const totalSeguro = Number.isFinite(total) && total > 0 ? total : 0;
 
-                    this.guardarCacheCatalogo({ ...cacheActual, total: totalSeguro });
+                    this.guardarCacheCatalogo({
+                        ...cacheActual,
+                        total: { ...cacheActual.total, [filtrosKey]: totalSeguro },
+                    });
                     return totalSeguro;
                 }),
                 catchError((error) => {
@@ -59,6 +77,62 @@ export class ServicioCatalogoLibros {
         } catch (error) {
             throw manejarError(error, 'servicioCatalogoLibros.getTotalLibros.cache');
         }
+    }
+
+    /**
+     * Genera una clave única para los filtros aplicados al catálogo de libros.
+     * @param filtros Filtros aplicados, incluyendo géneros, autores, años y valoraciones.
+     * @returns Cadena que representa la combinación de filtros, utilizada para almacenar y recuperar páginas del catálogo en la cache.
+     * La clave se construye concatenando los IDs de los géneros, autores, años y valoraciones seleccionados, separados por guiones y agrupados por tipo de filtro. Si no se aplican filtros, la clave será una cadena vacía.
+     * Ejemplo de clave generada: "1-2-3_4-5_2020-2021_5" (géneros 1, 2, 3; autores 4, 5; años 2020, 2021; valoración 5).
+     */
+    private generarFiltrosKey(filtros?: {
+        titulo?: string;
+        generos?: number[];
+        autores?: number[];
+        years?: number[];
+        valoraciones?: number[];
+    }): string {
+        if (!filtros) return '';
+        return [
+            filtros.titulo ? filtros.titulo : '',
+            filtros.generos?.join('-') ?? '',
+            filtros.autores?.join('-') ?? '',
+            filtros.years?.join('-') ?? '',
+            filtros.valoraciones?.join('-') ?? '',
+        ].join('_');
+    }
+
+    /**
+     * Construye los parámetros de la URL para la solicitud HTTP del catálogo de libros.
+     * @param page Número de página a obtener.
+     * @param limit Número de libros por página.
+     * @param filtros Filtros aplicados, incluyendo géneros, autores, años y valoraciones.
+     * @returns Objeto URLSearchParams con los parámetros construidos.
+     */
+    private construirParams(
+        page: number,
+        limit: number,
+        filtros?: {
+            titulo?: string;
+            generos?: number[];
+            autores?: number[];
+            years?: number[];
+            valoraciones?: number[];
+        },
+    ): URLSearchParams {
+        const params = new URLSearchParams({
+            page: String(page),
+            limit: String(limit),
+        });
+        if (filtros?.titulo) params.append('titulo', filtros.titulo);
+        if (filtros?.generos?.length) params.append('generos', filtros.generos.join(','));
+        if (filtros?.autores?.length) params.append('autores', filtros.autores.join(','));
+        if (filtros?.years?.length) params.append('years', filtros.years.join(','));
+        if (filtros?.valoraciones?.length)
+            params.append('valoraciones', filtros.valoraciones.join(','));
+
+        return params;
     }
 
     /**
@@ -72,15 +146,28 @@ export class ServicioCatalogoLibros {
     getCatalogoLibrosPaginado(
         page: number,
         sort = 'id_libro',
-        limit = 10,
+        limit = 12,
+        filtros?: {
+            titulo?: string;
+            generos?: number[];
+            autores?: number[];
+            years?: number[];
+            valoraciones?: number[];
+        },
     ): Observable<LibroResumen[]> {
-        const key = `${page}_${limit}`;
+        if (filtros?.titulo) {
+            filtros.titulo = valorTextoSeguro(filtros.titulo);
+        }
+        const filtrosKey = this.generarFiltrosKey(filtros);
+        const key = `${page}_${limit}_${filtrosKey}`;
         try {
-            let cacheActual = this.leerCacheCatalogo();
+            const cacheActual = this.leerCacheCatalogo();
             if (cacheActual.pages[key]) {
                 return of(cacheActual.pages[key]);
             }
-            const url = `${environment.apiUrl}:${environment.puerto}/libros?page=${page}&limit=${limit}`;
+            const params = this.construirParams(page, limit, filtros);
+
+            const url = `${environment.apiUrl}:${environment.puerto}/libros?${params.toString()}`;
             return this.http.get<LibroResumen[]>(url).pipe(
                 map((libros) => {
                     const normalizados = BaseLibros.normalizarYOrdenarLibros(libros, sort);
@@ -146,15 +233,12 @@ export class ServicioCatalogoLibros {
         }
         const raw = globalThis.sessionStorage.getItem(this.cacheCatalogoKey);
         if (!raw) {
-            return { total: null, pages: {}, currentPage: 1 };
+            return { total: {}, pages: {}, currentPage: 1 };
         }
         try {
             const parsed = JSON.parse(raw) as CacheCatalogoLibros;
             return {
-                total:
-                    typeof parsed?.total === 'number' && Number.isFinite(parsed.total)
-                        ? parsed.total
-                        : null,
+                total: parsed?.total && typeof parsed.total === 'object' ? parsed.total : {},
                 pages: parsed?.pages && typeof parsed.pages === 'object' ? parsed.pages : {},
                 currentPage:
                     typeof parsed?.currentPage === 'number' &&

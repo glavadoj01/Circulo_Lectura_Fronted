@@ -108,7 +108,7 @@ export class Header {
      */
     onPanelLinkClick(event: MouseEvent) {
         const target = event.target as HTMLElement;
-        if (target && target.tagName === 'A') this.hideMenu();
+        if (target?.tagName === 'A') this.hideMenu();
     }
 
     /**
@@ -138,8 +138,9 @@ export class Header {
             const focusables = this.getFocusable(panelEl);
             if (!focusables.length) return;
 
-            const first = focusables[0];
-            const last = focusables[focusables.length - 1];
+            const first = focusables.at(0) as HTMLElement;
+            // Si uso "focusebales[focusables.length - 1]" -> Sonar Marca como "No recomendado" y muestra esta alternativa "¿más legible?"
+            const last = focusables.at(-1) as HTMLElement;
             const active = document.activeElement as HTMLElement;
 
             if (e.shiftKey && active === first) {

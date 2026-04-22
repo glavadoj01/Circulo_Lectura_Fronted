@@ -1,0 +1,122 @@
+<aside class="w-full">
+  <div class="sticky top-24">
+    <div
+      class="flex flex-col gap-4 p-4 rounded-xl bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800">
+      <div class="flex flex-col mb-2">
+        <h2 class="text-gray-900 dark:text-white text-lg font-medium leading-normal">Filtros
+        </h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
+          Refina tu
+          búsqueda</p>
+      </div>
+      <div class="flex flex-col">
+        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group" open="">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
+            <p class="text-gray-900 dark:text-white text-sm font-medium leading-normal">
+              Género</p>
+            <div class="text-gray-600 dark:text-gray-400 group-open:rotate-180 transition-transform">
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+          </summary>
+          <div class="pt-2">
+            <fieldset>
+              <legend class="sr-only">Seleccionar género</legend>
+              @for (genero of generos(); track genero.id_genero) {
+              <label class="flex gap-x-3 py-2 flex-row items-center">
+                <input
+                  class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
+                  style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');"
+                  type="checkbox" [checked]="selectedGeneros.has(genero.id_genero)"
+                  (change)="toggleGenero(genero.id_genero)" />
+                <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
+                  {{ genero.nombre_genero }}
+                </p>
+              </label>
+              }
+            </fieldset>
+          </div>
+        </details>
+        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group"
+          aria-describedby="filtro-autor-ayuda">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
+            <p class="text-gray-900 dark:text-white text-sm font-medium leading-normal">
+              Autor</p>
+            <div class="text-gray-600 dark:text-gray-400 group-open:rotate-180 transition-transform">
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+          </summary>
+          <div>
+            @for (autor of autores(); track autor.id_autor) {
+            <label class="flex gap-x-3 py-2 flex-row items-center">
+              <input
+                class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
+                type="checkbox" [checked]="selectedAutores.has(autor.id_autor)"
+                (change)="toggleAutor(autor.id_autor)" />
+              <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
+                {{ autor.nombre_autor }} {{ autor.apellido_autor }}
+              </p>
+            </label>
+            }
+          </div>
+        </details>
+        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group"
+          aria-describedby="filtro-year-ayuda">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
+            <p class="text-gray-900 dark:text-white text-sm font-medium leading-normal">
+              Año
+              de Publicación</p>
+            <div class="text-gray-600 dark:text-gray-400 group-open:rotate-180 transition-transform">
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+          </summary>
+          <div>
+            @for (year of years(); track year) {
+            <label class="flex gap-x-3 py-2 flex-row items-center">
+              <input
+                class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
+                type="checkbox" [checked]="selectedYears.has(year)" (change)="toggleYear(year)" />
+              <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
+                {{ year }}
+              </p>
+            </label>
+            }
+          </div>
+        </details>
+        <details class="flex flex-col border-t border-gray-300 dark:border-gray-700 py-2 group"
+          aria-describedby="filtro-valoracion-ayuda">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
+            <p class="text-gray-900 dark:text-white text-sm font-medium leading-normal">
+              Valoración</p>
+            <div class="text-gray-600 dark:text-gray-400 group-open:rotate-180 transition-transform">
+              <span class="material-symbols-outlined">expand_more</span>
+            </div>
+          </summary>
+          <div>
+            @for (valor of [1,2,3,4,5]; track valor) {
+            <label class="flex gap-x-3 py-2 flex-row items-center">
+              <input
+                class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
+                type="checkbox" [checked]="selectedValoraciones.has(valor)" (change)="toggleValoracion(valor)" />
+              <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
+                {{ valor }} estrellas
+              </p>
+            </label>
+            }
+          </div>
+        </details>
+      </div>
+      <div class="flex flex-col gap-2 pt-4 border-t border-gray-300 dark:border-gray-700">
+        <button type="button" aria-label="Aplicar filtros del catálogo"
+          class="flex w-full min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]"
+          (click)="aplicarFiltros()">
+          <span class="truncate">Aplicar Filtros</span>
+        </button>
+        <button type="button" aria-label="Limpiar filtros del catálogo"
+          class="flex w-full min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-800 text-sm font-bold leading-normal tracking-[0.015em]"
+          (click)="limpiarFiltros()">
+          <span class="truncate">Limpiar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</aside>
