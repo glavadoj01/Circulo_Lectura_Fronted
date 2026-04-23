@@ -1,4 +1,10 @@
-import { LibroBD, LibroCritica, ListaComentarios } from '@interfaces/modelosBD/modelosBD';
+import {
+    EventoBD,
+    LibroBD,
+    LibroCritica,
+    ListaComentarios,
+    UsuarioBD,
+} from '@interfaces/modelosBD/modelosBD';
 
 /****************** INTERFACES DE LA CAPA DE APLICACIÓN ******************/
 
@@ -96,4 +102,25 @@ export interface DetalleListaCompleta {
     libros: LibroResumen[];
     comentarios: ListaComentarios[];
     errorComentarios: boolean;
+}
+
+export interface EventoResumen extends EventoBD {
+    nombreCreador: string;
+    totalAsistentes: number;
+    categorias: string[];
+}
+
+export interface UsuarioCompleto extends UsuarioBD {
+    librosLeidos: LibroResumen[];
+    librosPendientes: LibroResumen[];
+    listasCreadas: ListaApp[];
+    listasSeguidas: ListaApp[];
+    eventosCreados: EventoResumen[];
+    eventosAsistidos: EventoResumen[];
+    criticas: CriticaConTitulo[];
+    avatarUrl?: string;
+}
+
+export interface CriticaConTitulo extends LibroCritica {
+    titulo_libro: string;
 }

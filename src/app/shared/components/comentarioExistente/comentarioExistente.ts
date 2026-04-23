@@ -47,7 +47,7 @@ export class ComentarioExistente {
             }
 
             const sub = this.servicioUsuario
-                .getUsuarioPorId(idUsuario, 'nombre_usuario')
+                .getNombreUsuarioComentario(idUsuario)
                 .subscribe((data: any) => {
                     if (Array.isArray(data) && data.length > 0) {
                         this.usuarioNombre = data[0].nombre_usuario || 'Desconocido';

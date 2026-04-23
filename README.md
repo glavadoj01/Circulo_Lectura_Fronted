@@ -71,11 +71,16 @@ El código fuente está organizado en las siguientes carpetas y archivos:
 ```bash
 Circulo_Lectura_Fronted/
 ├── src/
+│   ├── environments/                                       # Configuración de entornos
+│   │   ├── environments.ts                                     # Usar para desarrollo local
+│   │   └── _environments.ts                                    # Versión limpia para compartir y editar
 │   └── app/
 │       ├── app.ts, app.routes.ts, app.html, app.config.ts  # Configuración y entrada principal
-│       ├── environments/                                   # Configuración de entornos
-│       │   ├── environments.ts                                 # Usar para desarrollo local
-│       │   └── _environments.ts                                # Versión limpia para compartir y editar
+│       │── interfaces/                                     # Modelos de datos
+│       │   ├── modelosApp/                                     # Modelos utilizados en la App
+│       │   │   └── modelosApp.ts                          
+│       │   └── modelosBD/                                      # Modelos utilizados en la BD
+│       │       └── modelosBD.ts
 │       ├── pages/                                          # Páginas de la aplicación
 │       │   ├── auth/                                           # auth.ts, auth.html, auth.css (WIP)
 │       │   ├── bienvenida/                                     # bienvenida.ts, bienvenida.html (WIP)
@@ -96,39 +101,36 @@ Circulo_Lectura_Fronted/
 │       │   │   └── servicioUsuario.ts                              # Gestiona la obtencion de datos de usuarios (actualmente para comentarios) (WIP)
 │       │   └── themeService/
 │       │       └── theme.ts                                        # Gestiona el cambio de tema claro/oscuro (WIP - paleta colores claros)
-│       ├── shared/
-│       │   ├── components/                      # Componentes reutilizables y/o especificos con logica
-│       │   │   ├── banner-cargando/
-│       │   │   ├── banner-error/
-│       │   │   ├── busqueda-listas/                # Gestiona la barra de busquedas del catalogo de listas
-│       │   │   ├── comentarioExistente/
-│       │   │   ├── comentarioNuevo/                # (WIP)
-│       │   │   ├── estrellas-puntuacion/           # Componente que muestra 5 estrellas reyenas según la nota media de un libro (detalles Libro y Lista - Catalogo Libros)
-│       │   │   ├── filtros-libros                  # Componente de Filtros para el Catalogo de Libros
-│       │   │   ├── filtros-listas                  # Componente de Filtros para el Catalogo de Listas
-│       │   │   ├── footer/
-│       │   │   ├── header/
-│       │   │   ├── libro-card/                     # Tarjeta Resumen para Catalogo Libros y Detalle Lista
-│       │   │   ├── libro-metadatos/                # Cabecera de la pagina Detalle Lista
-│       │   │   ├── lista-card/                     # Tarjeta Resumen para Catalogo de Listas
-│       │   │   ├── paginacion/                     # Componente de paginación y navegación en Catalogos
-│       │   │   ├── resumen-puntuaciones/           # Componente con el resumen de puntuaciones del Detalle de un Libro
-│       │   │   └── searchBar/                      # Barra de Busquedas Global (WIP)
-│       │   ├── pipes                           # Trasnformaciones Visuales sobre el DOM
-│       │   │   ├── autor-principal.pipe.ts         # Muestra el autor[0] con nombre y apellidos
-│       │   │   ├── puntuacion-normalizada.pipe.ts  # Utiliza el util Normalización 1-5 ¿?
-│       │   │   ├── puntuacion-texto.pipe.ts        # Utiliza el util Normalización 1-5 ¿? Tengo 2?
-│       │   │   ├── saltosLinea.pipe.ts             # Convierte saltos de linea en texto a <br>
-│       │   │   └── tiempo-relativo.pipe.ts         # Muestra un mensaje especifico de tiempo ("hace un momento", "hace 1 hora", "hace 2 horas", ...)
-│       │   └── utils                           # Utilidades/Funciones auxiliares y genericas
-│       │       ├── error.utils.ts                  # Centraliza la recepcion y emision normalizada de errores/claves
-│       │       ├── format.utils.ts                 # Funciones de formateo de datos
-│       │       └── validation.utils.ts             # Validaciones/Saneamiento sobre datos de Inputs y BD
-│       └── interfaces/           # Modelos de datos
-│           ├── modelosApp/         # Modelos utilizados en la App
-│           │   └── modelosApp.ts
-│           └── modelosBD/          # Modelos utilizados en la BD
-│               └── modelosBD.ts
+│       └── shared/
+│           ├── components/                      # Componentes reutilizables y/o especificos con logica
+│           │   ├── banner-cargando/
+│           │   ├── banner-error/
+│           │   ├── busqueda-listas/                # Gestiona la barra de busquedas del catalogo de listas
+│           │   ├── comentarioExistente/
+│           │   ├── comentarioNuevo/                # (WIP)
+│           │   ├── estrellas-puntuacion/           # Componente que muestra 5 estrellas reyenas según la nota media de un libro (detalles Libro y Lista - Catalogo Libros)
+│           │   ├── filtros-libros                  # Componente de Filtros para el Catalogo de Libros
+│           │   ├── filtros-listas                  # Componente de Filtros para el Catalogo de Listas
+│           │   ├── footer/
+│           │   ├── header/
+│           │   ├── libro-card/                     # Tarjeta Resumen para Catalogo Libros y Detalle Lista
+│           │   ├── libro-metadatos/                # Cabecera de la pagina Detalle Lista
+│           │   ├── lista-card/                     # Tarjeta Resumen para Catalogo de Listas
+│           │   ├── paginacion/                     # Componente de paginación y navegación en Catalogos
+│           │   ├── resumen-puntuaciones/           # Componente con el resumen de puntuaciones del Detalle de un Libro
+│           │   ├── searchBar/                      # Barra de Busquedas Global (WIP)
+│           │   └── usuario-card                    # Tarjeta del Perfil de Usuario
+│           ├── pipes                           # Trasnformaciones Visuales sobre el DOM
+│           │   ├── autor-principal.pipe.ts         # Muestra el autor[0] con nombre y apellidos
+│           │   ├── puntuacion-normalizada.pipe.ts  # Utiliza el util Normalización 1-5 ¿?
+│           │   ├── puntuacion-texto.pipe.ts        # Utiliza el util Normalización 1-5 ¿? Tengo 2?
+│           │   ├── saltosLinea.pipe.ts             # Convierte saltos de linea en texto a <br>
+│           │   └── tiempo-relativo.pipe.ts         # Muestra un mensaje especifico de tiempo ("hace un momento", "hace 1 hora", "hace 2 horas", ...)
+│           └── utils                           # Utilidades/Funciones auxiliares y genericas
+│               ├── error.utils.ts                  # Centraliza la recepcion y emision normalizada de errores/claves
+│               ├── format.utils.ts                 # Funciones de formateo de datos
+│               └── validation.utils.ts             # Validaciones/Saneamiento sobre datos de Inputs y BD
+
 ```
 
 ## Recursos adicionales

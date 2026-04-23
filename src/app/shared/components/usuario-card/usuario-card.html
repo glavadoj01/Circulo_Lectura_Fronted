@@ -1,0 +1,78 @@
+<div class="sticky top-24 flex flex-col gap-6">
+  <!-- ProfileHeader -->
+  <div
+    class="flex flex-col gap-4 items-start rounded-xl border border-gray-200/80 bg-background-light p-4 dark:border-white/10 dark:bg-white/5">
+    <img class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32"
+      alt="Avatar de usuario {{usuario().nombre_usuario || 'Usuario'}}" src={{usuario().avatarUrl}} />
+
+    <div class="flex flex-col justify-center">
+      <p class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-gray-900 dark:text-white">
+        {{usuario().nombre_usuario || 'Nombre no especificado'}}</p>
+      <p class="text-base font-normal leading-normal text-gray-600 dark:text-gray-400">
+        {{usuario().email_usuario || 'Correo no especificado'}}</p>
+      <p class="text-sm font-normal leading-normal text-gray-500 dark:text-gray-500">
+        {{usuario().fecha_registro_usuario || 'N/A' | tiempoRelativo}}</p>
+    </div>
+    <button
+      class="flex h-10 w-full min-w-21 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 px-4 text-sm font-bold leading-normal tracking-[0.015em] text-gray-800 hover:bg-gray-200/80 dark:bg-white/5 dark:text-white dark:hover:bg-white/10">
+      <span class="truncate">Editar Perfil</span>
+    </button>
+  </div>
+  <!-- ProfileStats -->
+  <div class="flex flex-wrap gap-3">
+    <div
+      class="flex min-w-27.75 flex-1 basis-[fit-content] flex-col gap-1 rounded-xl border border-gray-200/80 bg-background-light p-4 dark:border-white/10 dark:bg-white/5">
+      <p class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+        {{usuario().librosLeidos?.length || 0}}</p>
+      <p class="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">Libros Leídos</p>
+    </div>
+    <div
+      class="flex min-w-27.75 flex-1 basis-[fit-content] flex-col gap-1 rounded-xl border border-gray-200/80 bg-background-light p-4 dark:border-white/10 dark:bg-white/5">
+      <p class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+        {{usuario().librosPendientes?.length || 0}}</p>
+      <p class="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">Libros Leídos</p>
+    </div>
+    <div
+      class="flex min-w-27.75 flex-1 basis-[fit-content] flex-col gap-1 rounded-xl border border-gray-200/80 bg-background-light p-4 dark:border-white/10 dark:bg-white/5">
+      <p class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+        {{usuario().eventosCreados?.length || 0}}</p>
+      <p class="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">Eventos Creados</p>
+    </div>
+    <div
+      class="flex min-w-27.75 flex-1 basis-[fit-content] flex-col gap-1 rounded-xl border border-gray-200/80 bg-background-light p-4 dark:border-white/10 dark:bg-white/5">
+      <p class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+        {{usuario().eventosAsistidos?.length || 0}}</p>
+      <p class="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">Eventos Asistidos</p>
+    </div>
+    <div
+      class="flex min-w-27.75 flex-1 basis-[fit-content] flex-col gap-1 rounded-xl border border-gray-200/80 bg-background-light p-4 dark:border-white/10 dark:bg-white/5">
+      <p class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+        {{usuario().listasCreadas?.length || 0}}</p>
+      <p class="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">Listas Creadas</p>
+    </div>
+    <div
+      class="flex min-w-27.75 flex-1 basis-[fit-content] flex-col gap-1 rounded-xl border border-gray-200/80 bg-background-light p-4 dark:border-white/10 dark:bg-white/5">
+      <p class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+        {{usuario().listasSeguidas?.length || 0}}</p>
+      <p class="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">Listas Seguidas</p>
+    </div>
+    <div
+      class="flex min-w-27.75 flex-1 basis-[fit-content] flex-col gap-1 rounded-xl border border-gray-200/80 bg-background-light p-4 dark:border-white/10 dark:bg-white/5">
+      <p class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+        {{usuario().criticas?.length || 0}}</p>
+      <p class="text-sm font-normal leading-normal text-gray-600 dark:text-gray-400">Reseñas Escritas</p>
+    </div>
+  </div>
+  <div
+    class="flex flex-col gap-4 bg-background-element p-4 rounded-xl border border-gray-200/80 dark:border-white/10 dark:bg-white/5">
+    <input #idInput type="number" placeholder="ID del Perfil a Ver"
+      class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50" />
+    <button class="flex min-w-21 max-w-120 items-center justify-center overflow-hidden rounded-lg h-10 px-4 
+        bg-btn-primary text-primary text-sm font-bold leading-normal tracking-[0.015em] 
+        hover:bg-btn-primary-hover focus-visible:outline-none focus-visible:ring-2 
+        focus-visible:ring-btn-primary-focus active:bg-btn-primary-pressed transition-colors"
+      (click)="cambiarUsuario(idInput.value)">
+      Ir a Perfil (WIP - En Desarrollo)
+    </button>
+  </div>
+</div>

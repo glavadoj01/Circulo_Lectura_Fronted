@@ -7,6 +7,7 @@ import { Listas } from './pages/catalogos/listas/listas';
 import { Evento } from './pages/detalle/evento/evento';
 import { DetalleLibro } from './pages/detalle/libro/detalleLibro';
 import { DetalleLista } from './pages/detalle/lista/lista';
+import { PerfilUsuario } from './pages/perfilUsuario/perfilUsuario';
 
 export const routes: Routes = [
     { path: 'auth', component: Auth },
@@ -17,6 +18,7 @@ export const routes: Routes = [
     { path: 'detalle/evento/:id', component: Evento },
     { path: 'detalle/libro/:id', component: DetalleLibro },
     { path: 'detalle/lista/:id', component: DetalleLista },
+    { path: 'perfil-usuario/:id', component: PerfilUsuario },
     /* Ruta por defecto www.webapp.es */
     {
         path: '',
