@@ -47,22 +47,21 @@ cd Circulo_Lectura_Fronted
 
 ## 3. Edición de ficheros/credenciales
 
-- Renombra **_environments.ts** a **environments.ts** en `src/environments/`.
+- Renombrar **_environments.ts** a **environments.ts** en `src/environments/`.
 - Por defecto, la API está configurada en **<http://localhost:3000>**.
-- Para acceder desde un dispositivo externo en red local, edita **environments.ts** y reemplaza `localhost` por la IP o dominio local del backend (consulta las indicaciones dentro del propio fichero).
+- Para acceder desde un dispositivo externo en red local, editar **environments.ts** y reemplazar `localhost` por la IP o dominio local del backend (consultar las indicaciones dentro del propio fichero).
 
 ## 4. Ejecutar el servicio
 
-- `npm start` o `ng serve`: Inicia el servidor de desarrollo en modo local (por defecto en <http://localhost:4200>).
-- `ng serve --host 0.0.0.0`: Inicia el servidor permitiendo acceso desde otros dispositivos de la red local (requiere configurar la IP en **environments.ts** y en el backend, archivo **.env**).
+- `npm run start`: Inicia el servidor de desarrollo en modo local (por defecto en <http://localhost:4200>).
+- `npm run start:local`: Inicia el servidor permitiendo acceso desde otros dispositivos de la red local (requiere configurar la IP en **environments.ts** y en el backend, archivo **.env**).
 
 ### 4.1 Scripts disponibles
 
 ```bash
-npm start         # Inicia el servidor de desarrollo (ng serve)
-npm run build     # Compila la aplicación para producción
-npm run watch     # Compila en modo watch (desarrollo)
-npm run reinstall # Elimina node_modules y package-lock.json y reinstala dependencias
+npm run start           # Inicia el servidor en localhost
+npm run start:local     # Inicia el servidor en la IP local del dispositivo
+npm run reinstall       # Elimina node_modules y package-lock.json y reinstala dependencias
 ```
 
 ## Estructura del proyecto
@@ -78,32 +77,53 @@ Circulo_Lectura_Fronted/
 │       │   ├── environments.ts                                 # Usar para desarrollo local
 │       │   └── _environments.ts                                # Versión limpia para compartir y editar
 │       ├── pages/                                          # Páginas de la aplicación
-│       │   ├── auth/                                           # auth.ts, auth.html, auth.css
-│       │   ├── bienvenida/                                     # bienvenida.ts, bienvenida.html
-│       │   ├── perfil/                                         # perfil.ts, perfil.html
+│       │   ├── auth/                                           # auth.ts, auth.html, auth.css (WIP)
+│       │   ├── bienvenida/                                     # bienvenida.ts, bienvenida.html (WIP)
 │       │   ├── catalogos/                                      # libros, listas, eventos (cada uno con sus archivos .ts y .html)
-│       │   └── detalle/                                        # evento, libro, lista (cada uno con sus archivos .ts y .html)
+│       │   ├── condicionesYTerminos                            # Terminos y condiciones de uso (WIP)
+│       │   ├── detalle/                                        # evento, libro, lista (cada uno con sus archivos .ts y .html)
+│       │   └── perfilUsuario/                                  # perfil.ts, perfil.html
 │       ├── services/                                       # Servicios de la aplicación
-│       │   ├── servicioLibros/
-│       │   │   └── servicioLibros.ts
+│       │   ├── servicioLibros/                                 # Relacionados con Libros
+│       │   │   ├── baseLibros.ts                                   # Mapeados y portadas
+│       │   │   ├── servicioCatalogoLibros.ts                       # Especializado en LibroResumen para el Catalogo de Libros
+│       │   │   ├── servicioDetalleLibros.ts                        # Especializado en el DetalleLibro (criticas, generos, datos completos ...)
+│       │   │   └── servicioFiltrosLibro.ts                         # Gestiona la carga de filtros existentes en la BD (Generos, Autores, Años) para el Catalogo
+│       │   ├── servicioListas/                                  # Relacionado con Listas 
+│       │   │   ├── servicioCatalogoListas.ts                       # Gestiona los servicios del Catalogo de Listas
+│       │   │   └── servicioDetalleListas.ts                        # Gestiona los servicios del Detale de una Lista
 │       │   ├── servicioUsuario/
-│       │   │   └── servicioUsuario.ts
+│       │   │   └── servicioUsuario.ts                              # Gestiona la obtencion de datos de usuarios (actualmente para comentarios) (WIP)
 │       │   └── themeService/
-│       │       └── theme.ts
+│       │       └── theme.ts                                        # Gestiona el cambio de tema claro/oscuro (WIP - paleta colores claros)
 │       ├── shared/
-│       │   └── components/             # Componentes reutilizables
-│       │       ├── banner-cargando/
-│       │       ├── banner-error/
-│       │       ├── comentarioExistente/
-│       │       ├── comentarioNuevo/
-│       │       ├── estrellas-puntuacion/
-│       │       ├── footer/
-│       │       ├── header/
-│       │       ├── libro-card/
-│       │       ├── libro-metadatos/
-│       │       ├── paginacion/
-│       │       ├── resumen-puntuaciones/
-│       │       └── searchBar/
+│       │   ├── components/                      # Componentes reutilizables y/o especificos con logica
+│       │   │   ├── banner-cargando/
+│       │   │   ├── banner-error/
+│       │   │   ├── busqueda-listas/                # Gestiona la barra de busquedas del catalogo de listas
+│       │   │   ├── comentarioExistente/
+│       │   │   ├── comentarioNuevo/                # (WIP)
+│       │   │   ├── estrellas-puntuacion/           # Componente que muestra 5 estrellas reyenas según la nota media de un libro (detalles Libro y Lista - Catalogo Libros)
+│       │   │   ├── filtros-libros                  # Componente de Filtros para el Catalogo de Libros
+│       │   │   ├── filtros-listas                  # Componente de Filtros para el Catalogo de Listas
+│       │   │   ├── footer/
+│       │   │   ├── header/
+│       │   │   ├── libro-card/                     # Tarjeta Resumen para Catalogo Libros y Detalle Lista
+│       │   │   ├── libro-metadatos/                # Cabecera de la pagina Detalle Lista
+│       │   │   ├── lista-card/                     # Tarjeta Resumen para Catalogo de Listas
+│       │   │   ├── paginacion/                     # Componente de paginación y navegación en Catalogos
+│       │   │   ├── resumen-puntuaciones/           # Componente con el resumen de puntuaciones del Detalle de un Libro
+│       │   │   └── searchBar/                      # Barra de Busquedas Global (WIP)
+│       │   ├── pipes                           # Trasnformaciones Visuales sobre el DOM
+│       │   │   ├── autor-principal.pipe.ts         # Muestra el autor[0] con nombre y apellidos
+│       │   │   ├── puntuacion-normalizada.pipe.ts  # Utiliza el util Normalización 1-5 ¿?
+│       │   │   ├── puntuacion-texto.pipe.ts        # Utiliza el util Normalización 1-5 ¿? Tengo 2?
+│       │   │   ├── saltosLinea.pipe.ts             # Convierte saltos de linea en texto a <br>
+│       │   │   └── tiempo-relativo.pipe.ts         # Muestra un mensaje especifico de tiempo ("hace un momento", "hace 1 hora", "hace 2 horas", ...)
+│       │   └── utils                           # Utilidades/Funciones auxiliares y genericas
+│       │       ├── error.utils.ts                  # Centraliza la recepcion y emision normalizada de errores/claves
+│       │       ├── format.utils.ts                 # Funciones de formateo de datos
+│       │       └── validation.utils.ts             # Validaciones/Saneamiento sobre datos de Inputs y BD
 │       └── interfaces/           # Modelos de datos
 │           ├── modelosApp/         # Modelos utilizados en la App
 │           │   └── modelosApp.ts
