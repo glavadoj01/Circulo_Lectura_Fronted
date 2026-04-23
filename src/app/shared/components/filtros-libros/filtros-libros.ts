@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Signal, effect } from '@angular/core';
+import { Component, Output, EventEmitter, Signal } from '@angular/core';
 import {
     FiltroAutor,
     FiltroGenero,
@@ -33,10 +33,6 @@ export class FiltrosLibros {
         this.years = this.filtrosSrv.years;
         this.valoraciones = this.filtrosSrv.valoraciones;
 
-        effect(() => {
-            console.log('DEBUG generos():', this.generos());
-        });
-
         this.filtrosSrv.cargarTodosFiltros();
     }
 
@@ -66,6 +62,12 @@ export class FiltrosLibros {
         this.selectedAutores.clear();
         this.selectedYears.clear();
         this.selectedValoraciones.clear();
+        this.filtrosAplicados.emit({
+            generos: [],
+            autores: [],
+            years: [],
+            valoraciones: [],
+        });
     }
 
     aplicarFiltros() {

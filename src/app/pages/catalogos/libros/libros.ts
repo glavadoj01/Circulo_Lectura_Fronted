@@ -29,7 +29,12 @@ export class Libros {
         autores: number[];
         years: number[];
         valoraciones: number[];
-    } | null>(null);
+    }>({
+        generos: [],
+        autores: [],
+        years: [],
+        valoraciones: [],
+    });
     private readonly destroyRef = inject(DestroyRef);
     private readonly servicioLibros = inject(ServicioCatalogoLibros);
     readonly tamanioPagina: number = 12;
@@ -66,6 +71,7 @@ export class Libros {
         years: number[];
         valoraciones: number[];
     }) {
+        this.filtrosSeleccionados.set(filtros);
         this.servicioLibros
             .getTotalLibros(filtros)
             .pipe(takeUntilDestroyed(this.destroyRef))
@@ -142,14 +148,10 @@ export class Libros {
         });
         this.cargando.set(true);
         this.errorCarga.set(false);
+        const filtrosFinales = filtros ?? this.filtrosSeleccionados();
 
         this.servicioLibros
-            .getCatalogoLibrosPaginado(
-                pagina,
-                'id_libro',
-                this.tamanioPagina,
-                filtros ?? this.filtrosSeleccionados() ?? undefined,
-            )
+            .getCatalogoLibrosPaginado(pagina, 'id_libro', this.tamanioPagina, filtrosFinales)
             .pipe(
                 finalize(() => this.cargando.set(false)),
                 takeUntilDestroyed(this.destroyRef),
@@ -193,7 +195,7 @@ export class Libros {
 
         this.servicioLibros.setPaginaCatalogoActual(nuevaPagina);
         console.log('[CatalogoLibros] Cambio de pagina:', nuevaPagina);
-        this.cargarPagina(nuevaPagina, this.filtrosSeleccionados() ?? undefined);
+        this.cargarPagina(nuevaPagina, this.filtrosSeleccionados());
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }

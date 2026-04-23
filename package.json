@@ -1,6 +1,6 @@
 {
     "name": "circulo-lectura-fronted",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "description": "Frontend de la aplicación Círculo de Lectura",
     "homepage": "https://github.com/glavadoj01/Circulo_Lectura_Fronted#readme",
     "repository": {
@@ -21,7 +21,7 @@
     "scripts": {
         "reinstall": "rm -rf node_modules package-lock.json && npm install",
         "ng": "ng",
-        "start": "clear &&ng serve",
+        "start": "clear && ng serve",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
         "run": "clear && npm run reinstall && npm run start"

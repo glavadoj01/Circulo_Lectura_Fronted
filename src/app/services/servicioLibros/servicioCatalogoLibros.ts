@@ -56,11 +56,19 @@ export class ServicioCatalogoLibros {
                 return of(cacheActual.total[filtrosKey]);
             }
 
-            const params = this.construirParams(1, 1, filtros);
+            const params = this.construirParams(1, 0, filtros);
+            console.log(
+                '[ServicioCatalogoLibros] getTotalLibros - filtrosKey:',
+                filtrosKey,
+                'params:',
+                params.toString(),
+            );
             const url = `${environment.apiUrl}:${environment.puerto}/libros/total?${params.toString()}`;
+            console.log('[ServicioCatalogoLibros] getTotalLibros - URL:', url);
 
             return this.http.get<{ total: number }>(url).pipe(
                 map((resp) => {
+                    console.log('[ServicioCatalogoLibros] getTotalLibros - respuesta HTTP:', resp);
                     const total = Number(resp?.total ?? 0);
                     const totalSeguro = Number.isFinite(total) && total > 0 ? total : 0;
 
@@ -166,10 +174,18 @@ export class ServicioCatalogoLibros {
                 return of(cacheActual.pages[key]);
             }
             const params = this.construirParams(page, limit, filtros);
-
+            console.log(
+                '[ServicioCatalogoLibros] getCatalogoLibrosPaginado - params:',
+                params.toString(),
+            );
             const url = `${environment.apiUrl}:${environment.puerto}/libros?${params.toString()}`;
+            console.log('[ServicioCatalogoLibros] getCatalogoLibrosPaginado - URL:', url);
             return this.http.get<LibroResumen[]>(url).pipe(
                 map((libros) => {
+                    console.log(
+                        '[ServicioCatalogoLibros] getCatalogoLibrosPaginado - respuesta HTTP:',
+                        libros,
+                    );
                     const normalizados = BaseLibros.normalizarYOrdenarLibros(libros, sort);
                     this.guardarCacheCatalogo({
                         ...cacheActual,
@@ -199,6 +215,7 @@ export class ServicioCatalogoLibros {
     getPaginaCatalogoActual(): number {
         try {
             const cache = this.leerCacheCatalogo();
+            console.log('[ServicioCatalogoLibros] getPaginaCatalogoActual - cache leída:', cache);
             return cache.currentPage;
         } catch (error) {
             throw manejarError(error, 'servicioCatalogoLibros.getPaginaCatalogoActual');
@@ -237,6 +254,12 @@ export class ServicioCatalogoLibros {
         }
         try {
             const parsed = JSON.parse(raw) as CacheCatalogoLibros;
+            console.log(
+                '[ServicioCatalogoLibros] leerCacheCatalogo - cache raw:',
+                raw,
+                'parsed:',
+                parsed,
+            );
             return {
                 total: parsed?.total && typeof parsed.total === 'object' ? parsed.total : {},
                 pages: parsed?.pages && typeof parsed.pages === 'object' ? parsed.pages : {},
@@ -261,6 +284,7 @@ export class ServicioCatalogoLibros {
             throw new AppError('catalogo_cache_no_window');
         }
         try {
+            console.log('[ServicioCatalogoLibros] guardarCacheCatalogo - cache a guardar:', cache);
             globalThis.sessionStorage.setItem(this.cacheCatalogoKey, JSON.stringify(cache));
         } catch (error) {
             throw new AppError('catalogo_cache_guardar', { error });
