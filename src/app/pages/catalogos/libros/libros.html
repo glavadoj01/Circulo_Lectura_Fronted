@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <div class="flex flex-col lg:flex-row gap-8">
     <!-- Aside Filtros -->
     <div class="w-full lg:w-1/4 xl:w-1/5">
@@ -22,16 +22,6 @@
             resultados.
           </p>
         </div>
-        <div class="flex items-center gap-2">
-          <label for="orden-catalogo" class="text-sm text-gray-500 dark:text-gray-400">Ordenar por:</label>
-          <select id="orden-catalogo" aria-label="Ordenar resultados del catálogo"
-            class="form-select w-48 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 rounded-lg focus:ring-primary focus:border-primary text-sm">
-            <option>Mejor valorados</option>
-            <option>Más recientes</option>
-            <option>Título A-Z</option>
-            <option>Título Z-A</option>
-          </select>
-        </div>
       </div>
       @if (librosPagina().length === 0) {
       <section class="rounded-xl bg-gray-100 dark:bg-white/5 p-6">
@@ -40,7 +30,7 @@
       </section>
       } @else {
       <!-- Contenedor CatalogoLibros -->
-      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
         @for (libro of librosPagina(); track libro.id_libro) {
         <app-libro-card [libro]="libro"></app-libro-card>
         }
@@ -55,4 +45,4 @@
       } <!-- Fin del else errorCarga-->
     </div>
   </div>
-</div>
+</main>

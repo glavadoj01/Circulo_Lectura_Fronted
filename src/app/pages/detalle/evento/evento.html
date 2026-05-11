@@ -1,91 +1,71 @@
-<h2>Evento Placeholder - WIP</h2>
-<div class="grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-    <div class="max-w-4xl mx-auto bg-gray-100 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-        <div class="p-6 md:p-8 border-b border-gray-200 dark:border-gray-800">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Debate sobre 'Cien
-                años de soledad'</h1>
-            <div class="flex flex-wrap gap-x-6 gap-y-3 text-gray-600 dark:text-gray-400">
-                <div class="flex items-center space-x-2">
-                    <span class="material-icons-outlined text-primary text-xl">calendar_today</span>
-                    <span>Lunes, 25 de Noviembre</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="material-icons-outlined text-primary text-xl">schedule</span>
-                    <span>19:00 - 21:00</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="material-icons-outlined text-primary text-xl">location_on</span>
-                    <span>Sala de Conferencias Principal</span>
-                </div>
-            </div>
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- Aside Detalle -->
+    <div class="w-full lg:w-1/4 xl:w-1/5">
+      <aside class="sticky top-16.25 w-full border border-accent flex flex-col gap-4 bg-gray-900/40 rounded-xl p-6">
+        <h2 class="text-xl font-bold mb-2">{{detalle?.evento?.nombre_evento}}</h2>
+        <div class="flex items-center gap-2 text-gray-400">
+          <span class="material-icons-outlined text-primary">calendar_today</span>
+          <span>{{detalle?.evento?.fecha_evento | date:'fullDate'}}</span>
         </div>
-        <div class="p-6 md:p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Detalles del Evento
-                    </h2>
-                    <div class="prose prose-gray dark:prose-invert max-w-none">
-                        <p>Únete a nosotros para una noche de profunda discusión sobre la obra maestra de
-                            Gabriel García Márquez, "Cien años de soledad". Exploraremos juntos el realismo
-                            mágico, la saga de la familia Buendía y el impacto de la novela en la literatura
-                            mundial.</p>
-                        <p>Nuestra discusión se centrará en los temas principales como la soledad, la familia,
-                            el tiempo cíclico y la política. Invitamos a todos los miembros a venir preparados
-                            con sus pasajes favoritos, preguntas y perspectivas para compartir. Será una
-                            oportunidad enriquecedora para conectar con otros lectores y profundizar en nuestra
-                            apreciación de esta joya literaria.</p>
-                        <p>El evento será moderado por un experto en literatura latinoamericana para guiar la
-                            conversación y asegurar que todos tengan la oportunidad de participar.</p>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Libros Relacionados
-                        </h3>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                            <a class="group" href="#">
-                                <div
-                                    class="aspect-2/3 bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                                    <img alt="Portada de Cien años de soledad" class="w-full h-full object-cover"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0PDJekzntl5J0tAKDxnNuKFfGkBch47yh4N5j16DvjcQVAZrsWJAfD5UV7swF9VzWIY4lURFcTeGPI6a1iQMSAf0tHSvDKj7Qg0x3J4pBpxI8aCTQpvmvjspuWL3O7BAtN75ZC-1rKmLJbp8DL6unuaFXh-qVjP6alm2rWLr6CQoaAK0K9mG5SV7ckMN_uRYCLiySk1M6tLKX1ZiwlmR5W0-qxqs_UG4F_L1_KQR23UoFttTIsWRq2jwL4DN_rl6fN6pX5VbdyQ" />
-                                </div>
-                                <p
-                                    class="text-sm font-medium mt-2 text-center text-gray-800 dark:text-gray-200 truncate">
-                                    Cien años de soledad</p>
-                                <p class="text-xs text-center text-gray-500 dark:text-gray-400">Gabriel García
-                                    Márquez</p>
-                            </a>
-                            <a class="group" href="#">
-                                <div
-                                    class="aspect-2/3 bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                                    <img alt="Portada de otro libro relacionado"
-                                        class="w-full h-full object-cover opacity-75"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfzUQ6ehOMLUKuJjR8qz1ayoS214crKkF3bFAMDU2g8F5VMEd-HWv5R3U5CVdaoWGis95mdNRlYTJvrkgfeAWkmZbB5xKw303sAjy3gEiOON2CS04bWZolJyepEhBuv-NsbxfvlaiNpsZT32VYlrT1Jq96AIpRx-Z-QbYQrV0UdCiVjcFxa9FbMuEz4RVui4OILTRPJsfZ-ODbmkwTE6clXFgBUt3Emqxgl2WrMtiZswkEW6S5SXsZ3scqMW1EqCs-XtZwa0IR1A" />
-                                </div>
-                                <p
-                                    class="text-sm font-medium mt-2 text-center text-gray-800 dark:text-gray-200 truncate">
-                                    El amor en los tiempos del cólera</p>
-                                <p class="text-xs text-center text-gray-500 dark:text-gray-400">Gabriel García
-                                    Márquez</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:col-span-1">
-                    <div class="bg-gray-200 dark:bg-gray-800/50 p-6 rounded-lg sticky top-24">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Tu Asistencia</h3>
-                        <div class="space-y-3">
-                            <button
-                                class="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors">
-                                <span class="material-icons-outlined">check_circle</span>
-                                <span>Confirmado</span>
-                            </button>
-                        </div>
-                        <div class="mt-4 flex items-center justify-center space-x-2 text-gray-600 dark:text-gray-400">
-                            <span class="material-icons-outlined">group</span>
-                            <span class="text-sm">18 Asistentes confirmados</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="flex items-center gap-2 text-gray-400">
+          <span class="material-icons-outlined text-primary">schedule</span>
+          <span>{{detalle?.evento?.hora_evento}}</span>
         </div>
+        <div class="flex items-center gap-2 text-gray-400">
+          <span class="material-icons-outlined text-primary">location_on</span>
+          <span>{{detalle?.evento?.direccion_evento}}</span>
+        </div>
+        <div class="mt-4">
+          <div class="mb-2">Creador: <b>{{detalle?.evento?.id_usuarioCrd}}</b></div>
+          <div class="mb-2">Asistentes: <b>{{detalle?.asistentes?.length || 0}}</b></div>
+        </div>
+      </aside>
     </div>
-</div>
+    <div class="w-full lg:w-3/4 xl:w-4/5">
+      @if (cargando) {
+      <app-banner-cargando [elemento]="'evento'"></app-banner-cargando>
+      } @else if (!eventoEncontrado) {
+      <app-banner-error [elemento]="'evento'"></app-banner-error>
+      } @else {
+      <!-- Columna derecha (información extendida y libros relacionados) -->
+      <div class="flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center gap-4 mb-6">
+        <div class="flex min-w-72 flex-col gap-1">
+          <h1 class="text-2xl font-bold mb-4">{{detalle?.evento?.nombre_evento}}</h1>
+          <div class="text-gray-700 dark:text-gray-300 text-base leading-relaxed space-y-4">
+            <p>{{detalle?.evento?.descripcion_evento}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 w-full">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Libros Relacionados</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+          @for (libro of detalle?.libros ?? []; track libro.id_libro) {
+          <app-libro-card [libro]="libro"></app-libro-card>
+          }
+        </div>
+      </div>
+
+      <!-- Comentarios -->
+      <section class="border-t border-white/10 pt-10 flex flex-col gap-8">
+        <h2 class="text-xl font-bold mb-4">Comentarios</h2>
+        @if (errorComentarios) {
+        <output aria-live="polite"
+          class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-800 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300">
+          No se pudieron cargar los comentarios en este momento. Por favor, inténtalo de nuevo más tarde.
+        </output>
+        } @else if ((detalle?.comentarios?.length ?? 0) === 0) {
+        <output aria-live="polite" class="text-gray-600 dark:text-gray-400 text-sm">
+          Todavía no hay comentarios para este evento.
+        </output>
+        } @else {
+        @for (comentario of detalle?.comentarios ?? []; track comentario.id_eventoComentario) {
+        <app-comentario-existente [critica]="comentario"></app-comentario-existente>
+        }
+        }
+      </section>
+      }
+    </div>
+  </div>
+</main>

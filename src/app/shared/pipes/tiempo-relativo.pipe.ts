@@ -16,11 +16,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TiempoRelativoPipe implements PipeTransform {
     transform(value: string | Date | null | undefined): string {
         const fechaConvertida = this.parseFechaFlexible(value ?? undefined);
-        if (!fechaConvertida) return 'Fecha invalida';
+        if (!fechaConvertida) return 'Fecha inválida';
 
         const ahora = new Date();
         const diferenciaMs = ahora.getTime() - fechaConvertida.getTime();
-        if (diferenciaMs <= 0) return 'Hace un momento';
 
         const diferenciaMinutos = Math.floor(diferenciaMs / (1000 * 60));
         if (diferenciaMinutos < 1) return 'Hace un momento';
@@ -52,7 +51,6 @@ export class TiempoRelativoPipe implements PipeTransform {
      * @param fecha Valor a convertir a fecha. Puede ser un objeto Date, una cadena de texto o undefined.
      * @returns Objeto Date válido o null si la conversión falla.
      */
-
     private parseFechaFlexible(fecha: Date | string | undefined): Date | null {
         if (!fecha) {
             return null;

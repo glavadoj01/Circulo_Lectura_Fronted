@@ -1,13 +1,7 @@
-<main class="flex-1 px-4 sm:px-10 md:px-20 lg:px-40 py-10">
-  @if (cargando) {
-  <app-banner-cargando [elemento]="'lista'"></app-banner-cargando>
-  } @else if (!listaEncontrada) {
-  <app-banner-error [elemento]="'lista'"></app-banner-error>
-  } @else {
-  <div class="mx-auto flex max-w-7xl flex-col gap-12">
-    <!-- Detalle de la lista -->
-    <section class="grid gap-8 md:gap-20 contenedor-detalle">
-      <!-- Columna izquierda (información) -->
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- Aside Info Lista -->
+    <div class="w-full lg:w-1/4 xl:w-1/5">
       <aside class="w-fit h-fit border border-accent flex flex-col gap-4 bg-gray-900/40 rounded-xl p-6">
         <h2 class="text-xl font-bold mb-2">{{detalle?.lista?.nombre_lista}}</h2>
         <p class="text-gray-400">{{detalle?.lista?.descripcion_lista}}</p>
@@ -17,35 +11,43 @@
           <!-- Aquí podrías mostrar valoración media si la tienes en la lista -->
         </div>
       </aside>
-      <!-- Columna derecha (libros) -->
-      <div class="flex-1">
-        <h1 class="text-2xl font-bold mb-4">{{detalle?.lista?.nombre_lista}}</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          @for (libro of detalle?.libros ?? []; track libro.id_libro) {
-          <app-libro-card [libro]="libro"></app-libro-card>
-          }
+    </div>
+    <div class="w-full lg:w-3/4 xl:w-4/5">
+      @if (cargando) {
+      <app-banner-cargando [elemento]="'lista'"></app-banner-cargando>
+      } @else if (!listaEncontrada) {
+      <app-banner-error [elemento]="'lista'"></app-banner-error>
+      } @else {
+      <!-- Detalle de la lista -->
+      <div class="flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center gap-4 mb-6">
+        <div class="flex min-w-72 flex-col gap-1">
+          <h1 class="text-2xl font-bold mb-4">{{detalle?.lista?.nombre_lista}}</h1>
         </div>
       </div>
-    </section>
-
-    <!-- Comentarios -->
-    <section class="border-t border-white/10 pt-10 flex flex-col gap-8">
-      <h2 class="text-xl font-bold mb-4">Comentarios</h2>
-      @if (errorComentarios) {
-      <output aria-live="polite"
-        class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-800 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300">
-        No se pudieron cargar los comentarios en este momento. Por favor, inténtalo de nuevo más tarde.
-      </output>
-      } @else if ((detalle?.comentarios?.length ?? 0) === 0) {
-      <output aria-live="polite" class="text-gray-600 dark:text-gray-400 text-sm">
-        Todavía no hay comentarios para esta lista.
-      </output>
-      } @else {
-      @for (comentario of detalle?.comentarios ?? []; track comentario.id_listaComentario) {
-      <app-comentario-existente [critica]="comentario"></app-comentario-existente>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+        @for (libro of detalle?.libros ?? []; track libro.id_libro) {
+        <app-libro-card [libro]="libro"></app-libro-card>
+        }
+      </div>
+      <!-- Comentarios -->
+      <section class="border-t border-white/10 pt-10 flex flex-col gap-8">
+        <h2 class="text-xl font-bold mb-4">Comentarios</h2>
+        @if (errorComentarios) {
+        <output aria-live="polite"
+          class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-800 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-300">
+          No se pudieron cargar los comentarios en este momento. Por favor, inténtalo de nuevo más tarde.
+        </output>
+        } @else if ((detalle?.comentarios?.length ?? 0) === 0) {
+        <output aria-live="polite" class="text-gray-600 dark:text-gray-400 text-sm">
+          Todavía no hay comentarios para esta lista.
+        </output>
+        } @else {
+        @for (comentario of detalle?.comentarios ?? []; track comentario.id_listaComentario) {
+        <app-comentario-existente [critica]="comentario"></app-comentario-existente>
+        }
+        }
+      </section>
       }
-      }
-    </section>
+    </div>
   </div>
-  }
 </main>
