@@ -21,8 +21,12 @@ import { BannerError } from '@app/shared/components/banner-error/banner-error';
     templateUrl: './listas.html',
 })
 export class Listas {
-    // Signals para datos
+    /**
+     * Señal que contiene el conjunto de listas obtenidas del servicio, que se muestra en la interfaz. Esta señal se actualiza cada vez que se carga una nueva página de listas o se aplican nuevos filtros o términos de búsqueda, y es la fuente de datos principal para el componente de lista que muestra las listas al usuario.
+     * El tipo de esta señal es un array de objetos `ListaApp`, que representan las listas con sus propiedades como id, nombre, creador, categorías, libros de portada, total de libros, total de me gusta, y descripción.
+     */
     listas = signal<ListaApp[]>([]);
+    // Filtros y estados
     categorias = signal<string[]>([]);
     filtroCategoria = signal<string>('Todas');
     terminoBusqueda = signal<string>('');
@@ -31,9 +35,14 @@ export class Listas {
     cargando = signal(false);
     error = signal(false);
 
+    /**
+     * Injección del servicio de catálogo de listas, que se utiliza para obtener las listas desde el backend, incluyendo la obtención de páginas específicas de listas con filtros aplicados, y la obtención del total de listas para calcular el número de páginas. Este servicio es fundamental para la funcionalidad del componente, ya que proporciona los datos necesarios para mostrar las listas al usuario y manejar la paginación y los filtros.
+     */
     private readonly servicio = inject(ServicioCatalogoListas);
 
-    // Listas filtradas y buscadas
+    /**
+     * Señal computada que devuelve el conjunto de listas filtradas según la categoría seleccionada y el término de búsqueda ingresado por el usuario. Esta señal se actualiza automáticamente cada vez que cambian las señales de `listas`, `filtroCategoria`, o `terminoBusqueda`, aplicando los filtros correspondientes para mostrar solo las listas que coinciden con los criterios seleccionados por el usuario. Si no se selecciona ninguna categoría (o se selecciona "Todas"), no se aplica filtro de categoría, y si no se ingresa ningún término de búsqueda, no se aplica filtro de búsqueda.
+     */
     listasFiltradas = computed(() => {
         let resultado = this.listas();
         console.log(
@@ -56,10 +65,19 @@ export class Listas {
         console.log('[CatalogoListas - listasFiltradas] Listas después de filtrar:', resultado);
         return resultado;
     });
+
+    /**
+     * Inicializador del componente con carga de la primera página sin filtros aplicados.
+     */
     constructor() {
         this.cargarListas();
     }
 
+    /**
+     * Método para cargar las listas desde el servicio, obteniendo la página específica de listas según la página actual y los filtros aplicados.
+     * Este método se llama inicialmente en el constructor para cargar la primera página de listas, y también se llama cada vez que el usuario cambia de página o aplica nuevos filtros o términos de búsqueda.
+     * El método maneja los estados de carga y error, actualizando las señales correspondientes para mostrar mensajes de carga o error en la interfaz, y actualizando la señal de `listas` con los datos obtenidos del servicio.
+     */
     cargarListas() {
         this.cargando.set(true);
         if (!this.filtroCategoria()) {
@@ -100,24 +118,24 @@ export class Listas {
         });
     }
 
-    onBuscar(termino: string) {
+    buscarLista(termino: string) {
         console.log('[CatalogoListas] Término de búsqueda actualizado:', termino);
         this.terminoBusqueda.set(termino);
     }
 
-    onSeleccionarCategoria(cat: string) {
+    seleccionarCategoria(cat: string) {
         console.log('[CatalogoListas] Categoría seleccionada:', cat);
         this.filtroCategoria.set(cat);
     }
 
-    onPaginaChange(p: number) {
+    cambiarPagina(p: number) {
         console.log('[CatalogoListas] Cambio de página a:', p);
         this.pagina.set(p);
         this.servicio.setPaginaCatalogoActual(p);
         this.cargarListas();
     }
 
-    LimpiarFiltros() {
+    limpiarFiltros() {
         console.log('[CatalogoListas] Limpiando filtros y búsqueda');
         this.filtroCategoria.set('Todas');
         this.terminoBusqueda.set('');

@@ -25,7 +25,7 @@ export class Header {
 
     @ViewChild('openBtn') openBtn!: ElementRef<HTMLButtonElement>;
     @ViewChild('backdrop') backdrop!: ElementRef<HTMLElement>;
-    @ViewChild('panel') panel!: ElementRef<HTMLElement>;
+    @ViewChild('panel') panel!: ElementRef<HTMLDialogElement>;
     @ViewChild('closeBtn') closeBtn?: ElementRef<HTMLButtonElement>;
 
     /**
@@ -98,17 +98,40 @@ export class Header {
      * Maneja el evento de clic en el fondo del menú (backdrop) para cerrar el menú si se hace clic fuera de él.
      * @param event Evento de clic que se escucha a nivel de documento. Si el clic se realiza en el fondo del menú (backdrop), se cierra el menú lateral.
      */
-    onBackdropClick(event: MouseEvent) {
+    backdropClick(event: MouseEvent) {
         if (event.target === this.backdrop.nativeElement) this.hideMenu();
+    }
+
+    /**
+     * Maneja el evento de teclado en el fondo del menú (backdrop) para cerrar el menú si se presiona la tecla Escape mientras el foco está en el backdrop.
+     * @param event Evento de teclado que se escucha a nivel de documento. Si el foco está en el fondo del menú (backdrop) y se presiona la tecla Escape, se cierra el menú lateral.
+     */
+    backdropKeyUp(event: KeyboardEvent) {
+        if (event.key === 'Escape' && event.target === this.backdrop.nativeElement) {
+            event.preventDefault();
+            this.hideMenu();
+        }
     }
 
     /**
      * Maneja el evento de clic en los enlaces dentro del menú lateral para cerrar el menú al seleccionar un enlace. Esto asegura que el menú se cierre automáticamente cuando el usuario navegue a una nueva página desde el menú.
      * @param event Evento de clic que se escucha a nivel de documento. Si el clic se realiza en un enlace dentro del menú lateral, se cierra el menú.
      */
-    onPanelLinkClick(event: MouseEvent) {
+    panelLinkClick(event: MouseEvent) {
         const target = event.target as HTMLElement;
         if (target?.tagName === 'A') this.hideMenu();
+    }
+
+    /**
+     * Maneja el evento de teclado en los enlaces dentro del menú lateral para cerrar el menú al seleccionar un enlace con la tecla Enter.
+     * @param event Evento de teclado que se escucha a nivel de documento. Si el foco está en un enlace dentro del menú lateral y se presiona la tecla Enter, se cierra el menú.
+     */
+    panelLinkKeyUp(event: KeyboardEvent) {
+        const target = event.target as HTMLElement;
+        if (event.key === 'Enter' && target?.tagName === 'A') {
+            event.preventDefault();
+            this.hideMenu();
+        }
     }
 
     /**

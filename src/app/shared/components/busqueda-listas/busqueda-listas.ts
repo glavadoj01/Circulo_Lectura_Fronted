@@ -8,10 +8,9 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
 export class BusquedaListasComponent {
     termino = signal('');
 
-
     @Output() buscar = new EventEmitter<string>();
 
-    onBuscar() {
+    buscarLista() {
         this.buscar.emit(this.termino());
     }
 
@@ -22,7 +21,7 @@ export class BusquedaListasComponent {
 
     onKeyDown(event: KeyboardEvent) {
         if (event.key === 'Enter') {
-            this.onBuscar();
+            this.buscarLista();
         }
     }
 
