@@ -1,4 +1,4 @@
-import { valorTextoSeguro } from '@app/shared/utils/validation.utils';
+import { valorTextoSeguro } from '@sharedUtils/validation.utils';
 import { Pipe, PipeTransform } from '@angular/core';
 
 /**

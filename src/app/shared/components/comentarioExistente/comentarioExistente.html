@@ -11,14 +11,14 @@
       <p class="font-semibold text-black dark:text-white">
         <span>{{tituloComentario}}</span>
       </p>
-      <div class="flex items-center gap-2">
+      <div class="flex flex-col items-center gap-2">
+        <p class="text-xs text-gray-500 dark:text-gray-400 self-start">
+          {{fechaComentario | tiempoRelativo}}
+        </p>
         <div [class.hidden]="calificacion == null">
           <app-estrellas-puntuacion [puntuacion]="calificacion | puntuacionNormalizada">
           </app-estrellas-puntuacion>
         </div>
-        <p class="text-xs text-gray-500 dark:text-gray-400">
-          {{fechaComentario | tiempoRelativo}}
-        </p>
       </div>
     </div>
   </div>

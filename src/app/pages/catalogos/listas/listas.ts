@@ -30,10 +30,10 @@ export class Listas {
     categorias = signal<string[]>([]);
     filtroCategoria = signal<string>('Todas');
     terminoBusqueda = signal<string>('');
-    pagina = signal(1);
-    totalPaginas = signal(1);
-    cargando = signal(false);
-    error = signal(false);
+    pagina = signal<number>(1);
+    totalPaginas = signal<number>(1);
+    cargando = signal<boolean>(false);
+    error = signal<boolean>(false);
 
     /**
      * Injección del servicio de catálogo de listas, que se utiliza para obtener las listas desde el backend, incluyendo la obtención de páginas específicas de listas con filtros aplicados, y la obtención del total de listas para calcular el número de páginas. Este servicio es fundamental para la funcionalidad del componente, ya que proporciona los datos necesarios para mostrar las listas al usuario y manejar la paginación y los filtros.

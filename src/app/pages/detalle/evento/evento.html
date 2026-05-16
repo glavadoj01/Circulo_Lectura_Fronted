@@ -10,14 +10,14 @@
         </div>
         <div class="flex items-center gap-2 text-gray-400">
           <span class="material-icons-outlined text-primary">schedule</span>
-          <span>{{detalle?.evento?.hora_evento}}</span>
+          <span>{{detalle?.evento?.hora_evento ?? '' | Hora }}</span>
         </div>
         <div class="flex items-center gap-2 text-gray-400">
           <span class="material-icons-outlined text-primary">location_on</span>
           <span>{{detalle?.evento?.direccion_evento}}</span>
         </div>
         <div class="mt-4">
-          <div class="mb-2">Creador: <b>{{detalle?.evento?.id_usuarioCrd}}</b></div>
+          <div class="mb-2">Creador: <b>{{detalle?.evento?.nombreCreador}}</b></div>
           <div class="mb-2">Asistentes: <b>{{detalle?.asistentes?.length || 0}}</b></div>
         </div>
       </aside>
@@ -40,7 +40,7 @@
 
       <div class="mt-8 w-full">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Libros Relacionados</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mb-8">
           @for (libro of detalle?.libros ?? []; track libro.id_libro) {
           <app-libro-card [libro]="libro"></app-libro-card>
           }

@@ -15,7 +15,7 @@ import { BannerCargando } from '@sharedComponents/banner-cargando/banner-cargand
 import { BannerError } from '@sharedComponents/banner-error/banner-error';
 import { ResumenPuntuaciones } from '@sharedComponents/resumen-puntuaciones/resumen-puntuaciones';
 import { LibroMetadatos } from '@sharedComponents/libro-metadatos/libro-metadatos';
-import { valorNumeroSeguro } from '@app/shared/utils/validation.utils';
+import { valorNumeroSeguro } from '@sharedUtils/validation.utils';
 import { PortadaDetalleLibro } from './portada-detalle-libro/portada-detalle-libro';
 
 /**

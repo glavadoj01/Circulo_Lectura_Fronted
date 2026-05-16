@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { normalizarPuntuacion } from '@app/shared/utils/format.utils';
+import { normalizarPuntuacion } from '@sharedUtils/format.utils';
 
 /**
  * Pipe para formatear una puntuación numérica a texto con un número específico de dígitos decimales.

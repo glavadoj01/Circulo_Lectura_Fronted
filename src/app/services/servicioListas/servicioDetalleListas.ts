@@ -4,7 +4,8 @@ import { catchError, map, Observable, of, switchMap, forkJoin } from 'rxjs';
 import { environment } from '@environments/environments';
 import { ListaApp, DetalleListaCompleta, LibroResumen } from '@interfaces/modelosApp/modelosApp';
 import { ListaComentarios } from '@interfaces/modelosBD/modelosBD';
-import { manejarError, AppError } from '@app/shared/utils/error.utils';
+import { manejarError } from '@sharedUtils/error.utils';
+import { procesarRespuestaArray, procesarRespuestaUnica } from '@sharedUtils/procesarRespuesta';
 
 @Injectable({ providedIn: 'root' })
 export class ServicioDetalleListas {
@@ -17,12 +18,9 @@ export class ServicioDetalleListas {
      */
     private getListaPorId(id: number): Observable<ListaApp> {
         const url = `${environment.apiUrl}:${environment.puerto}/lista/${id}`;
-        return this.http.get<ListaApp>(url).pipe(
+        return this.http.get<{ data: ListaApp }>(url).pipe(
             map((resp) => {
-                if (!resp?.id_lista) {
-                    throw new AppError('lista_respuesta_invalida', { id });
-                }
-                return resp;
+                return procesarRespuestaUnica<ListaApp>(resp, 'lista');
             }),
             catchError((error) => {
                 throw manejarError(error, 'servicioDetalleListas.getListaPorId', { id });
@@ -32,8 +30,8 @@ export class ServicioDetalleListas {
 
     private getComentariosPorIdLista(id: number): Observable<ListaComentarios[]> {
         const url = `${environment.apiUrl}:${environment.puerto}/lista/${id}/comentarios`;
-        return this.http.get<ListaComentarios[]>(url).pipe(
-            map((resp) => (Array.isArray(resp) ? resp : [])),
+        return this.http.get<{ data: ListaComentarios[] }>(url).pipe(
+            map((resp) => procesarRespuestaArray<ListaComentarios>(resp, 'comentarios')),
             catchError((error) => {
                 throw manejarError(error, 'servicioDetalleListas.getComentariosPorIdLista', { id });
             }),
@@ -42,8 +40,8 @@ export class ServicioDetalleListas {
 
     private getLibrosPorIdLista(id: number): Observable<LibroResumen[]> {
         const url = `${environment.apiUrl}:${environment.puerto}/lista/${id}/libros`;
-        return this.http.get<LibroResumen[]>(url).pipe(
-            map((resp) => (Array.isArray(resp) ? resp : [])),
+        return this.http.get<{ data: LibroResumen[] }>(url).pipe(
+            map((resp) => procesarRespuestaArray<LibroResumen>(resp, 'libros')),
             catchError((error) => {
                 throw manejarError(error, 'servicioDetalleListas.getLibrosPorIdLista', { id });
             }),
@@ -60,9 +58,15 @@ export class ServicioDetalleListas {
                         comentarios: this.getComentariosPorIdLista(lista.id_lista),
                     }).pipe(
                         map(({ libros, comentarios }) => ({
-                            lista,
-                            libros,
-                            comentarios,
+                            lista: procesarRespuestaUnica<ListaApp>({ data: lista }, 'lista'),
+                            libros: procesarRespuestaArray<LibroResumen>(
+                                { data: libros },
+                                'libros',
+                            ),
+                            comentarios: procesarRespuestaArray<ListaComentarios>(
+                                { data: comentarios },
+                                'comentarios',
+                            ),
                             errorComentarios: false,
                         })),
                         catchError((error) => {

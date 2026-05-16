@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, input, computed } from '@angular/core';
-import { valorNumeroSeguro, valorTextoSeguro } from '@app/shared/utils/validation.utils';
+import { valorNumeroSeguro, valorTextoSeguro } from '@sharedUtils/validation.utils';
 import { EstrellasPuntuacion } from '@sharedComponents/estrellas-puntuacion/estrellas-puntuacion';
 
 /**

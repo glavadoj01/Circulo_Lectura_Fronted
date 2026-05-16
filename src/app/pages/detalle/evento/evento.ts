@@ -9,13 +9,14 @@ import { ComentarioExistente } from '@sharedComponents/comentarioExistente/comen
 import { BannerCargando } from '@sharedComponents/banner-cargando/banner-cargando';
 import { BannerError } from '@sharedComponents/banner-error/banner-error';
 import { LibroCard } from '@sharedComponents/libro-card/libro-card';
-import { DetalleEventoCompleto } from '@app/interfaces/modelosApp/modelosApp';
+import { DetalleEventoCompleto } from '@interfaces/modelosApp/modelosApp';
 import { ServicioDetalleEvento } from '@app/services/servicioEventos/servicioDetalleEvento';
 import { DatePipe } from '@angular/common';
+import { HoraPipe } from '@sharedPipes/hora.pipe';
 
 @Component({
     selector: 'app-evento',
-    imports: [BannerCargando, BannerError, ComentarioExistente, LibroCard, DatePipe],
+    imports: [BannerCargando, BannerError, ComentarioExistente, LibroCard, DatePipe, HoraPipe],
     templateUrl: './evento.html',
 })
 export class Evento {

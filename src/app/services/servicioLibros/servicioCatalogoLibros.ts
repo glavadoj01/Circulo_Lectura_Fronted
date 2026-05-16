@@ -66,10 +66,10 @@ export class ServicioCatalogoLibros {
             const url = `${environment.apiUrl}:${environment.puerto}/libros/total?${params.toString()}`;
             console.log('[ServicioCatalogoLibros] getTotalLibros - URL:', url);
 
-            return this.http.get<{ total: number }>(url).pipe(
+            return this.http.get<{ data: { total: number } }>(url).pipe(
                 map((resp) => {
                     console.log('[ServicioCatalogoLibros] getTotalLibros - respuesta HTTP:', resp);
-                    const total = Number(resp?.total ?? 0);
+                    const total = Number(resp.data?.total ?? 0);
                     const totalSeguro = Number.isFinite(total) && total > 0 ? total : 0;
 
                     this.guardarCacheCatalogo({
@@ -180,12 +180,13 @@ export class ServicioCatalogoLibros {
             );
             const url = `${environment.apiUrl}:${environment.puerto}/libros?${params.toString()}`;
             console.log('[ServicioCatalogoLibros] getCatalogoLibrosPaginado - URL:', url);
-            return this.http.get<LibroResumen[]>(url).pipe(
-                map((libros) => {
+            return this.http.get<{ data: LibroResumen[] }>(url).pipe(
+                map((resp) => {
                     console.log(
                         '[ServicioCatalogoLibros] getCatalogoLibrosPaginado - respuesta HTTP:',
-                        libros,
+                        resp,
                     );
+                    const libros = resp.data;
                     const normalizados = BaseLibros.normalizarYOrdenarLibros(libros, sort);
                     this.guardarCacheCatalogo({
                         ...cacheActual,

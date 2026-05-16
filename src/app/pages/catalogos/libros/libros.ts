@@ -58,9 +58,9 @@ export class Libros {
     /**
      * Señales auxiliares para manejar el estado de carga y error del catálogo.
      */
-    cargando = signal(true);
-    errorCarga = signal(false);
-    totalResultados = signal(0);
+    cargando = signal<boolean>(true);
+    errorCarga = signal<boolean>(false);
+    totalResultados = signal<number>(0);
 
     /**
      * Señal computada para calcular el total de páginas disponibles en función del total de resultados y el tamaño de página.

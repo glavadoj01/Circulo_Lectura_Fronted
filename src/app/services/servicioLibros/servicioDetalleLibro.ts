@@ -9,9 +9,11 @@ import {
     RespuestaCriticas,
 } from '@interfaces/modelosApp/modelosApp';
 import { BaseLibros } from './baseLibros';
-import { manejarError, AppError } from '@app/shared/utils/error.utils';
-import { valorNumeroSeguro } from '@app/shared/utils/validation.utils';
-import { normalizarPuntuacion } from '@app/shared/utils/format.utils';
+import { manejarError } from '@sharedUtils/error.utils';
+import { valorNumeroSeguro } from '@sharedUtils/validation.utils';
+import { normalizarPuntuacion } from '@sharedUtils/format.utils';
+import { procesarRespuestaUnica } from '@sharedUtils/procesarRespuesta';
+import { LibroCritica } from '@interfaces/modelosBD/modelosBD';
 
 @Injectable({ providedIn: 'root' })
 export class ServicioDetalleLibro {
@@ -30,11 +32,9 @@ export class ServicioDetalleLibro {
         const url = `${environment.apiUrl}:${environment.puerto}/libro/${id}`;
         return this.http.get<DetalleLibroCompleto>(url).pipe(
             map((resp) => {
-                const libro = resp.libro;
-                if (!libro?.id_libro) {
-                    throw new AppError('libro_respuesta_invalida', { id });
-                }
-                return BaseLibros.mapLibroApp(libro);
+                const data = procesarRespuestaUnica<{ libro: LibroApp }>(resp, 'libro');
+
+                return BaseLibros.mapLibroApp(data.libro);
             }),
             catchError((error) => {
                 throw manejarError(error, 'ServicioDetalleLibro.getLibroPorId', { id });
@@ -51,13 +51,17 @@ export class ServicioDetalleLibro {
         const url = `${environment.apiUrl}:${environment.puerto}/libro/${id}/criticas`;
         return this.http.get<RespuestaCriticas>(url).pipe(
             map((resp) => {
-                const frec = Array.isArray(resp.frecuencias) ? resp.frecuencias : [];
+                const resForm = procesarRespuestaUnica<{
+                    criticas: LibroCritica[];
+                    frecuencias: number[];
+                }>(resp, 'respuestaCriticas');
+                const frec = resForm.frecuencias;
                 const frecuenciasNormalizadas = [1, 2, 3, 4, 5].map((i) => {
                     const val = valorNumeroSeguro(frec[i - 1] ?? 0);
                     return normalizarPuntuacion(val);
                 });
                 return {
-                    ...resp,
+                    criticas: resForm.criticas,
                     frecuencias: frecuenciasNormalizadas as [
                         number,
                         number,

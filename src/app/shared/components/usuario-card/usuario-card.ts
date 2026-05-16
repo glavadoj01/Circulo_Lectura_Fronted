@@ -1,7 +1,7 @@
 import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UsuarioCompleto } from '@app/interfaces/modelosApp/modelosApp';
+import { UsuarioCompleto } from '@interfaces/modelosApp/modelosApp';
 import { TiempoRelativoPipe } from '@app/shared/pipes/tiempo-relativo.pipe';
 
 @Component({

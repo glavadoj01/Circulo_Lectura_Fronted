@@ -1,0 +1,44 @@
+<div class="p-4">
+  <div
+    class="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-xl bg-[#1F2937] p-6 hover:bg-[#2a3647] transition-colors">
+    <div class="flex flex-[2_2_0px] flex-col gap-4">
+      <div class="flex items-center gap-4">
+        <div class="flex flex-col items-center justify-center bg-[#121212] p-3 rounded-lg w-16 h-16 text-center">
+          <span class="text-primary font-bold text-2xl leading-none">{{ evento.fecha_evento | date:'dd' }}</span>
+          <span class="text-[#9CA3AF] text-xs uppercase tracking-wider">{{ evento.fecha_evento | date:'MMM' }}</span>
+          <span class="text-gray-500 dark:text-gray-300">{{ evento.hora_evento ?? '' | Hora }}</span>
+          <div class="flex flex-col gap-1">
+            <p class="text-[#E5E7EB] text-xl font-bold leading-tight">{{ evento.nombreCreador }}</p>
+            <p class="text-[#E5E7EB] text-xl font-bold leading-tight">{{ evento.nombre_evento }}</p>
+            <p class="text-[#9CA3AF] text-sm font-normal leading-normal">
+              {{ evento.descripcion_evento | slice:0:100 }}{{ evento.descripcion_evento.length > 100 ? '...' : '' }}
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-6 mt-2">
+          <button
+            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/20 text-primary hover:bg-primary/30 text-sm font-medium leading-normal gap-2 transition-colors">
+            <span class="material-symbols-outlined" style="font-size: 18px;">event_available</span>
+            <span class="truncate">Asistiré</span>
+          </button>
+          <div class="flex items-center gap-2 text-[#9CA3AF]">
+            <span class="material-symbols-outlined" style="font-size: 20px;">groups</span>
+            <span class="text-sm font-medium">{{ evento.totalAsistentes }}</span>
+          </div>
+        </div>
+        <div class="self-center w-fit">
+          <button
+            class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-[#10B981]/20 text-[#10B981] text-sm font-medium leading-normal gap-2"
+            routerLink="/detalle/evento/{{ evento.id_evento }}">
+            <span class="material-symbols-outlined" style="font-size: 18px;">info</span>
+            <span class="truncate">Ver Detalles</span>
+          </button>
+        </div>
+      </div>
+      <div class="w-full sm:w-40 bg-center bg-no-repeat aspect-2/3 bg-cover rounded-lg shrink-0"
+        data-alt="Book cover of 'One Hundred Years of Solitude'"
+        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD0KZ1KYV3g7vrWYfr8CeObNWgGvweyB030NUdAOI6jLC_VCvp1hf0427a6IG64ocMACtqiFUBvnoWC0YvgY505W6JilawM1ya0v-u7O73EhD489xJAeTPY0RpBbhaB3cKtKRr6jgSdZqn0jzsz86VHCfsXAQBMOaRwvRI49qONO6IAeMJOzVfaoQTI1XG3VPFplsGkCQN783UhbGsQHIbyEJb2nJAzvHFrkUI08se8X5gwjwFUIgH6pgrY_AF2HJF7xtFyfXr3-w");'>
+      </div>
+    </div>
+  </div>
+</div>

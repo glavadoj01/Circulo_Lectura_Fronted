@@ -3,8 +3,8 @@ import type {
     LibroCritica,
     ListaComentarios,
     EventoComentario,
-} from '@app/interfaces/modelosBD/modelosBD';
-import { valorNumeroSeguro } from '@app/shared/utils/validation.utils';
+} from '@interfaces/modelosBD/modelosBD';
+import { valorNumeroSeguro } from '@sharedUtils/validation.utils';
 import { ServicioUsuario } from '@services/servicioUsuario/servicioUsuario';
 import { EstrellasPuntuacion } from '@sharedComponents/estrellas-puntuacion/estrellas-puntuacion';
 import { PuntuacionNormalizadaPipe } from '@sharedPipes/puntuacion-normalizada.pipe';

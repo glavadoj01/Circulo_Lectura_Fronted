@@ -1,9 +1,5 @@
 import { Component, input, computed } from '@angular/core';
-import {
-    validarGeneros,
-    valorNumeroSeguro,
-    valorTextoSeguro,
-} from '@app/shared/utils/validation.utils';
+import { validarGeneros, valorNumeroSeguro, valorTextoSeguro } from '@sharedUtils/validation.utils';
 import { LibroApp } from '@interfaces/modelosApp/modelosApp';
 
 /**

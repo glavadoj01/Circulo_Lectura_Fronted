@@ -1,5 +1,5 @@
 import { Component, computed, input, output } from '@angular/core';
-import { valorNumeroSeguro } from '@app/shared/utils/validation.utils';
+import { valorNumeroSeguro } from '@sharedUtils/validation.utils';
 
 /**
  * Componente de paginación para navegar entre páginas de contenido. Permite seleccionar la página actual y muestra un conjunto de páginas visibles para facilitar la navegación. El componente recibe como inputs la página actual y el total de páginas, y emite un evento cuando se selecciona una nueva página.

@@ -1,7 +1,13 @@
 <main class="grow">
   <div class="container mx-auto px-4 py-8 lg:px-8">
+    @if (cargando()) {
+    <app-banner-cargando elemento="Perfil de Usuario"></app-banner-cargando>
+    }
+    @else if (!encontrado()) {
+    <app-banner-error elemento="Usuario "></app-banner-error>
+    }
+    @else {
     <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
-
       <aside class="md:col-span-4 lg:col-span-3">
         <usuario-card [usuario]="usuario()"></usuario-card>
       </aside>
@@ -19,12 +25,12 @@
                 class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary"
                 (click)="tabActiva.set('listas')" [class.border-primary]="tabActiva() === 'listas'"
                 [class.text-primary]="tabActiva() === 'listas'" href="#">Mis Listas</button>
-              <button
-                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-transparent px-1 py-4 text-sm font-bold text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-500 dark:hover:text-gray-200"
+              <button aria-current="page"
+                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary"
                 (click)="tabActiva.set('criticas')" [class.border-primary]="tabActiva() === 'criticas'"
                 [class.text-primary]="tabActiva() === 'criticas'" href="#">Mis Reseñas</button>
-              <button
-                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-transparent px-1 py-4 text-sm font-bold text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-500 dark:hover:text-gray-200"
+              <button aria-current="page"
+                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary"
                 (click)="tabActiva.set('eventos')" [class.border-primary]="tabActiva() === 'eventos'"
                 [class.text-primary]="tabActiva() === 'eventos'" href="#">Historial de Eventos</button>
             </nav>
@@ -90,7 +96,7 @@
             @for (c of usuario().criticas ?? []; track c.id_libro) {
             <a [routerLink]="['../detalle/libro', c.id_libro]"
               class="block rounded-lg border border-gray-200/80 bg-white p-4 shadow-sm hover:bg-gray-50 dark:border-white/10 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <h3 class="font-semibold text-black dark:text-white">{{ c.titulo_libro }}</h3>
+              <h3 class="font-semibold text-black dark:text-white mb-4">{{ c.titulo_libro }}</h3>
               <app-comentario-existente [critica]="c"></app-comentario-existente>
             </a>
             }
@@ -114,5 +120,6 @@
         </div>
       </div>
     </div>
+    }
   </div>
 </main>

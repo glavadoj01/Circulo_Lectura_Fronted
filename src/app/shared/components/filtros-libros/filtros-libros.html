@@ -29,7 +29,7 @@
                   type="checkbox" [checked]="selectedGeneros.has(genero.id_genero)"
                   (change)="toggleGenero(genero.id_genero)" />
                 <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
-                  {{ genero.nombre_genero }}
+                  {{ genero?.nombre_genero ?? 'Sin género' }}
                 </p>
               </label>
               }
@@ -53,7 +53,7 @@
                 type="checkbox" [checked]="selectedAutores.has(autor.id_autor)"
                 (change)="toggleAutor(autor.id_autor)" />
               <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
-                {{ autor.nombre_autor }} {{ autor.apellido_autor }}
+                {{ autor?.nombre_autor ?? 'Desconocido' }} {{ autor?.apellido_autor ?? '' }}
               </p>
             </label>
             }
@@ -76,7 +76,7 @@
                 class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
                 type="checkbox" [checked]="selectedYears.has(year)" (change)="toggleYear(year)" />
               <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
-                {{ year }}
+                {{ year ?? 'Desconocido' }}
               </p>
             </label>
             }
@@ -98,7 +98,7 @@
                 class="h-5 w-5 rounded border-gray-400 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none"
                 type="checkbox" [checked]="selectedValoraciones.has(valor)" (change)="toggleValoracion(valor)" />
               <p class="text-gray-700 dark:text-gray-300 text-sm font-normal leading-normal">
-                {{ valor }} estrellas
+                {{ valor ? valor + ' estrellas' : 'Sin valoración' }}
               </p>
             </label>
             }

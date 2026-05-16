@@ -1,9 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
-import { manejarError, AppError } from '@app/shared/utils/error.utils';
+import { manejarError, AppError } from '@sharedUtils/error.utils';
 import { environment } from '@environments/environments';
-import { ListaApp } from '@app/interfaces/modelosApp/modelosApp';
+import { ListaApp } from '@interfaces/modelosApp/modelosApp';
+import { procesarRespuestaArray } from '@sharedUtils/procesarRespuesta';
 
 interface CacheCatalogoListas {
     total: number | null;
@@ -27,9 +28,9 @@ export class ServicioCatalogoListas {
                 return of(cacheActual.total);
             }
             const url = `${environment.apiUrl}:${environment.puerto}/listas`;
-            return this.http.get<ListaApp[]>(url).pipe(
+            return this.http.get<{ data: ListaApp[] }>(url).pipe(
                 map((resp) => {
-                    const total = Array.isArray(resp) ? resp.length : 0;
+                    const total = Array.isArray(resp.data) ? resp.data.length : 0;
                     this.guardarCacheCatalogo({ ...cacheActual, total });
                     return total;
                 }),
@@ -50,8 +51,9 @@ export class ServicioCatalogoListas {
                 return of(cacheActual.pages[key]);
             }
             const url = `${environment.apiUrl}:${environment.puerto}/listas?page=${page}&limit=${limit}`;
-            return this.http.get<ListaApp[]>(url).pipe(
-                map((listas) => {
+            return this.http.get<{ data: ListaApp[] }>(url).pipe(
+                map((resp) => {
+                    const listas = procesarRespuestaArray<ListaApp>(resp, 'Listas');
                     this.guardarCacheCatalogo({
                         ...cacheActual,
                         pages: {
