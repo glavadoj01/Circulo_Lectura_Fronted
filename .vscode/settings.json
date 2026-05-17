@@ -1,11 +1,12 @@
 {
-    "css.validate": false,
-    "angular-schematics.schematicsDefaultOptions": {
-        "angular-component": {
-            "skipChangeDetectionOnPush": true
-        },
-        "angular-*": {
-            "externalTemplate": true
-        }
-    }
+	"css.validate": true,
+	"angular-schematics.schematicsDefaultOptions": {
+		"angular-component": {
+			"skipChangeDetectionOnPush": true
+		},
+		"angular-*": {
+			"externalTemplate": true,
+			"skipTests": true
+		}
+	}
 }

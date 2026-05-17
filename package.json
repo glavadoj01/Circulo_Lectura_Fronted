@@ -28,8 +28,12 @@
         "run": "clear && npm run reinstall && npm run start"
     },
     "prettier": {
-        "printWidth": 100,
-        "singleQuote": true,
+        "useTabs": true,
+        "tabWidth": 2,
+        "printWidth": 120,
+        "singleQuote": false,
+        "singleAttributePerLine": true,
+        "arrowParens": "avoid",
         "overrides": [
             {
                 "files": "*.html",
