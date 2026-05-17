@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { normalizarPuntuacion } from '@sharedUtils/format.utils';
+import { Pipe, PipeTransform } from "@angular/core";
+import { normalizarPuntuacion } from "@Utils/format.utils";
 
 /**
  * Pipe para formatear una puntuación numérica a texto con un número específico de dígitos decimales.
@@ -11,13 +11,13 @@ import { normalizarPuntuacion } from '@sharedUtils/format.utils';
  */
 
 @Pipe({
-    name: 'puntuacionTexto',
+	name: "puntuacionTexto",
 })
 export class PuntuacionTextoPipe implements PipeTransform {
-    transform(value: unknown, digits = 1): string {
-        // Normaliza la puntuación usando la utilidad centralizada
-        const num = normalizarPuntuacion(value);
-        const digitsSeguro = Math.max(0, Math.floor(Number(digits)));
-        return num.toFixed(digitsSeguro);
-    }
+	transform(value: unknown, digits = 1): string {
+		// Normaliza la puntuación usando la utilidad centralizada
+		const num = normalizarPuntuacion(value);
+		const digitsSeguro = Math.max(0, Math.floor(Number(digits)));
+		return num.toFixed(digitsSeguro);
+	}
 }

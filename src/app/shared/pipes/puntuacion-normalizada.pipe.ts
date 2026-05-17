@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { normalizarPuntuacion } from '@sharedUtils/format.utils';
+import { Pipe, PipeTransform } from "@angular/core";
+import { normalizarPuntuacion } from "@Utils/format.utils";
 
 /**
  * Pipe para normalizar una puntuación a un formato numérico válido.
@@ -9,10 +9,10 @@ import { normalizarPuntuacion } from '@sharedUtils/format.utils';
  */
 
 @Pipe({
-    name: 'puntuacionNormalizada',
+	name: "puntuacionNormalizada",
 })
 export class PuntuacionNormalizadaPipe implements PipeTransform {
-    transform(value: unknown): number {
-        return normalizarPuntuacion(value);
-    }
+	transform(value: unknown): number {
+		return normalizarPuntuacion(value);
+	}
 }

@@ -1,20 +1,20 @@
 /* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
 /* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-        "rootDir": "./src",
-        "paths": {
-            "@app/*": ["./src/app/*"],
-            "@services/*": ["./src/app/services/*"],
-            "@sharedComponents/*": ["./src/app/shared/components/*"],
-            "@sharedUtils/*": ["./src/app/shared/utils/*"],
-            "@sharedPipes/*": ["./src/app/shared/pipes/*"],
-            "@interfaces/*": ["./src/app/interfaces/*"],
-            "@environments/*": ["./src/environments/*"]
-        },
-        "types": []
-    },
-    "include": ["src/**/*.ts"],
-    "exclude": ["src/**/*.spec.ts"]
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "./src",
+		"paths": {
+			"@app/*": ["./src/app/*"],
+			"@Services/*": ["./src/app/services/*"],
+			"@sharedComponents/*": ["./src/app/shared/components/*"],
+			"@Utils/*": ["./src/app/shared/utils/*"],
+			"@Pipes/*": ["./src/app/shared/pipes/*"],
+			"@Interfaces/*": ["./src/app/interfaces/*"],
+			"@environments/*": ["./src/environments/*"]
+		},
+		"types": []
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": ["src/**/*.spec.ts"]
 }

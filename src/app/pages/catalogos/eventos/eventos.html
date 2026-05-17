@@ -1,12 +1,11 @@
-<h2>Eventos Placeholder - WIP</h2>
 <div class="flex flex-col gap-8 mt-8">
   <!-- Cabecera Catalogo Eventos -->
   <div class="flex flex-wrap justify-between gap-4 p-4">
     <div class="flex min-w-72 flex-col gap-3">
-      <p class="text-[#E5E7EB] text-4xl font-black leading-tight tracking-[-0.033em]">Eventos
-        del Círculo</p>
-      <p class="text-[#9CA3AF] text-base font-normal leading-normal">Explora, únete y
-        participa en nuestras próximas discusiones.</p>
+      <p class="text-[#E5E7EB] text-4xl font-black leading-tight tracking-[-0.033em]">Eventos del Círculo</p>
+      <p class="text-[#9CA3AF] text-base font-normal leading-normal">
+        Explora, únete y participa en nuestras próximas discusiones.
+      </p>
     </div>
     <button
       class="flex min-w-21 max-w-120 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/90 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors">
@@ -16,21 +15,24 @@
   <!-- Barra de busqueda Eventos -->
   <div class="px-4 py-3">
     <label class="flex flex-col min-w-40 h-12 w-full">
-      <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-        <div
-          class="text-[#9CA3AF] flex border-none bg-[#1F2937] items-center justify-center pl-4 rounded-l-lg border-r-0">
-          <span class="material-symbols-outlined" style="font-size: 24px;">search</span>
+      <div
+        class="flex w-full flex-1 items-stretch h-full overflow-hidden rounded-lg border border-[#374151] bg-[#1F2937] transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/50">
+        <div class="text-[#9CA3AF] flex items-center justify-center px-4 shrink-0">
+          <span class="material-symbols-outlined" style="font-size: 24px">search</span>
         </div>
         <input
-          class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#E5E7EB] focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-[#1F2937] focus:border-none h-full placeholder:text-[#9CA3AF] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-          placeholder="Buscar eventos por libro o tema" value="" />
+          class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden border-none bg-transparent px-4 pl-0 text-base font-normal leading-normal text-[#E5E7EB] placeholder:text-[#9CA3AF] focus:border-none focus:outline-0 focus:ring-0"
+          placeholder="Buscar eventos por libro o tema" [value]="busqueda()"
+          (input)="busqueda.set($any($event.target).value); busquedaPasados.set($any($event.target).value)"
+          (keyup.enter)="buscarProximos(); buscarPasados()" />
       </div>
     </label>
   </div>
   <!-- Contenedor Eventos Próximos -->
   <section class="flex flex-col gap-4">
     <h2 class="text-[#E5E7EB] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-      Próximos Eventos</h2>
+      Próximos Eventos
+    </h2>
     <!-- Evento -->
     @if (cargandoProximos()) {
     <app-banner-cargando elemento="Eventos Próximos"></app-banner-cargando>
@@ -40,8 +42,21 @@
     @for (evento of eventosProximos(); track evento.id_evento) {
     <app-evento-card [evento]="evento"></app-evento-card>
     }
+    <div class="flex justify-center p-4 mt-4">
+      <div class="flex items-center gap-3 text-[#E5E7EB]">
+        <button type="button" class="px-3 py-1 rounded bg-[#1F2937] disabled:opacity-50"
+          [disabled]="paginaProximos() <= 1" (click)="cambiarPaginaProximos(paginaProximos() - 1)">
+          Anterior
+        </button>
+        <span class="text-sm">Página {{ paginaProximos() }} de {{ totalPaginasProximos() }}</span>
+        <button type="button" class="px-3 py-1 rounded bg-[#1F2937] disabled:opacity-50"
+          [disabled]="paginaProximos() >= totalPaginasProximos()" (click)="cambiarPaginaProximos(paginaProximos() + 1)">
+          Siguiente
+        </button>
+      </div>
+    </div>
     }
-    <div class="p-4">
+    <!-- <div class="p-4">
       <div
         class="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-xl bg-[#1F2937] p-6 hover:bg-[#2a3647] transition-colors">
         <div class="flex flex-[2_2_0px] flex-col gap-4">
@@ -85,8 +100,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Evento -->
     <a routerLink="/detalle/evento/2">
       <div class="p-4">
         <div
@@ -132,12 +145,13 @@
           </div>
         </div>
       </div>
-    </a>
+    </a> -->
   </section>
   <!-- Contenedor Eventos Pasados -->
   <section class="flex flex-col gap-4 mt-8">
     <h2 class="text-[#E5E7EB] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-      Eventos Pasados</h2>
+      Eventos Pasados
+    </h2>
     <!-- Evento -->
     @if (cargandoPasados()) {
     <app-banner-cargando elemento="Eventos Pasados"></app-banner-cargando>
@@ -147,8 +161,21 @@
     @for (evento of eventosPasados(); track evento.id_evento) {
     <app-evento-pasado-card [evento]="evento"></app-evento-pasado-card>
     }
+    <div class="flex justify-center p-4 mt-4">
+      <div class="flex items-center gap-3 text-[#E5E7EB]">
+        <button type="button" class="px-3 py-1 rounded bg-[#1F2937] disabled:opacity-50"
+          [disabled]="paginaPasados() <= 1" (click)="cambiarPaginaPasados(paginaPasados() - 1)">
+          Anterior
+        </button>
+        <span class="text-sm">Página {{ paginaPasados() }} de {{ totalPaginasPasados() }}</span>
+        <button type="button" class="px-3 py-1 rounded bg-[#1F2937] disabled:opacity-50"
+          [disabled]="paginaPasados() >= totalPaginasPasados()" (click)="cambiarPaginaPasados(paginaPasados() + 1)">
+          Siguiente
+        </button>
+      </div>
+    </div>
     }
-    <a routerLink="/detalle/evento/3">
+    <!-- <a routerLink="/detalle/evento/3">
       <div class="p-4">
         <div
           class="flex flex-col sm:flex-row items-stretch justify-between gap-6 rounded-xl bg-[#1F2937]/60 p-6 opacity-70">
@@ -192,6 +219,6 @@
           </div>
         </div>
       </div>
-    </a>
+    </a> -->
   </section>
 </div>
