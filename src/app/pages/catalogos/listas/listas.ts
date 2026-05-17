@@ -5,8 +5,8 @@ import { ListaCardComponent } from "@sharedComponents/lista-card/lista-card";
 import { Paginacion } from "@sharedComponents/paginacion/paginacion";
 import type { ListaApp } from "@Interfaces/modelosApp/modelosApp";
 import { ServicioCatalogoListas } from "@app/services/servicioListas/servicioCatalogoListas";
-import { BannerCargando } from "@app/shared/components/banner-cargando/banner-cargando";
-import { BannerError } from "@app/shared/components/banner-error/banner-error";
+import { BannerCargando } from "@sharedComponents/banner-cargando/banner-cargando";
+import { BannerError } from "@sharedComponents/banner-error/banner-error";
 
 @Component({
 	selector: "app-listas",

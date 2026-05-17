@@ -1,18 +1,28 @@
 import { Component, inject, signal } from "@angular/core";
 import { UsuarioCompleto } from "@Interfaces/modelosApp/modelosApp";
 import { ServicioUsuario } from "@app/services/servicioUsuario/servicioUsuario";
-import { UsuarioCard } from "@app/shared/components/usuario-card/usuario-card";
-import { ListaCardComponent } from "@app/shared/components/lista-card/lista-card";
-import { ComentarioExistente } from "@app/shared/components/comentarioExistente/comentarioExistente";
-import { LibroCard } from "@app/shared/components/libro-card/libro-card";
+import { UsuarioCard } from "@sharedComponents/usuario-card/usuario-card";
+import { ListaCardComponent } from "@sharedComponents/lista-card/lista-card";
+import { ComentarioExistente } from "@sharedComponents/comentarioExistente/comentarioExistente";
+import { LibroCard } from "@sharedComponents/libro-card/libro-card";
 import { forkJoin } from "rxjs";
 import { ActivatedRoute, RouterLink } from "@angular/router";
-import { BannerCargando } from "@app/shared/components/banner-cargando/banner-cargando";
-import { BannerError } from "@app/shared/components/banner-error/banner-error";
+import { BannerCargando } from "@sharedComponents/banner-cargando/banner-cargando";
+import { BannerError } from "@sharedComponents/banner-error/banner-error";
+import { EventoCardComponent } from "@sharedComponents/evento-card/evento-card";
 
 @Component({
 	selector: "app-perfil-usuario",
-	imports: [UsuarioCard, ListaCardComponent, ComentarioExistente, LibroCard, RouterLink, BannerCargando, BannerError],
+	imports: [
+		UsuarioCard,
+		ListaCardComponent,
+		ComentarioExistente,
+		LibroCard,
+		RouterLink,
+		BannerCargando,
+		BannerError,
+		EventoCardComponent,
+	],
 	templateUrl: "./perfilUsuario.html",
 })
 export class PerfilUsuario {

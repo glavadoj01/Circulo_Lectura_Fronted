@@ -10,7 +10,7 @@ import { manejarError } from "@Utils/error.utils";
 import { Paginacion } from "@sharedComponents/paginacion/paginacion";
 import { LibroCard } from "@sharedComponents/libro-card/libro-card";
 import { LibroResumen } from "@Interfaces/modelosApp/modelosApp";
-import { FiltrosLibros } from "@app/shared/components/filtros-libros/filtros-libros";
+import { FiltrosLibros } from "@sharedComponents/filtros-libros/filtros-libros";
 
 /**
  * Componente para mostrar un catálogo de libros con paginación. Permite navegar entre páginas de libros, mostrando un número limitado de libros por página. El componente maneja el estado de carga y errores, y utiliza servicios para obtener los datos del catálogo desde el backend.

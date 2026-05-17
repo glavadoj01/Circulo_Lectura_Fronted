@@ -16,21 +16,21 @@
         <div class="flex flex-col gap-6">
           <!-- Tabs -->
           <div class="border-b border-gray-200/80 dark:border-white/10">
-            <nav aria-label="Tabs" class="-mb-px flex gap-8 px-4">
+            <nav aria-label="Tabs" class="-mb-px flex gap-2 md:gap-8 lg:gap-16 px-4">
               <button aria-current="page"
-                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary"
+                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary cursor-pointer"
                 (click)="tabActiva.set('libros')" [class.border-primary]="tabActiva() === 'libros'"
                 [class.text-primary]="tabActiva() === 'libros'" href="#">Mis Libros</button>
               <button aria-current="page"
-                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary"
+                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary cursor-pointer"
                 (click)="tabActiva.set('listas')" [class.border-primary]="tabActiva() === 'listas'"
                 [class.text-primary]="tabActiva() === 'listas'" href="#">Mis Listas</button>
               <button aria-current="page"
-                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary"
+                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary cursor-pointer"
                 (click)="tabActiva.set('criticas')" [class.border-primary]="tabActiva() === 'criticas'"
                 [class.text-primary]="tabActiva() === 'criticas'" href="#">Mis Reseñas</button>
               <button aria-current="page"
-                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary"
+                class="group inline-flex shrink-0 items-center justify-center gap-2 border-b-2 border-primary px-1 py-4 text-sm font-bold text-primary cursor-pointer"
                 (click)="tabActiva.set('eventos')" [class.border-primary]="tabActiva() === 'eventos'"
                 [class.text-primary]="tabActiva() === 'eventos'" href="#">Historial de Eventos</button>
             </nav>
@@ -104,19 +104,28 @@
           }
           @else if (tabActiva()==='eventos') {
           <div class="px-4">
-            <h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-gray-900 dark:text-white">
+            <h2
+              class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-gray-900 dark:text-white border-emerald-600/80 border-b-2 pb-4">
               Historial de Eventos
             </h2>
-          </div>
-
-          <div class="grid grid-cols-1 gap-6 px-4 sm:grid-cols-2 @[640px]:grid-cols-3">
-            <p>EVENTOS WIP 😃</p>
-            @for (ev of usuario().eventosAsistidos ?? []; track ev.id_evento) {
-            <!-- <evento-card [evento]="ev"></evento-card> -->
-            }
+            <div class="mt-4 border-emerald-600/80 border-y-2 pb-4 pt-4">
+              <h3 class="font-bold text-gray-900 dark:text-white mb-2">Eventos Organizdos</h3>
+              <div class="grid grid-cols-1 gap-6 px-4 sm:grid-cols-2 @[640px]:grid-cols-3">
+                @for (ev of usuario().eventosCreados ?? []; track ev.id_evento) {
+                <app-evento-card [evento]="ev"></app-evento-card>
+                }
+              </div>
+            </div>
+            <div class="mt-4 border-emerald-600/80 border-t-2 pt-4">
+              <h3 class="font-bold text-gray-900 dark:text-white mb-2">Eventos Asistidos</h3>
+              <div class="grid grid-cols-1 gap-6 px-4 sm:grid-cols-2 @[640px]:grid-cols-3">
+                @for (ev of usuario().eventosAsistidos ?? []; track ev.id_evento) {
+                <app-evento-card [evento]="ev"></app-evento-card>
+                }
+              </div>
+            </div>
           </div>
           }
-
         </div>
       </div>
     </div>
